@@ -12,9 +12,8 @@ LDSCRIPT        = ./linker.ld
 LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000
 
 
-MODULES         := init
-INC             = -I. -I./include
-AS_INC          = -I ./init
+MODULES         := init lib
+INC             = -I. -I./include -I./lib
 SRC             := main.c
 
 include $(patsubst %, %/subsys.mk, $(MODULES))

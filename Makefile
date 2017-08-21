@@ -5,7 +5,7 @@ GRUB=grub2
 BOCHS=bochs
 DEBUG_DIR=./debug
 
-SRC	:= src/
+SRC	:= src
 KERNEL	:= $(SRC)/kernel.bin
 
 all:
