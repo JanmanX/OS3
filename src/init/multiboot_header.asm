@@ -14,6 +14,7 @@
 
 [BITS 64]
 section .multiboot_header
+align 8
 header_start:
 	multiboot_magic 	dd MULTIBOOT2_HEADER_MAGIC
 	multiboot_arch		dd MULTIBOOT_ARCHITECTURE_I386
@@ -23,6 +24,17 @@ header_start:
 						+ (header_end - header_start))
 
 	; other tags here
+align 8
+framebuffer_tag_start:
+        dw 5
+        dw 0
+        dd 20
+        dd 800
+        dd 600
+        dd 32
+framebuffer_tag_end:
+align 8
+
 
 	; End tag
 	dw 0x00	; type

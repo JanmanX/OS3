@@ -269,7 +269,7 @@ long_mode_start:
         xor r15, r15
         cld
 
-	; mb_info_ptr is already in rdi
+	; mb_info_ptr is already in edi (rdi)
 	call main
 	hlt
 

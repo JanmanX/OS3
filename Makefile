@@ -28,3 +28,6 @@ bochs: iso
 
 tags:
 	find os/ | xargs ctags
+
+clean:
+	rm -fv bx_enh_dbg.ini

@@ -1,0 +1,326 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AS	./Makefile	/^AS              = nasm$/;"	m
+ASFLAGS	./Makefile	/^ASFLAGS         = -f elf64$/;"	m
+BLACK	./lib/libc.h	/^	BLACK = 0x0,$/;"	e	enum:color
+BLUE	./lib/libc.h	/^	BLUE = 0x1,$/;"	e	enum:color
+BOCHS_DEBUG	./lib/libc.h	54;"	d
+BROWN	./lib/libc.h	/^	BROWN = 0x6,$/;"	e	enum:color
+CC	./Makefile	/^CC              = x86_64-elf-gcc$/;"	m
+CFLAGS	./Makefile	/^CFLAGS          = -std=gnu99 -ffreestanding -O0 -Wall -Wextra -m64 -g -mno-red-zone -nostdinc -H$/;"	m
+CYAN	./lib/libc.h	/^	CYAN = 0x3,$/;"	e	enum:color
+DARK_GRAY	./lib/libc.h	/^	DARK_GRAY = 0x8,$/;"	e	enum:color
+DEBUG	./lib/libc.h	63;"	d
+ERROR	./lib/libc.h	64;"	d
+FILES	./init/subsys.mk	/^FILES := boot.asm multiboot_header.asm$/;"	m
+FILES	./lib/subsys.mk	/^FILES := libc.c$/;"	m
+GREEN	./lib/libc.h	/^	GREEN = 0x2,$/;"	e	enum:color
+HALT	./lib/libc.h	59;"	d
+INC	./Makefile	/^INC             = -I. -I.\/include -I.\/lib$/;"	m
+KLIB_H	./lib/libc.h	2;"	d
+LD	./Makefile	/^LD              = ld$/;"	m
+LDFLAGS	./Makefile	/^LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000$/;"	m
+LDSCRIPT	./Makefile	/^LDSCRIPT        = .\/linker.ld$/;"	m
+LIGHT_BLUE	./lib/libc.h	/^	LIGHT_BLUE = 0x9,$/;"	e	enum:color
+LIGHT_CYAN	./lib/libc.h	/^	LIGHT_CYAN = 0xB,$/;"	e	enum:color
+LIGHT_GRAY	./lib/libc.h	/^	LIGHT_GRAY = 0x7,$/;"	e	enum:color
+LIGHT_GREEN	./lib/libc.h	/^	LIGHT_GREEN = 0xA,$/;"	e	enum:color
+LIGHT_MAGENTA	./lib/libc.h	/^	LIGHT_MAGENTA = 0xD,$/;"	e	enum:color
+LIGHT_RED	./lib/libc.h	/^	LIGHT_RED = 0xC,$/;"	e	enum:color
+LOG	./lib/libc.h	61;"	d
+MAGENTA	./lib/libc.h	/^	MAGENTA = 0x5,$/;"	e	enum:color
+MAX_ARGS	./lib/libc.c	129;"	d	file:
+MODULE	./init/subsys.mk	/^MODULE := init$/;"	m
+MODULE	./lib/subsys.mk	/^MODULE := lib$/;"	m
+MODULES	./Makefile	/^MODULES         := init lib$/;"	m
+MULTIBOOT2_BOOTLOADER_MAGIC	./lib/multiboot2.h	33;"	d
+MULTIBOOT2_HEADER_MAGIC	./lib/multiboot2.h	30;"	d
+MULTIBOOT_ARCHITECTURE_I386	./lib/multiboot2.h	73;"	d
+MULTIBOOT_ARCHITECTURE_MIPS32	./lib/multiboot2.h	74;"	d
+MULTIBOOT_CONSOLE_FLAGS_CONSOLE_REQUIRED	./lib/multiboot2.h	77;"	d
+MULTIBOOT_CONSOLE_FLAGS_EGA_TEXT_SUPPORTED	./lib/multiboot2.h	78;"	d
+MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT	./lib/multiboot2.h	266;"	d
+MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED	./lib/multiboot2.h	264;"	d
+MULTIBOOT_FRAMEBUFFER_TYPE_RGB	./lib/multiboot2.h	265;"	d
+MULTIBOOT_HEADER	./lib/multiboot2.h	23;"	d
+MULTIBOOT_HEADER_ALIGN	./lib/multiboot2.h	27;"	d
+MULTIBOOT_HEADER_TAG_ADDRESS	./lib/multiboot2.h	66;"	d
+MULTIBOOT_HEADER_TAG_CONSOLE_FLAGS	./lib/multiboot2.h	68;"	d
+MULTIBOOT_HEADER_TAG_EFI_BS	./lib/multiboot2.h	71;"	d
+MULTIBOOT_HEADER_TAG_END	./lib/multiboot2.h	64;"	d
+MULTIBOOT_HEADER_TAG_ENTRY_ADDRESS	./lib/multiboot2.h	67;"	d
+MULTIBOOT_HEADER_TAG_FRAMEBUFFER	./lib/multiboot2.h	69;"	d
+MULTIBOOT_HEADER_TAG_INFORMATION_REQUEST	./lib/multiboot2.h	65;"	d
+MULTIBOOT_HEADER_TAG_MODULE_ALIGN	./lib/multiboot2.h	70;"	d
+MULTIBOOT_HEADER_TAG_OPTIONAL	./lib/multiboot2.h	75;"	d
+MULTIBOOT_INFO_ALIGN	./lib/multiboot2.h	39;"	d
+MULTIBOOT_MEMORY_ACPI_RECLAIMABLE	./lib/multiboot2.h	174;"	d
+MULTIBOOT_MEMORY_AVAILABLE	./lib/multiboot2.h	172;"	d
+MULTIBOOT_MEMORY_BADRAM	./lib/multiboot2.h	176;"	d
+MULTIBOOT_MEMORY_NVS	./lib/multiboot2.h	175;"	d
+MULTIBOOT_MEMORY_RESERVED	./lib/multiboot2.h	173;"	d
+MULTIBOOT_MOD_ALIGN	./lib/multiboot2.h	36;"	d
+MULTIBOOT_SEARCH	./lib/multiboot2.h	26;"	d
+MULTIBOOT_TAG_ALIGN	./lib/multiboot2.h	43;"	d
+MULTIBOOT_TAG_TYPE_ACPI_NEW	./lib/multiboot2.h	59;"	d
+MULTIBOOT_TAG_TYPE_ACPI_OLD	./lib/multiboot2.h	58;"	d
+MULTIBOOT_TAG_TYPE_APM	./lib/multiboot2.h	54;"	d
+MULTIBOOT_TAG_TYPE_BASIC_MEMINFO	./lib/multiboot2.h	48;"	d
+MULTIBOOT_TAG_TYPE_BOOTDEV	./lib/multiboot2.h	49;"	d
+MULTIBOOT_TAG_TYPE_BOOT_LOADER_NAME	./lib/multiboot2.h	46;"	d
+MULTIBOOT_TAG_TYPE_CMDLINE	./lib/multiboot2.h	45;"	d
+MULTIBOOT_TAG_TYPE_EFI32	./lib/multiboot2.h	55;"	d
+MULTIBOOT_TAG_TYPE_EFI64	./lib/multiboot2.h	56;"	d
+MULTIBOOT_TAG_TYPE_EFI_BS	./lib/multiboot2.h	62;"	d
+MULTIBOOT_TAG_TYPE_EFI_MMAP	./lib/multiboot2.h	61;"	d
+MULTIBOOT_TAG_TYPE_ELF_SECTIONS	./lib/multiboot2.h	53;"	d
+MULTIBOOT_TAG_TYPE_END	./lib/multiboot2.h	44;"	d
+MULTIBOOT_TAG_TYPE_FRAMEBUFFER	./lib/multiboot2.h	52;"	d
+MULTIBOOT_TAG_TYPE_MMAP	./lib/multiboot2.h	50;"	d
+MULTIBOOT_TAG_TYPE_MODULE	./lib/multiboot2.h	47;"	d
+MULTIBOOT_TAG_TYPE_NETWORK	./lib/multiboot2.h	60;"	d
+MULTIBOOT_TAG_TYPE_SMBIOS	./lib/multiboot2.h	57;"	d
+MULTIBOOT_TAG_TYPE_VBE	./lib/multiboot2.h	51;"	d
+NULL	./lib/libc.h	7;"	d
+OBJS	./Makefile	/^OBJS    := $(patsubst %.asm,%.o,$(filter %.asm,$(SRC))) \\$/;"	m
+PDPT	./init/boot.asm	/^PDPT:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PDPE$/;"	l
+PDT	./init/boot.asm	/^PDT:	resb (PAGE_ENTRY_SIZE * NUM_PDE * NUM_PDPE * NUM_PML4E)	; 512 PDE$/;"	l
+PML4T	./init/boot.asm	/^PML4T:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PML4E$/;"	l
+RED	./lib/libc.h	/^	RED = 0x4,$/;"	e	enum:color
+SRC	./Makefile	/^SRC             := main.c$/;"	m
+VGA_ADDRESS	./lib/libc.c	60;"	d	file:
+WHITE	./lib/libc.h	/^	WHITE = 0XF,$/;"	e	enum:color
+YELLOW	./lib/libc.h	/^	YELLOW = 0XE,$/;"	e	enum:color
+_pause	./lib/libc.c	/^void _pause(void)$/;"	f
+addr	./lib/multiboot2.h	/^  multiboot_uint64_t addr;$/;"	m	struct:multiboot_mmap_entry
+architecture	./lib/multiboot2.h	/^  multiboot_uint32_t architecture;$/;"	m	struct:multiboot_header
+biosdev	./lib/multiboot2.h	/^  multiboot_uint32_t biosdev;$/;"	m	struct:multiboot_tag_bootdev
+blue	./lib/multiboot2.h	/^  multiboot_uint8_t blue;$/;"	m	struct:multiboot_color
+bss_end_addr	./lib/multiboot2.h	/^  multiboot_uint32_t bss_end_addr;$/;"	m	struct:multiboot_header_tag_address
+check_cpuid	./init/boot.asm	/^check_cpuid:$/;"	l
+check_gbyte_paging	./init/boot.asm	/^check_gbyte_paging:$/;"	l
+check_long_mode	./init/boot.asm	/^check_long_mode:$/;"	l
+check_multiboot	./init/boot.asm	/^check_multiboot:$/;"	l
+checksum	./lib/multiboot2.h	/^  multiboot_uint32_t checksum;$/;"	m	struct:multiboot_header
+clear_screen	./lib/libc.c	/^void clear_screen()$/;"	f
+cmdline	./lib/multiboot2.h	/^  char cmdline[0];$/;"	m	struct:multiboot_tag_module
+color	./lib/libc.h	/^enum color {$/;"	g
+common	./lib/multiboot2.h	/^  struct multiboot_tag_framebuffer_common common;$/;"	m	struct:multiboot_tag_framebuffer	typeref:struct:multiboot_tag_framebuffer::multiboot_tag_framebuffer_common
+console_flags	./lib/multiboot2.h	/^  multiboot_uint32_t console_flags;$/;"	m	struct:multiboot_header_tag_console_flags
+cseg	./lib/multiboot2.h	/^  multiboot_uint16_t cseg;$/;"	m	struct:multiboot_tag_apm
+cseg_16	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_16;$/;"	m	struct:multiboot_tag_apm
+cseg_16_len	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_16_len;$/;"	m	struct:multiboot_tag_apm
+cseg_len	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_len;$/;"	m	struct:multiboot_tag_apm
+depth	./lib/multiboot2.h	/^  multiboot_uint32_t depth;$/;"	m	struct:multiboot_header_tag_framebuffer
+descr_size	./lib/multiboot2.h	/^  multiboot_uint32_t descr_size;$/;"	m	struct:multiboot_tag_efi_mmap
+descr_vers	./lib/multiboot2.h	/^  multiboot_uint32_t descr_vers;$/;"	m	struct:multiboot_tag_efi_mmap
+dhcpack	./lib/multiboot2.h	/^  multiboot_uint8_t dhcpack[0];$/;"	m	struct:multiboot_tag_network
+dseg	./lib/multiboot2.h	/^  multiboot_uint16_t dseg;$/;"	m	struct:multiboot_tag_apm
+dseg_len	./lib/multiboot2.h	/^  multiboot_uint16_t dseg_len;$/;"	m	struct:multiboot_tag_apm
+efi_mmap	./lib/multiboot2.h	/^  multiboot_uint8_t efi_mmap[0];$/;"	m	struct:multiboot_tag_efi_mmap
+enable_paging	./init/boot.asm	/^enable_paging:$/;"	l
+entries	./lib/multiboot2.h	/^  struct multiboot_mmap_entry entries[0];$/;"	m	struct:multiboot_tag_mmap	typeref:struct:multiboot_tag_mmap::multiboot_mmap_entry
+entry_addr	./lib/multiboot2.h	/^  multiboot_uint32_t entry_addr;$/;"	m	struct:multiboot_header_tag_entry_address
+entry_size	./lib/multiboot2.h	/^  multiboot_uint32_t entry_size;$/;"	m	struct:multiboot_tag_mmap
+entry_version	./lib/multiboot2.h	/^  multiboot_uint32_t entry_version;$/;"	m	struct:multiboot_tag_mmap
+entsize	./lib/multiboot2.h	/^  multiboot_uint32_t entsize;$/;"	m	struct:multiboot_tag_elf_sections
+error	./init/boot.asm	/^error:$/;"	l
+extern	./init/boot.asm	/^extern main$/;"	l
+external_specification	./lib/multiboot2.h	/^  multiboot_uint8_t external_specification[256];$/;"	m	struct:multiboot_vbe_mode_info_block
+external_specification	./lib/multiboot2.h	/^  multiboot_uint8_t external_specification[512];$/;"	m	struct:multiboot_vbe_info_block
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_address
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_console_flags
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_entry_address
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_framebuffer
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_information_request
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_module_align
+flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_tag_apm
+framebuffer_addr	./lib/multiboot2.h	/^  multiboot_uint64_t framebuffer_addr;$/;"	m	struct:multiboot_tag_framebuffer_common
+framebuffer_blue_field_position	./lib/multiboot2.h	/^      multiboot_uint8_t framebuffer_blue_field_position;$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon3
+framebuffer_blue_mask_size	./lib/multiboot2.h	/^      multiboot_uint8_t framebuffer_blue_mask_size;$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon3
+framebuffer_bpp	./lib/multiboot2.h	/^  multiboot_uint8_t framebuffer_bpp;$/;"	m	struct:multiboot_tag_framebuffer_common
+framebuffer_green_field_position	./lib/multiboot2.h	/^      multiboot_uint8_t framebuffer_green_field_position;$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon3
+framebuffer_green_mask_size	./lib/multiboot2.h	/^      multiboot_uint8_t framebuffer_green_mask_size;$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon3
+framebuffer_height	./lib/multiboot2.h	/^  multiboot_uint32_t framebuffer_height;$/;"	m	struct:multiboot_tag_framebuffer_common
+framebuffer_palette	./lib/multiboot2.h	/^      struct multiboot_color framebuffer_palette[0];$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon2	typeref:struct:multiboot_tag_framebuffer::__anon1::__anon2::multiboot_color
+framebuffer_palette_num_colors	./lib/multiboot2.h	/^      multiboot_uint16_t framebuffer_palette_num_colors;$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon2
+framebuffer_pitch	./lib/multiboot2.h	/^  multiboot_uint32_t framebuffer_pitch;$/;"	m	struct:multiboot_tag_framebuffer_common
+framebuffer_red_field_position	./lib/multiboot2.h	/^      multiboot_uint8_t framebuffer_red_field_position;$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon3
+framebuffer_red_mask_size	./lib/multiboot2.h	/^      multiboot_uint8_t framebuffer_red_mask_size;$/;"	m	struct:multiboot_tag_framebuffer::__anon1::__anon3
+framebuffer_type	./lib/multiboot2.h	/^  multiboot_uint8_t framebuffer_type;$/;"	m	struct:multiboot_tag_framebuffer_common
+framebuffer_width	./lib/multiboot2.h	/^  multiboot_uint32_t framebuffer_width;$/;"	m	struct:multiboot_tag_framebuffer_common
+gdt64	./init/boot.asm	/^gdt64:                               ; Global Descriptor Table (64-bit).$/;"	l
+global	./init/boot.asm	/^global start$/;"	l
+green	./lib/multiboot2.h	/^  multiboot_uint8_t green;$/;"	m	struct:multiboot_color
+header_addr	./lib/multiboot2.h	/^  multiboot_uint32_t header_addr;$/;"	m	struct:multiboot_header_tag_address
+header_end	./init/multiboot_header.asm	/^header_end:$/;"	l
+header_length	./lib/multiboot2.h	/^  multiboot_uint32_t header_length;$/;"	m	struct:multiboot_header
+header_start	./init/multiboot_header.asm	/^header_start:$/;"	l
+height	./lib/multiboot2.h	/^  multiboot_uint32_t height;$/;"	m	struct:multiboot_header_tag_framebuffer
+inb	./lib/libc.c	/^inline uint8_t inb(uint16_t port)$/;"	f
+ind	./lib/libc.c	/^inline uint32_t ind(uint16_t port)$/;"	f
+int16_t	./lib/stdint.h	/^typedef signed short int16_t;$/;"	t
+int32_t	./lib/stdint.h	/^typedef signed int int32_t;$/;"	t
+int64_t	./lib/stdint.h	/^typedef signed long long int64_t;$/;"	t
+int8_t	./lib/stdint.h	/^typedef signed char int8_t;$/;"	t
+intptr_t	./lib/stdint.h	/^typedef int64_t intptr_t;$/;"	t
+io_wait	./lib/libc.c	/^inline void io_wait(void)$/;"	f
+itoa	./lib/libc.c	/^void itoa(char *buf, int base, int64_t n)$/;"	f
+kprint	./lib/libc.c	/^void kprint(char *str)$/;"	f
+kprintf	./lib/libc.c	/^void kprintf(const char *fmt, ...)$/;"	f
+len	./lib/multiboot2.h	/^  multiboot_uint64_t len;$/;"	m	struct:multiboot_mmap_entry
+load_addr	./lib/multiboot2.h	/^  multiboot_uint32_t load_addr;$/;"	m	struct:multiboot_header_tag_address
+load_end_addr	./lib/multiboot2.h	/^  multiboot_uint32_t load_end_addr;$/;"	m	struct:multiboot_header_tag_address
+long_mode_start	./init/boot.asm	/^long_mode_start:$/;"	l
+magic	./lib/multiboot2.h	/^  multiboot_uint32_t magic;$/;"	m	struct:multiboot_header
+main	./main.c	/^int main(unsigned long mb_info_struct_addr)$/;"	f
+major	./lib/multiboot2.h	/^  multiboot_uint8_t major;$/;"	m	struct:multiboot_tag_smbios
+mem_lower	./lib/multiboot2.h	/^  multiboot_uint32_t mem_lower;$/;"	m	struct:multiboot_tag_basic_meminfo
+mem_upper	./lib/multiboot2.h	/^  multiboot_uint32_t mem_upper;$/;"	m	struct:multiboot_tag_basic_meminfo
+memcmp	./lib/libc.c	/^uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n)$/;"	f
+memcmp2	./lib/libc.c	/^uint8_t memcmp2(const void *s1, const void *s2, uint64_t n)$/;"	f
+memcpy	./lib/libc.c	/^void *memcpy(void *dst, void *src, uint64_t count)$/;"	f
+memset	./lib/libc.c	/^void memset(uint8_t *s, uint8_t c, uint64_t n)$/;"	f
+minor	./lib/multiboot2.h	/^  multiboot_uint8_t minor;$/;"	m	struct:multiboot_tag_smbios
+mod_end	./lib/multiboot2.h	/^  multiboot_uint32_t mod_end;$/;"	m	struct:multiboot_tag_module
+mod_start	./lib/multiboot2.h	/^  multiboot_uint32_t mod_start;$/;"	m	struct:multiboot_tag_module
+multiboot_arch	./init/multiboot_header.asm	/^	multiboot_arch		dd MULTIBOOT_ARCHITECTURE_I386$/;"	d
+multiboot_color	./lib/multiboot2.h	/^struct multiboot_color$/;"	s
+multiboot_header	./lib/multiboot2.h	/^struct multiboot_header$/;"	s
+multiboot_header_chksm	./init/multiboot_header.asm	/^	multiboot_header_chksm	dd 0x100000000 - (MULTIBOOT2_HEADER_MAGIC \\$/;"	d
+multiboot_header_len	./init/multiboot_header.asm	/^	multiboot_header_len	dd header_end - header_start$/;"	d
+multiboot_header_tag	./lib/multiboot2.h	/^struct multiboot_header_tag$/;"	s
+multiboot_header_tag_address	./lib/multiboot2.h	/^struct multiboot_header_tag_address$/;"	s
+multiboot_header_tag_console_flags	./lib/multiboot2.h	/^struct multiboot_header_tag_console_flags$/;"	s
+multiboot_header_tag_entry_address	./lib/multiboot2.h	/^struct multiboot_header_tag_entry_address$/;"	s
+multiboot_header_tag_framebuffer	./lib/multiboot2.h	/^struct multiboot_header_tag_framebuffer$/;"	s
+multiboot_header_tag_information_request	./lib/multiboot2.h	/^struct multiboot_header_tag_information_request$/;"	s
+multiboot_header_tag_module_align	./lib/multiboot2.h	/^struct multiboot_header_tag_module_align$/;"	s
+multiboot_magic	./init/multiboot_header.asm	/^	multiboot_magic 	dd MULTIBOOT2_HEADER_MAGIC$/;"	d
+multiboot_memory_map_t	./lib/multiboot2.h	/^typedef struct multiboot_mmap_entry multiboot_memory_map_t;$/;"	t	typeref:struct:multiboot_mmap_entry
+multiboot_mmap_entry	./lib/multiboot2.h	/^struct multiboot_mmap_entry$/;"	s
+multiboot_tag	./lib/multiboot2.h	/^struct multiboot_tag$/;"	s
+multiboot_tag_apm	./lib/multiboot2.h	/^struct multiboot_tag_apm$/;"	s
+multiboot_tag_basic_meminfo	./lib/multiboot2.h	/^struct multiboot_tag_basic_meminfo$/;"	s
+multiboot_tag_bootdev	./lib/multiboot2.h	/^struct multiboot_tag_bootdev$/;"	s
+multiboot_tag_efi32	./lib/multiboot2.h	/^struct multiboot_tag_efi32$/;"	s
+multiboot_tag_efi64	./lib/multiboot2.h	/^struct multiboot_tag_efi64$/;"	s
+multiboot_tag_efi_mmap	./lib/multiboot2.h	/^struct multiboot_tag_efi_mmap$/;"	s
+multiboot_tag_elf_sections	./lib/multiboot2.h	/^struct multiboot_tag_elf_sections$/;"	s
+multiboot_tag_framebuffer	./lib/multiboot2.h	/^struct multiboot_tag_framebuffer$/;"	s
+multiboot_tag_framebuffer_common	./lib/multiboot2.h	/^struct multiboot_tag_framebuffer_common$/;"	s
+multiboot_tag_mmap	./lib/multiboot2.h	/^struct multiboot_tag_mmap$/;"	s
+multiboot_tag_module	./lib/multiboot2.h	/^struct multiboot_tag_module$/;"	s
+multiboot_tag_network	./lib/multiboot2.h	/^struct multiboot_tag_network$/;"	s
+multiboot_tag_new_acpi	./lib/multiboot2.h	/^struct multiboot_tag_new_acpi$/;"	s
+multiboot_tag_old_acpi	./lib/multiboot2.h	/^struct multiboot_tag_old_acpi$/;"	s
+multiboot_tag_smbios	./lib/multiboot2.h	/^struct multiboot_tag_smbios$/;"	s
+multiboot_tag_string	./lib/multiboot2.h	/^struct multiboot_tag_string$/;"	s
+multiboot_tag_vbe	./lib/multiboot2.h	/^struct multiboot_tag_vbe$/;"	s
+multiboot_uint16_t	./lib/multiboot2.h	/^typedef unsigned short		multiboot_uint16_t;$/;"	t
+multiboot_uint32_t	./lib/multiboot2.h	/^typedef unsigned int		multiboot_uint32_t;$/;"	t
+multiboot_uint64_t	./lib/multiboot2.h	/^typedef unsigned long long	multiboot_uint64_t;$/;"	t
+multiboot_uint8_t	./lib/multiboot2.h	/^typedef unsigned char		multiboot_uint8_t;$/;"	t
+multiboot_vbe_info_block	./lib/multiboot2.h	/^struct multiboot_vbe_info_block$/;"	s
+multiboot_vbe_mode_info_block	./lib/multiboot2.h	/^struct multiboot_vbe_mode_info_block$/;"	s
+num	./lib/multiboot2.h	/^  multiboot_uint32_t num;$/;"	m	struct:multiboot_tag_elf_sections
+offset	./lib/multiboot2.h	/^  multiboot_uint32_t offset;$/;"	m	struct:multiboot_tag_apm
+outb	./lib/libc.c	/^inline void outb(uint16_t port, uint8_t val)$/;"	f
+outd	./lib/libc.c	/^inline void outd(uint16_t port, uint32_t val)$/;"	f
+part	./lib/multiboot2.h	/^  multiboot_uint32_t part;$/;"	m	struct:multiboot_tag_bootdev
+pointer	./lib/multiboot2.h	/^  multiboot_uint32_t pointer;$/;"	m	struct:multiboot_tag_efi32
+pointer	./lib/multiboot2.h	/^  multiboot_uint64_t pointer;$/;"	m	struct:multiboot_tag_efi64
+red	./lib/multiboot2.h	/^  multiboot_uint8_t red;$/;"	m	struct:multiboot_color
+requests	./lib/multiboot2.h	/^  multiboot_uint32_t requests[0];$/;"	m	struct:multiboot_header_tag_information_request
+reserved	./lib/multiboot2.h	/^  multiboot_uint16_t reserved;$/;"	m	struct:multiboot_tag_framebuffer_common
+reserved	./lib/multiboot2.h	/^  multiboot_uint8_t reserved[6];$/;"	m	struct:multiboot_tag_smbios
+rsdp	./lib/multiboot2.h	/^  multiboot_uint8_t rsdp[0];$/;"	m	struct:multiboot_tag_new_acpi
+rsdp	./lib/multiboot2.h	/^  multiboot_uint8_t rsdp[0];$/;"	m	struct:multiboot_tag_old_acpi
+section	./init/boot.asm	/^section .bss$/;"	l
+section	./init/boot.asm	/^section .ro_data$/;"	l
+section	./init/boot.asm	/^section .text$/;"	l
+section	./init/multiboot_header.asm	/^section .multiboot_header$/;"	l
+sections	./lib/multiboot2.h	/^  char sections[0];$/;"	m	struct:multiboot_tag_elf_sections
+set_color	./lib/libc.c	/^void set_color(uint8_t foreground, uint8_t background)$/;"	f
+setup_page_tables	./init/boot.asm	/^setup_page_tables:$/;"	l
+shndx	./lib/multiboot2.h	/^  multiboot_uint32_t shndx;$/;"	m	struct:multiboot_tag_elf_sections
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_address
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_console_flags
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_entry_address
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_framebuffer
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_information_request
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_module_align
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_apm
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_basic_meminfo
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_bootdev
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_efi32
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_efi64
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_efi_mmap
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_elf_sections
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_framebuffer_common
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_mmap
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_module
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_network
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_new_acpi
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_old_acpi
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_smbios
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_string
+size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_vbe
+slice	./lib/multiboot2.h	/^  multiboot_uint32_t slice;$/;"	m	struct:multiboot_tag_bootdev
+stack_bottom	./init/boot.asm	/^stack_bottom:$/;"	l
+stack_top	./init/boot.asm	/^stack_top:$/;"	l
+start	./init/boot.asm	/^start:$/;"	l
+string	./lib/multiboot2.h	/^  char string[0];$/;"	m	struct:multiboot_tag_string
+tables	./lib/multiboot2.h	/^  multiboot_uint8_t tables[0];$/;"	m	struct:multiboot_tag_smbios
+type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag
+type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_address
+type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_console_flags
+type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_entry_address
+type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_framebuffer
+type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_information_request
+type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_module_align
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_mmap_entry
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_apm
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_basic_meminfo
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_bootdev
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_efi32
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_efi64
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_efi_mmap
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_elf_sections
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_framebuffer_common
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_mmap
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_module
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_network
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_new_acpi
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_old_acpi
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_smbios
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_string
+type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_vbe
+uint16_t	./lib/stdint.h	/^typedef unsigned short uint16_t;$/;"	t
+uint32_t	./lib/stdint.h	/^typedef unsigned int uint32_t;$/;"	t
+uint64_t	./lib/stdint.h	/^typedef unsigned long long uint64_t;$/;"	t
+uint8_t	./lib/stdint.h	/^typedef unsigned char uint8_t;$/;"	t
+uintptr_t	./lib/stdint.h	/^typedef uint64_t uintptr_t;$/;"	t
+update_cursor	./lib/libc.c	/^void update_cursor(int row, int col)$/;"	f
+vbe_control_info	./lib/multiboot2.h	/^  struct multiboot_vbe_info_block vbe_control_info;$/;"	m	struct:multiboot_tag_vbe	typeref:struct:multiboot_tag_vbe::multiboot_vbe_info_block
+vbe_interface_len	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_interface_len;$/;"	m	struct:multiboot_tag_vbe
+vbe_interface_off	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_interface_off;$/;"	m	struct:multiboot_tag_vbe
+vbe_interface_seg	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_interface_seg;$/;"	m	struct:multiboot_tag_vbe
+vbe_mode	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_mode;$/;"	m	struct:multiboot_tag_vbe
+vbe_mode_info	./lib/multiboot2.h	/^  struct multiboot_vbe_mode_info_block vbe_mode_info;$/;"	m	struct:multiboot_tag_vbe	typeref:struct:multiboot_tag_vbe::multiboot_vbe_mode_info_block
+version	./lib/multiboot2.h	/^  multiboot_uint16_t version;$/;"	m	struct:multiboot_tag_apm
+vga_attrib	./lib/libc.c	/^static uint8_t vga_attrib = (LIGHT_CYAN)|(BLACK << 4);$/;"	v	file:
+vga_buffer	./lib/libc.c	/^static uint8_t *vga_buffer = (uint8_t*)VGA_ADDRESS;$/;"	v	file:
+vga_buffer_x	./lib/libc.c	/^static uint8_t vga_buffer_x = 0x00;$/;"	v	file:
+vga_buffer_y	./lib/libc.c	/^static uint8_t vga_buffer_y = 0x00;$/;"	v	file:
+width	./lib/multiboot2.h	/^  multiboot_uint32_t width;$/;"	m	struct:multiboot_header_tag_framebuffer
+write_char	./lib/libc.c	/^void write_char(uint8_t c)$/;"	f
+zero	./lib/multiboot2.h	/^  multiboot_uint32_t zero;$/;"	m	struct:multiboot_mmap_entry
