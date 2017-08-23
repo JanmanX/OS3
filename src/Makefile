@@ -12,7 +12,7 @@ LDSCRIPT        = ./linker.ld
 LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000
 
 
-MODULES         := init lib
+MODULES         := init lib drivers mem
 INC             = -I. -I./include -I./lib
 SRC             := main.c
 

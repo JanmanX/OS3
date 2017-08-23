@@ -1,3 +1,6 @@
 os.iso
 *.o
 *.map
+*.bin
+*.ini
+*.swp
