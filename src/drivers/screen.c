@@ -1,25 +1,12 @@
 #include "screen.h"
 #include <stdint.h>
 #include <multiboot2.h>
+#include "font.h"
+#include <types.h>
 
 
 uint8_t screen_init(struct multiboot_tag_framebuffer* mb_fb)
 {
-
-
-	uint32_t *a = (uint32_t*)0xA0000;
-
-a[0] = 0xFF00FF00;
-a[1] = 0xFF00FF00;
-a[2] = 0xFF00FF00;
-a[3] = 0xFF00FF00;
-a[4] = 0xFFFFFFFF;
-a[5] = 0xFFFF0000;
-a[6] = 0xFFFF0000;
-
-
-
-
 	if(mb_fb->common.framebuffer_type != MULTIBOOT_FRAMEBUFFER_TYPE_RGB) {
 		/* TODO: Log and fail*/
 		return 1;
@@ -30,33 +17,10 @@ a[6] = 0xFFFF0000;
 	bpp = mb_fb->common.framebuffer_bpp;
 	buffer = (uint32_t*)(uint32_t)mb_fb->common.framebuffer_addr;
 
-
-	if(buffer == a) {
-a[10] = 0xFF00FF00;
-a[11] = 0xFF00FF00;
-a[12] = 0xFF00FF00;
-a[13] = 0xFF00FF00;
-a[14] = 0xFFFFFFFF;
-a[15] = 0xFFFF0000;
-a[16] = 0xFFFF0000;
-	}
-
-
-
-
-
-	put_pixel(0,0, 0xFF00FF00);
-put_pixel(1,1, 0xFFFFFF00);
-put_pixel(1,0, 0xFFFFFF00);
-put_pixel(0,1, 0xFFFFFF00);
-put_pixel(100,0, 0xFF00FF00);
-put_pixel(100,1, 0xFFFFFF00);
-
-
 }
 
 
-static void put_pixel(uint32_t x, uint32_t y, uint32_t argb)
+void screen_put_pixel(uint32_t x, uint32_t y, uint32_t argb)
 {
 	uint32_t location = x + (y * width);
 
@@ -66,6 +30,50 @@ static void put_pixel(uint32_t x, uint32_t y, uint32_t argb)
 		return;
 	}
 
-	//buffer[location] = argb;
+	buffer[location] = argb;
 }
 
+void screen_put_char(unsigned char c, uint32_t x, uint32_t y,
+		     uint32_t foreground, uint32_t background)
+{
+	/* Get the index of the character in the font bitmap */
+	uint8_t *bitmap = font.Bitmap + (uint64_t)(c * font.Height);
+
+	/* Bitmask */
+	int mask[8]={128, 64, 32, 16, 8, 4, 2, 1};
+
+	/* iterators */
+	uint32_t cx, cy;
+
+	for(cy = 0; cy < font.Height; cy++) {
+		for(cx = 0; cx < font.Width; cx++) {
+			if(bitmap[cy] & mask[cx]) {
+				screen_put_pixel(x+cx, y+cy, foreground);
+			} else {
+				screen_put_pixel(x+cx, y+cy, background);
+			}
+		}
+	}
+}
+
+void screen_clear()
+{
+	if(buffer == NULL) {
+		return;
+	}
+
+	uint32_t i;
+	for(i = 0; i < width * height; i++) {
+		buffer[i] = 0x00000000;
+	}
+}
+
+uint32_t screen_get_width()
+{
+	return width;
+}
+
+uint32_t screen_get_height()
+{
+	return height;
+}

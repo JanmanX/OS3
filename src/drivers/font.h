@@ -1,4 +1,4 @@
-// (c) 2009, 2010 Lutz Sammer, License: AGPLv3
+#pragma once
 
 	/// bitmap font structure
 struct bitmap_font {
@@ -9,6 +9,8 @@ struct bitmap_font {
 	const unsigned short *Index;	///< encoding to character index
 	const unsigned char *Bitmap;	///< bitmap of all characters
 };
+
+extern const struct bitmap_font font;
 
 	/// @{ defines to have human readable font files
 #define ________ 0x00
