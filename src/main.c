@@ -1,13 +1,13 @@
 #include <libc.h>
 #include <multiboot2.h>
+#include <drivers/screen.h>
+#include <mem/mem.h>
 
 
 int main(unsigned long mb_info_struct_addr)
 {
-	uint8_t *a = (uint8_t*)0xA0000;
-
-
-
+	/* Install identity-pages */
+	paging_init();
 
 
 	uint32_t mb_info_size = *(uint32_t*)mb_info_struct_addr;
@@ -106,9 +106,9 @@ int main(unsigned long mb_info_struct_addr)
 		case MULTIBOOT_TAG_TYPE_FRAMEBUFFER: {
 			struct multiboot_tag_framebuffer *tag_fb
 				= (struct multiboot_tag_framebuffer *) tag;
-			kprintf("Framebuffer: 0x%x, type: 0x%x\n",
-				tag_fb->common.framebuffer_addr,
-			       	tag_fb->common.framebuffer_type);
+
+			screen_init(tag_fb);
+
 			break;
 		}
 		}
@@ -117,5 +117,8 @@ int main(unsigned long mb_info_struct_addr)
 
 
 	asm __volatile__("hlt");
+	for(;;) {
+	}
+
 	return 0;
 }
