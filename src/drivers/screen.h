@@ -9,16 +9,7 @@
 #define COLOR_GREEN	0x0000FF00
 #define COLOR_BLUE	0x000000FF
 
-
-
-static uint32_t *buffer;
-static uint32_t width;
-static uint32_t height;
-static uint8_t bpp;
-
-static uint32_t *position;
-
-uint8_t screen_init(struct multiboot_tag_framebuffer* mb_fb);
+uint8_t screen_init();
 void screen_put_pixel(uint32_t x, uint32_t y, uint32_t argb);
 void screen_put_char(unsigned char c, uint32_t x, uint32_t y,
 		     uint32_t foreground, uint32_t background);
@@ -26,4 +17,4 @@ void screen_put_char(unsigned char c, uint32_t x, uint32_t y,
 void screen_clear();
 uint32_t screen_get_width();
 uint32_t screen_get_height();
-
+uint8_t screen_get_bpp();

@@ -1,12 +1,28 @@
 #include "screen.h"
 #include <stdint.h>
+#include <libc.h>
 #include <multiboot2.h>
+#include <multiboot_parser.h>
 #include "font.h"
-#include <types.h>
 
 
-uint8_t screen_init(struct multiboot_tag_framebuffer* mb_fb)
+static uint32_t *buffer = NULL;
+static uint32_t width = 0;
+static uint32_t height = 0;
+static uint8_t bpp = 0;
+
+uint8_t screen_init()
 {
+	/* Retrieve the multiboot tag from the parser */
+	struct multiboot_tag_framebuffer *mb_fb =
+		multiboot_parser_get_tag(MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
+
+	/* Return if no tag found */
+	if(mb_fb == NULL)
+	{
+		return -1;
+	}
+
 	if(mb_fb->common.framebuffer_type != MULTIBOOT_FRAMEBUFFER_TYPE_RGB) {
 		/* TODO: Log and fail*/
 		return 1;
@@ -22,6 +38,12 @@ uint8_t screen_init(struct multiboot_tag_framebuffer* mb_fb)
 
 void screen_put_pixel(uint32_t x, uint32_t y, uint32_t argb)
 {
+	/* Check screen is initialized */
+	if(buffer == NULL) {
+		return;
+	}
+
+	/* Calculate the target offset */
 	uint32_t location = x + (y * width);
 
 	/* Check overflow */
@@ -30,50 +52,60 @@ void screen_put_pixel(uint32_t x, uint32_t y, uint32_t argb)
 		return;
 	}
 
+	/* Write the pixel */
 	buffer[location] = argb;
 }
 
 void screen_put_char(unsigned char c, uint32_t x, uint32_t y,
 		     uint32_t foreground, uint32_t background)
 {
-	/* Get the index of the character in the font bitmap */
-	uint8_t *bitmap = font.Bitmap + (uint64_t)(c * font.Height);
+       /* Get the index of the character in the font bitmap */
+       uint8_t *bitmap = font.Bitmap + (uint64_t)(c * font.Height);
 
-	/* Bitmask */
-	int mask[8]={128, 64, 32, 16, 8, 4, 2, 1};
+       /* Bitmask */
+       int mask[8]={128, 64, 32, 16, 8, 4, 2, 1};
 
-	/* iterators */
-	uint32_t cx, cy;
+       /* iterators */
+       uint32_t cx, cy;
 
-	for(cy = 0; cy < font.Height; cy++) {
-		for(cx = 0; cx < font.Width; cx++) {
-			if(bitmap[cy] & mask[cx]) {
-				screen_put_pixel(x+cx, y+cy, foreground);
-			} else {
-				screen_put_pixel(x+cx, y+cy, background);
-			}
-		}
-	}
+       /* Iterate for each pixel-line in character */
+       for(cy = 0; cy < font.Height; cy++) {
+
+	       /* Iterate over each pixel */
+               for(cx = 0; cx < font.Width; cx++) {
+		       /* If pixel is on, draw it using foreground colour*/
+                       if(bitmap[cy] & mask[cx]) {
+                               screen_put_pixel(x+cx, y+cy, foreground);
+                       } else {
+                               screen_put_pixel(x+cx, y+cy, background);
+                       }
+               }
+       }
 }
 
 void screen_clear()
 {
-	if(buffer == NULL) {
-		return;
-	}
+       if(buffer == NULL) {
+               return;
+       }
 
-	uint32_t i;
-	for(i = 0; i < width * height; i++) {
-		buffer[i] = 0x00000000;
-	}
+       uint32_t i;
+       for(i = 0; i < width * height; i++) {
+               buffer[i] = 0x00000000;
+       }
 }
 
 uint32_t screen_get_width()
 {
-	return width;
+       return width;
 }
 
 uint32_t screen_get_height()
 {
-	return height;
+       return height;
+}
+
+uint8_t screen_get_bpp()
+{
+	return bpp;
 }

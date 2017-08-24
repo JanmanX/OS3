@@ -1,6 +1,6 @@
 #include "mem.h"
 #include <stdint.h>
-#include <lib/libc.h>
+#include <libc.h>
 
 
 static void paging_reload_pml4t(uint64_t pml4t_start_phys)

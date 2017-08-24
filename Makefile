@@ -36,3 +36,4 @@ tags:
 clean:
 	rm -fv bx_enh_dbg.ini
 	rm -fv $(TARGET)
+	make -C $(SRC) clean

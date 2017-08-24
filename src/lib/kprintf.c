@@ -23,7 +23,7 @@ void write_char(uint8_t c)
 		x = 0;
 	} else {
 		/* Write character at position x,y*/
-		screen_put_char(c, x, y, 0xFFFFFFFF, 0xFF000000);
+		screen_put_char(c, x, y, 0xFFFFFF88, 0xFF000000);
 
 		/* Move to next character*/
 		x += font.Width;
