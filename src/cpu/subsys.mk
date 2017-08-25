@@ -1,7 +1,7 @@
 
 # Set the module name
-MODULE := init
+MODULE := cpu
 
-FILES := boot.asm multiboot_header.asm
+FILES := gdt.c
 
 SRC += $(patsubst %, $(MODULE)/%, $(FILES))

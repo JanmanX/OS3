@@ -60,3 +60,5 @@ void gdt_install_descriptor(uint8_t num, uint32_t base, uint32_t limit,
 	gdt[num].flags = flags;
 	gdt[num].base2 = (uint8_t)((base >> 24) & 0xFF);
 }
+
+
