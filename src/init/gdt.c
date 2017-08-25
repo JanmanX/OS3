@@ -4,17 +4,17 @@
 #include <kprintf.h>
 
 /* The GDT */
-static gdt_entry_t gdt[GDT_MAX_DESCRIPTORS];
+static gdt_entry_t gdt[GDT_MAX_DESCRIPTORS] __attribute__ ((aligned (8)));;
 
 /* Pointer to GDT */
-static gdt_pointer_t gdt_ptr;
+static gdt_pointer_t gdt_ptr __attribute__ ((aligned (8)));;
 
-/* Number of entries in GDT */
-static uint32_t gdt_index = 0;
 
 void gdt_load(uint64_t new_gdt_ptr)
 {
-	asm volatile("lgdt (%%rax)" : : "a"((uint64_t)&new_gdt_ptr));
+	asm volatile("lgdt (%%rax)" : : "a"(new_gdt_ptr));
+
+	BOCHS_DEBUG;
 }
 
 void gdt_init()
@@ -24,8 +24,8 @@ void gdt_init()
 
 	/*		     num  base  limit     access  flags*/
 	gdt_install_descriptor(0, 0x00, 0x00000000, 0x00, 0x00); /* NULL Descriptor */
-	gdt_install_descriptor(1, 0x00, 0xFFFFFFFF, 0x9A, 0x10); /* KCODE Descriptor */
-	gdt_install_descriptor(2, 0x00, 0xFFFFFFFF, 0x92, 0x10); /* KDATA Descriptor */
+	gdt_install_descriptor(1, 0x00, 0x00000000, 0x9A, 0x2); /* KCODE Descriptor */
+	gdt_install_descriptor(2, 0x00, 0x00000000, 0x92, 0x2); /* KDATA Descriptor */
 
 
 
