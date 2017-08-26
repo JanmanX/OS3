@@ -12,9 +12,7 @@ void write_char(uint8_t c)
 {
 	/* Clear screen, if bottom of screen reached*/
 	if(y >= screen_get_height()) {
-		screen_clear();
-		x = 0;
-		y = 0;
+		clear_screen();
 	}
 
 	/* Handle newlines */
@@ -77,7 +75,7 @@ void kprintf(const char *fmt, ...)
 			goto string;
 
 		case 'c':
-			buf[0] = va_arg(args, char);
+			buf[0] = (char)va_arg(args, int);
 			buf[1] = (char)0;
 			s = buf;
 			goto string;
@@ -102,5 +100,9 @@ void kprintf(const char *fmt, ...)
 	va_end(args);
 }
 
-
+void clear_screen()
+{
+	screen_clear();
+	x = y = 0;
+}
 
