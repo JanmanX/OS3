@@ -4,3 +4,7 @@ os.iso
 *.bin
 *.ini
 *.swp
+*tags
+*.objdump
+
+notes/*

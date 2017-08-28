@@ -15,15 +15,6 @@ uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n);
 void memset(uint8_t *s, uint8_t c, uint64_t n);
 
 
-/* DEBUG FUNCTIONS
- * Should not be used in production */
-#define BOCHS_DEBUG do {\
-			asm volatile("xchg %bx, %bx");\
-		} while(0);
-
-
-#define HALT asm volatile("hlt")
-
 #define LOG(m) kprintf("[LOG %s():%d]: %s\n", __func__, __LINE__, m)
 
 #define DEBUG(m) kprintf("[DEBUG %s():%d]: %s\n", __func__, __LINE__, m)
@@ -31,6 +22,18 @@ void memset(uint8_t *s, uint8_t c, uint64_t n);
 		kprintf("[ERROR %s():%d]: %s\n", __func__, __LINE__, m);\
 		HALT;\
 		} while(0);
+
+/* Assembly instructions */
+#define CLI asm volatile ("cli")
+#define STI asm volatile ("sti")
+#define HALT asm volatile("hlt")
+
+/* DEBUG FUNCTIONS
+* Should not be used in production */
+#define BOCHS_DEBUG do {\
+		       asm volatile("xchg %bx, %bx");\
+	       } while(0);
+
 
 
 #endif /* KLIB_H */

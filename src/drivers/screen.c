@@ -4,6 +4,8 @@
 #include <multiboot2.h>
 #include <multiboot_parser.h>
 #include "font.h"
+#include <errno.h>
+
 
 
 static uint32_t *buffer = NULL;
@@ -15,24 +17,27 @@ uint8_t screen_init()
 {
 	/* Retrieve the multiboot tag from the parser */
 	struct multiboot_tag_framebuffer *mb_fb =
+		(struct multiboot_tag_framebuffer*)
 		multiboot_parser_get_tag(MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
 
 	/* Return if no tag found */
 	if(mb_fb == NULL)
 	{
-		return -1;
+		return ENOENT;
 	}
 
 	if(mb_fb->common.framebuffer_type != MULTIBOOT_FRAMEBUFFER_TYPE_RGB) {
 		/* TODO: Log and fail*/
-		return 1;
+		return EBADF;
 	}
 
 	width = mb_fb->common.framebuffer_width;
 	height = mb_fb->common.framebuffer_height;
 	bpp = mb_fb->common.framebuffer_bpp;
-	buffer = (uint32_t*)(uint32_t)mb_fb->common.framebuffer_addr;
+	buffer = (uint32_t*)mb_fb->common.framebuffer_addr;
 
+	/* Return success */
+	return EOK;
 }
 
 
@@ -60,7 +65,7 @@ void screen_put_char(unsigned char c, uint32_t x, uint32_t y,
 		     uint32_t foreground, uint32_t background)
 {
        /* Get the index of the character in the font bitmap */
-       uint8_t *bitmap = font.Bitmap + (uint64_t)(c * font.Height);
+       const uint8_t *bitmap = font.Bitmap + (uint64_t)(c * font.Height);
 
        /* Bitmask */
        int mask[8]={128, 64, 32, 16, 8, 4, 2, 1};
@@ -85,10 +90,12 @@ void screen_put_char(unsigned char c, uint32_t x, uint32_t y,
 
 void screen_clear()
 {
+	/* Sanity check */
        if(buffer == NULL) {
                return;
        }
 
+       /* Zero out bytes from framebuffer */
        uint32_t i;
        for(i = 0; i < width * height; i++) {
                buffer[i] = 0x00000000;

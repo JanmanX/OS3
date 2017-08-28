@@ -1,7 +1,7 @@
 TARGET=os.iso
 
 QEMU=qemu-system-x86_64
-QEMU_FLAGS=-m 10G -s -vga std # -cpu host -enable-kvm
+QEMU_FLAGS=-m 6G -s -vga std # -cpu host -enable-kvm
 
 GRUB=grub2
 BOCHS=bochs
@@ -23,7 +23,7 @@ run: iso
 	$(QEMU) $(GRUB_KERNEL) $(QEMU_FLAGS) -cdrom  $(TARGET)
 
 debug: iso
-	$(QEMU) $(GRUB_KERNEL) $(QEMU_FLAGS) $(QEMU_DRIVE)  -S -cdrom  $(TARGET)
+	$(QEMU) $(GRUB_KERNEL) $(QEMU_FLAGS)  -S -cdrom  $(TARGET)
 
 
 

@@ -1,4 +1,6 @@
-	/// bitmap font structure
+#pragma once
+
+/// bitmap font structure
 struct bitmap_font {
 	unsigned char Width;		///< max. character width
 	unsigned char Height;		///< character height

@@ -9,7 +9,7 @@ static uint32_t mb_info_size = 0;
 void multiboot_parser_init(uint8_t* mb_info_struct_addr)
 {
 	/* Get the size */
-	uint32_t mb_info_size = *(uint32_t*)mb_info_struct_addr;
+	mb_info_size = *(uint32_t*)mb_info_struct_addr;
 
 	/* Get the pointer to the first tag */
 	mb_first_tag = (struct multiboot_tag *) (mb_info_struct_addr + 8);
@@ -124,6 +124,8 @@ struct multiboot_tag *multiboot_parser_get_tag(uint32_t tag)
 
 #endif
 
+	/* Nothing found */
+	return NULL;
 }
 
 

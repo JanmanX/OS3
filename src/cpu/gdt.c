@@ -3,6 +3,7 @@
 #include <libc.h>
 #include <kprintf.h>
 
+
 /* The GDT */
 static gdt_entry_t gdt[GDT_MAX_DESCRIPTORS] __attribute__ ((aligned (8)));;
 
@@ -13,20 +14,17 @@ static gdt_pointer_t gdt_ptr __attribute__ ((aligned (8)));;
 void gdt_load(uint64_t new_gdt_ptr)
 {
 	asm volatile("lgdt (%%rax)" : : "a"(new_gdt_ptr));
-
-	BOCHS_DEBUG;
 }
 
 void gdt_init()
 {
 	/* Clear out the descriptors */
-	memset(gdt, 0x00, GDT_MAX_DESCRIPTORS * sizeof(gdt_entry_t));
+	memset((uint8_t*)gdt, 0x00, GDT_MAX_DESCRIPTORS * sizeof(gdt_entry_t));
 
-	/*		     num  base  limit     access  flags*/
-	gdt_install_descriptor(0, 0x00, 0x00000000, 0x00, 0x00); /* NULL Descriptor */
-	gdt_install_descriptor(1, 0x00, 0x00000000, 0x9A, 0x2); /* KCODE Descriptor */
-	gdt_install_descriptor(2, 0x00, 0x00000000, 0x92, 0x2); /* KDATA Descriptor */
-
+	/*		       num       base  limit     access  flags*/
+	gdt_install_descriptor(GDT_NULL_INDEX, 0x00, 0x00000000, 0x00, 0x00); /* NULL Descriptor */
+	gdt_install_descriptor(GDT_KERNEL_CODE_INDEX, 0x00, 0x00000000, 0x9A, 0x2);
+	gdt_install_descriptor(GDT_KERNEL_DATA_INDEX, 0x00, 0x00000000, 0x92, 0x2);
 
 
 	/* Load the GDT */
@@ -60,5 +58,3 @@ void gdt_install_descriptor(uint8_t num, uint32_t base, uint32_t limit,
 	gdt[num].flags = flags;
 	gdt[num].base2 = (uint8_t)((base >> 24) & 0xFF);
 }
-
-

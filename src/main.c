@@ -3,12 +3,14 @@
 #include <multiboot2.h>
 #include <drivers/screen.h>
 #include <mem/mem.h>
-#include <init/gdt.h>
+#include <cpu/gdt.h>
+#include <cpu/idt.h>
+#include <cpu/interrupt.h>
 
-int main(unsigned long mb_info_struct_addr)
+int main(uint64_t mb_info_struct_addr)
 {
 	/* Initialize Multiboot info struct parser */
-	multiboot_parser_init(mb_info_struct_addr);
+	multiboot_parser_init((uint8_t*)mb_info_struct_addr);
 
 	/* Initialize screen */
 	screen_init();
@@ -19,9 +21,11 @@ int main(unsigned long mb_info_struct_addr)
 	/* Initialize GDT */
 	gdt_init();
 
+	/* Initialize Interrupts */
+	interrupt_init();
 
 	/* Done initializing */
-	kprintf("DONE INITIALIZING.\n");
+	kprintf("Done initializing.\n");
 
 	asm __volatile__("hlt");
 	for(;;) {

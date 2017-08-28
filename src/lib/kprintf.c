@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <drivers/screen.h>
 #include <drivers/font.h>
+#include <libc.h>
+
 
 /* Position of the */
 static uint32_t x = 0;

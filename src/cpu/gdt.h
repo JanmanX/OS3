@@ -4,6 +4,16 @@
 
 #define GDT_MAX_DESCRIPTORS 8
 
+/* Descriptor indexes */
+#define GDT_NULL_INDEX			(0x00)
+#define GDT_KERNEL_CODE_INDEX		(0x01)
+#define GDT_KERNEL_DATA_INDEX		(0x02)
+
+/* Descriptor Offsets */
+#define GDT_NULL_OFFSET			(GDT_NULL_INDEX << 3)
+#define GDT_KERNEL_CODE_OFFSET		(GDT_KERNEL_CODE_INDEX << 3)
+#define GDT_KERNEL_DATA_OFFSET		(GDT_KERNEL_CODE_INDEX << 3)
+
 typedef struct gdt_entry {
 	uint16_t limit0;
 	uint16_t base0;

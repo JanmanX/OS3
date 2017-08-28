@@ -39,9 +39,11 @@ OBJS    := $(patsubst %.asm,%.o,$(filter %.asm,$(SRC))) \
 all: $(OBJS)
 	echo $(OBJS)
 	$(LD) -o kernel.bin $(LDFLAGS) $^
+	objdump -DMintel kernel.bin > kernel.objdump
 
 
 
 clean:
 	rm -f $(OBJS)
 	rm -f *.map
+	rm -f *.objdump
