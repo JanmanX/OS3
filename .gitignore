@@ -8,3 +8,7 @@ os.iso
 *.objdump
 
 notes/*
+
+
+# remove this later
+docs/*
