@@ -1,7 +1,7 @@
 
 # Set the module name
-MODULE := cpu
+MODULE := kernel
 
-FILES := gdt.c idt.c
+FILES := interrupt.c _interrupt.asm exception.c
 
 SRC += $(patsubst %, $(MODULE)/%, $(FILES))

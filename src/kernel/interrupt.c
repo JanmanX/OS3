@@ -5,14 +5,10 @@
 #include <cpu/gdt.h>
 #include <stdint.h>
 #include <libc.h>
+#include <errno.h>
+
 
 static interrupt_handler_t interrupt_handlers[INTERRUPTS_MAX] = {NULL};
-
-uint8_t interrupt_set(uint8_t irq, interrupt_handler_t handler)
-{
-
-}
-
 
 void interrupt_install_jumper_gates()
 {
@@ -291,24 +287,32 @@ void interrupt_init()
 	/* TODO:
 	 *	apic
 	 *	syscall
-	 *	exceptions */
+
+	/* Setup exceptions */
+	exception_init();
+
 
 	/* Enable interrupts */
 	//STI;
 }
 
-
-
 void interrupt_handler(pt_regs_t *regs)
 {
-	kprintf("Exception: 0x%x caught\n", regs->interrupt_num);
+	kprintf("Interrupt: 0x%x caught\n", regs->interrupt_num);
+
+	interrupt_handler_t handler = interrupt_handlers[regs->interrupt_num];
+	if(handler != NULL) {
+		handler(regs);
+	} else {
+		LOGF("Interrupt 0x%x has no handler!\n", regs->interrupt_num);
+	}
 }
 
 uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler)
 {
 	/* SANITY CHECK */
 	if(irq >= INTERRUPTS_MAX) {
-		ERROR("Could not install interrupt. IRQ: 0x%x >= 0x%0x", irq,
+		ERRORF("Could not install interrupt. IRQ: 0x%x >= 0x%0x", irq,
 		      INTERRUPTS_MAX);
 		return EPERM;
 	}
@@ -321,8 +325,8 @@ uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler)
 void interrupt_uninstall(uint8_t irq)
 {
 	if(irq >= INTERRUPTS_MAX) {
-		ERROR("Could not uninstall interrupt. IRQ number too high: 0x%x
-		      >= 0x%x", irq, INTERRUPTS_MAX);
+		ERRORF("Could not uninstall interrupt. IRQ number too high: 0x%x >= 0x%x"
+						, irq, INTERRUPTS_MAX);
 		return EPERM;
 	}
 

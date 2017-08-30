@@ -41,10 +41,8 @@ typedef struct pt_regs {
 	/* top of stack page */
 } __attribute__((packed)) pt_regs_t;
 
-
+/* Function footprint of interrupt handlers*/
 typedef uint8_t (*interrupt_handler_t)(pt_regs_t *regs);
-
-
 
 
 void interrupt_init();

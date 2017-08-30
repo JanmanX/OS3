@@ -17,10 +17,10 @@ void memset(uint8_t *s, uint8_t c, uint64_t n);
 
 #define LOG(m) kprintf("[LOG %s():%d]: %s\n", __func__, __LINE__, m);\
 
-#define DEBUG(m) kprintf("[DEBUG %s():%d]: ", __func__, __LINE__, m);\
+#define DEBUG(m) kprintf("[DEBUG %s():%d]: %s\n", __func__, __LINE__, m);\
 
 #define ERROR(m) do {\
-		kprintf("[ERROR %s():%d]: ", __func__, __LINE__, m);\
+		kprintf("[ERROR %s():%d]: %s\n", __func__, __LINE__, m);\
 		HALT;\
 		} while(0);
 
@@ -47,7 +47,8 @@ void memset(uint8_t *s, uint8_t c, uint64_t n);
 
 /* DEBUG FUNCTIONS
 * Should not be used in production */
-#define BOCHS_DEBUG do {\		       asm volatile("xchg %bx, %bx");\
+#define BOCHS_DEBUG do {\
+			asm volatile("xchg %bx, %bx");\
 	       } while(0);
 
 
