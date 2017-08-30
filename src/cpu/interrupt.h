@@ -42,7 +42,7 @@ typedef struct pt_regs {
 } __attribute__((packed)) pt_regs_t;
 
 
-typedef void (*interrupt_handler_t)(pt_regs_t *regs);
+typedef uint8_t (*interrupt_handler_t)(pt_regs_t *regs);
 
 
 
@@ -50,7 +50,8 @@ typedef void (*interrupt_handler_t)(pt_regs_t *regs);
 void interrupt_init();
 void interrupt_handler(pt_regs_t *regs);
 uint8_t interrupt_request(uint8_t irq, interrupt_handler_t handler);
-
+uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler);
+void interrupt_uninstall(uint8_t irq);
 
 /* Interrupt gates */
 extern void interrupt_handler_0(void);

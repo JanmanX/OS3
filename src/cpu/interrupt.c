@@ -304,4 +304,29 @@ void interrupt_handler(pt_regs_t *regs)
 	kprintf("Exception: 0x%x caught\n", regs->interrupt_num);
 }
 
+uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler)
+{
+	/* SANITY CHECK */
+	if(irq >= INTERRUPTS_MAX) {
+		ERROR("Could not install interrupt. IRQ: 0x%x >= 0x%0x", irq,
+		      INTERRUPTS_MAX);
+		return EPERM;
+	}
 
+	interrupt_handlers[irq] = handler;
+
+	return EOK;
+}
+
+void interrupt_uninstall(uint8_t irq)
+{
+	if(irq >= INTERRUPTS_MAX) {
+		ERROR("Could not uninstall interrupt. IRQ number too high: 0x%x
+		      >= 0x%x", irq, INTERRUPTS_MAX);
+		return EPERM;
+	}
+
+	interrupt_handlers[irq] = NULL;
+
+	return EOK;
+}
