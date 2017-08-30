@@ -14,6 +14,8 @@ void *memcpy(void *dst, void *src, uint64_t count);
 uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n);
 void memset(uint8_t *s, uint8_t c, uint64_t n);
 
+uint8_t checksum_zero(uint8_t *, uint64_t count);
+
 
 #define LOG(m) kprintf("[LOG %s():%d]: %s\n", __func__, __LINE__, m);\
 

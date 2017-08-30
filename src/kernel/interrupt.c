@@ -334,3 +334,16 @@ void interrupt_uninstall(uint8_t irq)
 
 	return EOK;
 }
+
+void interrupt_print_regs(pt_regs_t *regs)
+{
+	kprintf("Interrupt_num: 0x%x\n", regs->interrupt_num);
+	kprintf("error_code: 0x%x\n", regs->error_code);
+	kprintf("rip: 0x%x\n", regs->rip);
+	kprintf("cs:: 0x%x\n", regs->cs);
+	kprintf("eflags: 0x%x\n", regs->eflags);
+	kprintf("rsp: 0x%x\n", regs->rsp);
+	kprintf("ss: 0x%x\n", regs->ss);
+}
+
+

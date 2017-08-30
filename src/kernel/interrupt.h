@@ -50,6 +50,8 @@ void interrupt_handler(pt_regs_t *regs);
 uint8_t interrupt_request(uint8_t irq, interrupt_handler_t handler);
 uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler);
 void interrupt_uninstall(uint8_t irq);
+void interrupt_print_regs(pt_regs_t *regs);
+
 
 /* Interrupt gates */
 extern void interrupt_handler_0(void);

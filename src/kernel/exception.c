@@ -50,12 +50,30 @@ uint8_t exception_handler_df(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_ts(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_np(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_ss(pt_regs_t *regs) {return EOK;}
-uint8_t exception_handler_gp(pt_regs_t *regs) {return EOK;}
+
+uint8_t exception_handler_gp(pt_regs_t *regs)
+{
+	/* DEBUG */
+	LOG("GP caught!");
+	interrupt_print_regs(regs);
+
+	if(regs->error_code != 0x00) {
+		kprintf("ERROR CODE\n\tE: 0x%x\n\tTbl: 0x%x\n\tIndex: 0x%x\n",
+			regs->error_code & 0x01,
+			(regs->error_code >> 1) & 0x03,
+			(regs->error_code >> 3) & (0xFFF));
+	}
+
+
+	return EOK;
+}
+
+
 uint8_t exception_handler_pf(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_mf(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_ac(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_mc(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_xm(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_ve(pt_regs_t *regs) {return EOK;}
-uint8_t exception_handler_reserved(pt_regs_t *regs) {return EOK;}
+uint8_t exception_handler_reserved(pt_regs_t *regs) {LOG("Reserved exception caught");return EOK;}
 

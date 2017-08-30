@@ -5,7 +5,7 @@
 #include <mem/mem.h>
 #include <cpu/gdt.h>
 #include <cpu/idt.h>
-#include <cpu/interrupt.h>
+#include <kernel/interrupt.h>
 
 int main(uint64_t mb_info_struct_addr)
 {
@@ -24,9 +24,13 @@ int main(uint64_t mb_info_struct_addr)
 	/* Initialize Interrupts */
 	interrupt_init();
 
-	/* Done initializing */
-	kprintf("Done initializing.\n");
+	/* ACPI Init */
+	acpi_init();
 
+	/* Done initializing */
+	LOG("Done initializing.\n");
+
+	/* Stop the machine */
 	asm __volatile__("hlt");
 	for(;;) {
 	}

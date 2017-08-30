@@ -3,6 +3,8 @@
 #include <kprintf.h>
 
 
+
+
 void itoa(char *buf, int base, int64_t n)
 {
 	char *p = buf;
@@ -94,6 +96,17 @@ void memset(uint8_t *s, uint8_t c, uint64_t n)
 		*s++ = c;
 	}
 }
+
+uint8_t checksum_zero(uint8_t *b, uint64_t count)
+{
+	uint8_t sum = 0;
+	while(count--) {
+		sum += *b++;
+	}
+
+	return sum;
+}
+
 
 inline uint8_t inb(uint16_t port)
 {
