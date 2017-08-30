@@ -15,11 +15,19 @@ uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n);
 void memset(uint8_t *s, uint8_t c, uint64_t n);
 
 
-#define LOG(m) kprintf("[LOG %s():%d]: %s\n", __func__, __LINE__, m)
+#define LOG(m, ...) do {\
+		kprintf("[LOG %s():%d]: ", __func__, __LINE__);\
+		kprintf(m, __VA_ARGS__);\
+		} while(0);
 
-#define DEBUG(m) kprintf("[DEBUG %s():%d]: %s\n", __func__, __LINE__, m)
-#define ERROR(m) do {\
-		kprintf("[ERROR %s():%d]: %s\n", __func__, __LINE__, m);\
+#define DEBUG(m, ...) do {\
+		kprintf("[DEBUG %s():%d]: ", __func__, __LINE__);\
+		kprintf(m, __VA_ARGS__);\
+		} while(0);
+
+#define ERROR(m, ...) do {\
+		kprintf("[ERROR %s():%d]: %s\n", __func__, __LINE__);\
+		kprintf(m, __VA_ARGS__);\
 		HALT;\
 		} while(0);
 
