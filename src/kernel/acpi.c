@@ -2,11 +2,18 @@
 #include <multiboot2.h>
 #include <libc.h>
 
+/* Root System Description Table Pointer */
 rsdp_t *rsdp;
 
+/* Root System Description Table.
+ * Can point to either RSDT or XSDT */
+rsdt_t *rsdt;
 
 rsdp_t *acpi_get_rsdp()
 {
+	/* The value to return */
+	rsdp_t *ret = NULL;
+
 	/* Get the Multiboot ACPI tag */
 	/* Since the multiboot tag structure for both old and new ACPI
 	 * revisions is the same, just use the same pointer. */
@@ -30,21 +37,52 @@ rsdp_t *acpi_get_rsdp()
 	}
 
 	/* RSDP is stored in the tag structure */
-	rsdp = &(mb_acpi->rsdp);
+	ret = &(mb_acpi->rsdp);
 
 	/* Verify checksum */
-	uint8_t checksum = checksum_zero((uint8_t*)rsdp,
-					 rsdp->revision == 0 ?
+	uint8_t checksum = checksum_zero((uint8_t*)ret,
+					 ret->revision == 0 ?
 						RSDP_REV_1_SIZE :
 						RSDP_REV_2_SIZE);
 
 	if(checksum == 0) {
 		/* Valid RSDP found*/
-		return rsdp;
+		LOG("Checksum passed");
+		return ret;
 	} else {
 		LOG("Checksum mismatch for RSDP");
 	}
 	/* No RSDP found */
+	return NULL;
+}
+
+rsdt_t *acpi_get_rsdt()
+{
+	/* The value to return */
+	rsdt_t *ret = NULL;
+
+	/* Check for valid RSDP */
+	if(rsdp == NULL) {
+		LOG("Cannot get Root System Description Table. RSDP == NULLL");
+		return NULL;
+	}
+
+	/* Get RSDT / XSDT */
+	if(rsdp->revision == RSDP_REV_1) {
+		ret = (rsdt_t*)(rsdp->rsdt_ptr);
+	} else { /* ACPI revision 2.0+*/
+		ret = (rsdt_t*)(rsdp->xsdt_ptr);
+	}
+
+	/* Verify checksum */
+	if(checksum_zero((uint8_t*)ret, ret->header.length) == 0) {
+		LOG("[RX]SDT checksum passed");
+		return ret;
+	} else { /* Checksum failed */
+		LOG("[RX]SDT checksum failed");
+	}
+
+	/* Nothing found */
 	return NULL;
 }
 
@@ -57,10 +95,10 @@ void acpi_init(void)
 		return;
 	}
 
-	/* debug. remove this  */
-	char signature[9] = {0};
-	char oem[7] = {0};
-	memcpy(signature, rsdp->signature, 8);
-	LOGF("RSDP: %s\n", signature);
-
+	/* Get the [RX]SDT */
+	rsdt = acpi_get_rsdt();
+	if(rsdt == NULL) {
+		ERROR("RSDT NOT FOUND!");
+		return;
+	}
 }
