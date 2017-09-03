@@ -56,24 +56,6 @@ void *memcpy(void *dst, void *src, uint64_t count)
 	return dst;
 }
 
-uint8_t memcmp2(const void *s1, const void *s2, uint64_t n)
-{
-	/* No bytes to compare */
-	if(n == 0) {
-		return 0;
-	}
-
-	/* Compare until not equal, or until no more bytes to compare */
-	while(--n && *(uint8_t*)s1 != *(uint8_t*)s2) {
-		s1 = (uint8_t*)s1 + 1;
-		s2 = (uint8_t*)s2 + 1;
-	}
-
-	/* Return difference */
-	return *((uint8_t*)s1) - *((uint8_t*)s2);
-}
-
-
 uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n)
 {
 	/* While bytes to compare */

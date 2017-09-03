@@ -2,29 +2,31 @@
 #include <stdint.h>
 
 /* Table Signatures */
-#define APIC_SIGNATURE_MADT "APIC"
-#define APIC_SIGNATURE_BGRT "BGRT"
-#define APIC_SIGNATURE_BERT "BERT"
-#define APIC_SIGNATURE_CPEP "CPEP"
-#define APIC_SIGNATURE_DSDT "DSDT"
-#define APIC_SIGNATURE_ECDI "ECDT"
-#define APIC_SIGNATURE_EINJ "EINJ"
-#define APIC_SIGNATURE_ERST "ERST"
-#define APIC_SIGNATURE_FADT "FACP"
-#define APIC_SIGNATURE_FACS "FACS"
-#define APIC_SIGNATURE_HEST "HEST"
-#define APIC_SIGNATURE_MSCT "MSCT"
-#define APIC_SIGNATURE_MPST "MPST"
-#define APIC_SIGNATURE_OEMx "OEMx"
-#define APIC_SIGNATURE_PMTT "PMTT"
-#define APIC_SIGNATURE_PSDT "PSDT"
-#define APIC_SIGNATURE_RASF "RASF"
-#define APIC_SIGNATURE_RSDT "RSDT"
-#define APIC_SIGNATURE_SBST "SBST"
-#define APIC_SIGNATURE_SLIT "SLIT"
-#define APIC_SIGNATURE_SRAT "SRAT"
-#define APIC_SIGNATURE_SSDT "SSDT"
-#define APIC_SIGNATURE_XSDT "XSDT"
+#define ACPI_SIGNATURE_LEN	(0x04)
+
+#define ACPI_SIGNATURE_MADT "APIC"
+#define ACPI_SIGNATURE_BGRT "BGRT"
+#define ACPI_SIGNATURE_BERT "BERT"
+#define ACPI_SIGNATURE_CPEP "CPEP"
+#define ACPI_SIGNATURE_DSDT "DSDT"
+#define ACPI_SIGNATURE_ECDI "ECDT"
+#define ACPI_SIGNATURE_EINJ "EINJ"
+#define ACPI_SIGNATURE_ERST "ERST"
+#define ACPI_SIGNATURE_FADT "FACP"
+#define ACPI_SIGNATURE_FACS "FACS"
+#define ACPI_SIGNATURE_HEST "HEST"
+#define ACPI_SIGNATURE_MSCT "MSCT"
+#define ACPI_SIGNATURE_MPST "MPST"
+#define ACPI_SIGNATURE_OEMx "OEMx"
+#define ACPI_SIGNATURE_PMTT "PMTT"
+#define ACPI_SIGNATURE_PSDT "PSDT"
+#define ACPI_SIGNATURE_RASF "RASF"
+#define ACPI_SIGNATURE_RSDT "RSDT"
+#define ACPI_SIGNATURE_SBST "SBST"
+#define ACPI_SIGNATURE_SLIT "SLIT"
+#define ACPI_SIGNATURE_SRAT "SRAT"
+#define ACPI_SIGNATURE_SSDT "SSDT"
+#define ACPI_SIGNATURE_XSDT "XSDT"
 
 
 /* RSDP version 1.0 and 2.0 */
@@ -67,13 +69,13 @@ typedef struct acpi_sdt {
 /* XSDT */
 typedef struct xsdt {
 	acpi_sdt_t header;
-	uint64_t tables[0];
+	uint64_t tables[ ];
 } __attribute__((packed)) xsdt_t;
 
 /* RSDT */
 typedef struct rsdt {
 	acpi_sdt_t header;
-	uint32_t tables[0];
+	uint32_t tables[ ];
 } __attribute__((packed)) rsdt_t;
 
 /* Other system descriptor tables */
@@ -85,7 +87,7 @@ typedef struct madt {
 	uint32_t local_controller_addr;
 	uint32_t flags;
 
-	/* */
+
 } __attribute__((packed)) madt_t;
 
 typedef struct madt_entry_lapic {
@@ -132,7 +134,7 @@ typedef struct madt_entry_nmi {
 
 void acpi_init(void);
 void acpi_parse_table(acpi_sdt_t *table);
-void acpi_get_table(uint8_t[4] signature);
+void* acpi_get_table(uint8_t* signature);
 
 
 
