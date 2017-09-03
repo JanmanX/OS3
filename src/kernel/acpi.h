@@ -4,29 +4,29 @@
 /* Table Signatures */
 #define ACPI_SIGNATURE_LEN	(0x04)
 
-#define ACPI_SIGNATURE_MADT "APIC"
-#define ACPI_SIGNATURE_BGRT "BGRT"
-#define ACPI_SIGNATURE_BERT "BERT"
-#define ACPI_SIGNATURE_CPEP "CPEP"
-#define ACPI_SIGNATURE_DSDT "DSDT"
-#define ACPI_SIGNATURE_ECDI "ECDT"
-#define ACPI_SIGNATURE_EINJ "EINJ"
-#define ACPI_SIGNATURE_ERST "ERST"
-#define ACPI_SIGNATURE_FADT "FACP"
-#define ACPI_SIGNATURE_FACS "FACS"
-#define ACPI_SIGNATURE_HEST "HEST"
-#define ACPI_SIGNATURE_MSCT "MSCT"
-#define ACPI_SIGNATURE_MPST "MPST"
-#define ACPI_SIGNATURE_OEMx "OEMx"
-#define ACPI_SIGNATURE_PMTT "PMTT"
-#define ACPI_SIGNATURE_PSDT "PSDT"
-#define ACPI_SIGNATURE_RASF "RASF"
-#define ACPI_SIGNATURE_RSDT "RSDT"
-#define ACPI_SIGNATURE_SBST "SBST"
-#define ACPI_SIGNATURE_SLIT "SLIT"
-#define ACPI_SIGNATURE_SRAT "SRAT"
-#define ACPI_SIGNATURE_SSDT "SSDT"
-#define ACPI_SIGNATURE_XSDT "XSDT"
+#define ACPI_SIGNATURE_MADT ((uint8_t*)"APIC")
+#define ACPI_SIGNATURE_BGRT ((uint8_t*)"BGRT")
+#define ACPI_SIGNATURE_BERT ((uint8_t*)"BERT")
+#define ACPI_SIGNATURE_CPEP ((uint8_t*)"CPEP")
+#define ACPI_SIGNATURE_DSDT ((uint8_t*)"DSDT")
+#define ACPI_SIGNATURE_ECDI ((uint8_t*)"ECDT")
+#define ACPI_SIGNATURE_EINJ ((uint8_t*)"EINJ")
+#define ACPI_SIGNATURE_ERST ((uint8_t*)"ERST")
+#define ACPI_SIGNATURE_FADT ((uint8_t*)"FACP")
+#define ACPI_SIGNATURE_FACS ((uint8_t*)"FACS")
+#define ACPI_SIGNATURE_HEST ((uint8_t*)"HEST")
+#define ACPI_SIGNATURE_MSCT ((uint8_t*)"MSCT")
+#define ACPI_SIGNATURE_MPST ((uint8_t*)"MPST")
+#define ACPI_SIGNATURE_OEMx ((uint8_t*)"OEMx")
+#define ACPI_SIGNATURE_PMTT ((uint8_t*)"PMTT")
+#define ACPI_SIGNATURE_PSDT ((uint8_t*)"PSDT")
+#define ACPI_SIGNATURE_RASF ((uint8_t*)"RASF")
+#define ACPI_SIGNATURE_RSDT ((uint8_t*)"RSDT")
+#define ACPI_SIGNATURE_SBST ((uint8_t*)"SBST")
+#define ACPI_SIGNATURE_SLIT ((uint8_t*)"SLIT")
+#define ACPI_SIGNATURE_SRAT ((uint8_t*)"SRAT")
+#define ACPI_SIGNATURE_SSDT ((uint8_t*)"SSDT")
+#define ACPI_SIGNATURE_XSDT ((uint8_t*)"XSDT")
 
 
 /* RSDP version 1.0 and 2.0 */
