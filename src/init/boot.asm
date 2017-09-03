@@ -20,6 +20,7 @@
 %define ERROR_NO_LONG_MODE '2'
 %define ERROR_KERNEL_PANIC '3'
 %define ERROR_NO_GBYTE_PAGING '4'
+%define ERROR_NO_APIC		'5'
 %define ERROR_DEBUG	   '255'
 
 
@@ -56,6 +57,8 @@ start:
 	call check_multiboot
 	call check_cpuid
 	call check_long_mode
+	call check_apic
+
 
 	call setup_page_tables
 	call enable_paging
@@ -166,6 +169,19 @@ check_gbyte_paging:
 	mov eax, ERROR_NO_GBYTE_PAGING
 	jmp error
 
+; check_apic()
+;
+; Checks if CPU has APIC
+check_apic:
+	mov eax, 0x00000001
+	cpuid
+	test edx, 1 << 9
+	jz .no_apic
+	ret
+
+.no_apic:
+	mov al, ERROR_NO_APIC
+	jmp error
 
 
 ; set_up_page_tables()
