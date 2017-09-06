@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#define GDT_MAX_DESCRIPTORS 8
+#define GDT_MAX_DESCRIPTORS 32
 
 /* Descriptor indexes */
 #define GDT_NULL_INDEX			(0x00)
@@ -23,6 +23,22 @@ typedef struct gdt_entry {
 	uint8_t flags:4;
 	uint8_t base2;
 } __attribute__((packed)) gdt_entry_t;
+
+
+typedef struct gdt_system_entry {
+	uint16_t limit0;
+	uint16_t base0;
+
+	uint8_t base1;
+	uint8_t type0;
+
+	uint8_t limit1;
+	uint8_t base2;
+
+	uint32_t base3;
+	uint32_t reserved;
+} __attribute__((packed)) gdt_system_entry;
+
 
 typedef struct {
 	uint16_t limit;
