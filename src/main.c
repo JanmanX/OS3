@@ -6,6 +6,8 @@
 #include <cpu/gdt.h>
 #include <cpu/idt.h>
 #include <kernel/interrupt.h>
+#include <kernel/acpi.h>
+
 
 int main(uint64_t mb_info_struct_addr)
 {
@@ -15,17 +17,17 @@ int main(uint64_t mb_info_struct_addr)
 	/* Initialize screen */
 	screen_init();
 
-	/* Install identity-pages */
-	paging_init();
+	/* Initialize memory systems */
+	mem_init();
+
+	/* ACPI Init */
+	acpi_init();
 
 	/* Initialize GDT */
 	gdt_init();
 
 	/* Initialize Interrupts */
 	interrupt_init();
-
-	/* ACPI Init */
-	acpi_init();
 
 	/* Done initializing */
 	LOG("Done initializing.\n");
