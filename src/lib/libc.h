@@ -16,6 +16,22 @@ void memset(uint8_t *s, uint8_t c, uint64_t n);
 
 uint8_t checksum_zero(uint8_t *, uint64_t count);
 
+/* Assembly  functions */
+uint8_t inb(uint16_t port);
+uint32_t ind(uint16_t port);
+
+void outb(uint16_t port, uint8_t val);
+void outd(uint16_t port, uint32_t val);
+
+
+/* Pointer helper macros */
+/* Returns the appropriate pointer type to p + offet in bytes */
+#define GET_UINT8(p, offset) (*((uint8_t*)p + offset))
+#define GET_UINT16(p, offset) (*(uint16_t*)((uint8_t*)p + offset))
+#define GET_UINT32(p, offset) (*(uint32_t*)((uint8_t*)p + offset))
+#define GET_UINT64(p, offset) (*(uint64_t*)((uint8_t*)p + offset))
+
+
 
 #define LOG(m) kprintf("[LOG %s():%d]: %s\n", __func__, __LINE__, m);\
 

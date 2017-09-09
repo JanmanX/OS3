@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <libc.h>
 #include <errno.h>
-
+#include <cpu/apic.h>
 
 static interrupt_handler_t interrupt_handlers[INTERRUPTS_MAX] = {NULL};
 
@@ -285,8 +285,11 @@ void interrupt_init()
 	interrupt_install_jumper_gates();
 
 	/* TODO:
-	 *	apic
 	 *	syscall
+	*/
+
+	apic_init();
+
 
 	/* Setup exceptions */
 	exception_init();

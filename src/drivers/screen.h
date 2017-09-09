@@ -14,6 +14,7 @@ void screen_put_pixel(uint32_t x, uint32_t y, uint32_t argb);
 void screen_put_char(unsigned char c, uint32_t x, uint32_t y,
 		     uint32_t foreground, uint32_t background);
 
+
 void screen_clear();
 uint32_t screen_get_width();
 uint32_t screen_get_height();

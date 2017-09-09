@@ -32,6 +32,7 @@ int main(uint64_t mb_info_struct_addr)
 	/* Done initializing */
 	LOG("Done initializing.\n");
 
+
 	/* Stop the machine */
 	asm __volatile__("hlt");
 	for(;;) {

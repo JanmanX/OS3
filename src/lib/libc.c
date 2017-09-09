@@ -3,8 +3,6 @@
 #include <kprintf.h>
 
 
-
-
 void itoa(char *buf, int base, int64_t n)
 {
 	char *p = buf;

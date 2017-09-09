@@ -84,7 +84,7 @@ typedef struct rsdt {
 typedef struct madt {
 	acpi_sdt_t header;
 
-	uint32_t local_controller_addr;
+	uint32_t lapic_addr;
 	uint32_t flags;
 
 

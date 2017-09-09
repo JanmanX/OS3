@@ -5,13 +5,13 @@
 #include <multiboot_parser.h>
 #include "font.h"
 #include <errno.h>
-
-
+#include <kprintf.h>
 
 static uint32_t *buffer = NULL;
 static uint32_t width = 0;
 static uint32_t height = 0;
 static uint8_t bpp = 0;
+
 
 uint8_t screen_init()
 {
@@ -39,6 +39,8 @@ uint8_t screen_init()
 	/* Return success */
 	return EOK;
 }
+
+
 
 
 void screen_put_pixel(uint32_t x, uint32_t y, uint32_t argb)

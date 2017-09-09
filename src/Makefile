@@ -41,7 +41,9 @@ all: $(OBJS)
 	$(LD) -o kernel.bin $(LDFLAGS) $^
 	objdump -DMintel kernel.bin > kernel.objdump
 
-
+tags:
+	rm -f tags
+	find . | xargs ctags
 
 clean:
 	rm -f $(OBJS)
