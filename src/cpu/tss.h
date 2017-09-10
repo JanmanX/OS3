@@ -1,8 +1,11 @@
 #pragma once
 
+#include <stdint.h>
+
+
 #define TSS_MAX_SEGMENTS	(16)
 
-struct tss {
+typedef struct tss {
 	uint32_t reserved0;
 
 	uint64_t rsp0;

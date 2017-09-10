@@ -66,7 +66,7 @@ void gdt_install_tss(uint8_t num, uint64_t base, uint64_t limit)
 		return;
 	}
 
-	gdt_system_entry_t *tss_entry = (gdt_system_entry_t*)gdt+num;
+	gdt_system_entry_t *tss_entry = (gdt_system_entry_t*)&gdt[num];
 
 	/* TYPE = 0x9 (Available 64-bit TSS) | Present (8) */
 	uint8_t type = 0x89;

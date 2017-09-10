@@ -22,6 +22,7 @@ void lapic_enable(void)
 
 void apic_disable_pic(void)
 {
+	LOG("Disabling PIC");
 	/*
 	 mov al, 0xff
 	out 0xa1, al
@@ -29,6 +30,8 @@ void apic_disable_pic(void)
 	 */
 	outb(0xa1, 0xff);
 	outb(0x21, 0xff);
+
+	LOG("PIC disabled");
 }
 
 void apic_init(void)

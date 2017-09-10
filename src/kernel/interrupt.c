@@ -7,6 +7,8 @@
 #include <libc.h>
 #include <errno.h>
 #include <cpu/apic.h>
+#include <cpu/tss.h>
+
 
 static interrupt_handler_t interrupt_handlers[INTERRUPTS_MAX] = {NULL};
 
@@ -283,6 +285,12 @@ void interrupt_init()
 
 	/* Setup the jumper gates */
 	interrupt_install_jumper_gates();
+
+	/* Install TSS */
+	tss_init();
+	tss_install(0);
+
+
 
 	/* TODO:
 	 *	syscall

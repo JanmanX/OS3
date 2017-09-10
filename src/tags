@@ -4,31 +4,130 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+ACPI_SDT_REV_1	./kernel/acpi.h	58;"	d
+ACPI_SDT_REV_2	./kernel/acpi.h	59;"	d
+ACPI_SDT_SIZE	./kernel/acpi.h	53;"	d
+ACPI_SIGNATURE_BERT	./kernel/acpi.h	9;"	d
+ACPI_SIGNATURE_BGRT	./kernel/acpi.h	8;"	d
+ACPI_SIGNATURE_CPEP	./kernel/acpi.h	10;"	d
+ACPI_SIGNATURE_DSDT	./kernel/acpi.h	11;"	d
+ACPI_SIGNATURE_ECDI	./kernel/acpi.h	12;"	d
+ACPI_SIGNATURE_EINJ	./kernel/acpi.h	13;"	d
+ACPI_SIGNATURE_ERST	./kernel/acpi.h	14;"	d
+ACPI_SIGNATURE_FACS	./kernel/acpi.h	16;"	d
+ACPI_SIGNATURE_FADT	./kernel/acpi.h	15;"	d
+ACPI_SIGNATURE_HEST	./kernel/acpi.h	17;"	d
+ACPI_SIGNATURE_LEN	./kernel/acpi.h	5;"	d
+ACPI_SIGNATURE_MADT	./kernel/acpi.h	7;"	d
+ACPI_SIGNATURE_MPST	./kernel/acpi.h	19;"	d
+ACPI_SIGNATURE_MSCT	./kernel/acpi.h	18;"	d
+ACPI_SIGNATURE_OEMx	./kernel/acpi.h	20;"	d
+ACPI_SIGNATURE_PMTT	./kernel/acpi.h	21;"	d
+ACPI_SIGNATURE_PSDT	./kernel/acpi.h	22;"	d
+ACPI_SIGNATURE_RASF	./kernel/acpi.h	23;"	d
+ACPI_SIGNATURE_RSDT	./kernel/acpi.h	24;"	d
+ACPI_SIGNATURE_SBST	./kernel/acpi.h	25;"	d
+ACPI_SIGNATURE_SLIT	./kernel/acpi.h	26;"	d
+ACPI_SIGNATURE_SRAT	./kernel/acpi.h	27;"	d
+ACPI_SIGNATURE_SSDT	./kernel/acpi.h	28;"	d
+ACPI_SIGNATURE_XSDT	./kernel/acpi.h	29;"	d
 AS	./Makefile	/^AS              = nasm$/;"	m
 ASFLAGS	./Makefile	/^ASFLAGS         = -f elf64$/;"	m
-BOCHS_DEBUG	./lib/libc.h	20;"	d
+BOCHS_DEBUG	./lib/libc.h	68;"	d
 Bitmap	./drivers/font.h	/^	const unsigned char *Bitmap;	\/\/\/< bitmap of all characters$/;"	m	struct:bitmap_font
 CC	./Makefile	/^CC              = x86_64-elf-gcc$/;"	m
-CFLAGS	./Makefile	/^CFLAGS          = -std=gnu99 -ffreestanding -O0 -Wall -Wextra -m64 -g -mno-red-zone -nostdinc -H$/;"	m
-CLI	./lib/libc.h	38;"	d
+CFLAGS	./Makefile	/^CFLAGS          = -std=gnu11 -ffreestanding -O0 -Wall -Wextra -m64 -g -mno-red-zone -nostdinc -H$/;"	m
+CLI	./lib/libc.h	62;"	d
 COLOR_ALPHA	./drivers/screen.h	7;"	d
 COLOR_BLUE	./drivers/screen.h	10;"	d
 COLOR_GREEN	./drivers/screen.h	9;"	d
 COLOR_RED	./drivers/screen.h	8;"	d
 Chars	./drivers/font.h	/^	unsigned short Chars;		\/\/\/< number of characters in font$/;"	m	struct:bitmap_font
-DEBUG	./lib/libc.h	29;"	d
-ERROR	./lib/libc.h	30;"	d
-FILES	./cpu/subsys.mk	/^FILES := gdt.c idt.c interrupt.c _interrupt.asm$/;"	m
+DEBUG	./lib/libc.h	38;"	d
+DEBUGF	./lib/libc.h	50;"	d
+E2BIG	./lib/errno.h	11;"	d
+EACCES	./lib/errno.h	17;"	d
+EAGAIN	./lib/errno.h	15;"	d
+EBADF	./lib/errno.h	13;"	d
+EBUSY	./lib/errno.h	20;"	d
+ECHILD	./lib/errno.h	14;"	d
+EDOM	./lib/errno.h	37;"	d
+EEXIST	./lib/errno.h	21;"	d
+EFAULT	./lib/errno.h	18;"	d
+EFBIG	./lib/errno.h	31;"	d
+EINTR	./lib/errno.h	8;"	d
+EINVAL	./lib/errno.h	26;"	d
+EIO	./lib/errno.h	9;"	d
+EISDIR	./lib/errno.h	25;"	d
+EMFILE	./lib/errno.h	28;"	d
+EMLINK	./lib/errno.h	35;"	d
+ENFILE	./lib/errno.h	27;"	d
+ENODEV	./lib/errno.h	23;"	d
+ENOENT	./lib/errno.h	6;"	d
+ENOEXEC	./lib/errno.h	12;"	d
+ENOMEM	./lib/errno.h	16;"	d
+ENOSPC	./lib/errno.h	32;"	d
+ENOTBLK	./lib/errno.h	19;"	d
+ENOTDIR	./lib/errno.h	24;"	d
+ENOTTY	./lib/errno.h	29;"	d
+ENXIO	./lib/errno.h	10;"	d
+EOK	./lib/errno.h	3;"	d
+EPERM	./lib/errno.h	5;"	d
+EPIPE	./lib/errno.h	36;"	d
+ERANGE	./lib/errno.h	38;"	d
+EROFS	./lib/errno.h	34;"	d
+ERROR	./lib/libc.h	40;"	d
+ERRORF	./lib/libc.h	55;"	d
+ESPIPE	./lib/errno.h	33;"	d
+ESRCH	./lib/errno.h	7;"	d
+ETXTBSY	./lib/errno.h	30;"	d
+EXCEPTION_15	./kernel/exception.h	22;"	d
+EXCEPTION_9	./kernel/exception.h	16;"	d
+EXCEPTION_AC	./kernel/exception.h	24;"	d
+EXCEPTION_BP	./kernel/exception.h	10;"	d
+EXCEPTION_BR	./kernel/exception.h	12;"	d
+EXCEPTION_DB	./kernel/exception.h	8;"	d
+EXCEPTION_DE	./kernel/exception.h	7;"	d
+EXCEPTION_DF	./kernel/exception.h	15;"	d
+EXCEPTION_GP	./kernel/exception.h	20;"	d
+EXCEPTION_MC	./kernel/exception.h	25;"	d
+EXCEPTION_MF	./kernel/exception.h	23;"	d
+EXCEPTION_NM	./kernel/exception.h	14;"	d
+EXCEPTION_NMI	./kernel/exception.h	9;"	d
+EXCEPTION_NP	./kernel/exception.h	18;"	d
+EXCEPTION_OF	./kernel/exception.h	11;"	d
+EXCEPTION_PF	./kernel/exception.h	21;"	d
+EXCEPTION_SS	./kernel/exception.h	19;"	d
+EXCEPTION_TS	./kernel/exception.h	17;"	d
+EXCEPTION_UD	./kernel/exception.h	13;"	d
+EXCEPTION_VE	./kernel/exception.h	27;"	d
+EXCEPTION_XM	./kernel/exception.h	26;"	d
+EXDEV	./lib/errno.h	22;"	d
+FILES	./cpu/subsys.mk	/^FILES := gdt.c idt.c apic.c$/;"	m
 FILES	./drivers/subsys.mk	/^FILES := screen.c font.c$/;"	m
 FILES	./init/subsys.mk	/^FILES := boot.asm multiboot_header.asm$/;"	m
+FILES	./kernel/subsys.mk	/^FILES := interrupt.c _interrupt.asm exception.c acpi.c$/;"	m
 FILES	./lib/subsys.mk	/^FILES := libc.c kprintf.c multiboot_parser.c$/;"	m
-FILES	./mem/subsys.mk	/^FILES := mem.c$/;"	m
-GDT_KERNEL_CODE	./cpu/gdt.h	9;"	d
-GDT_KERNEL_DATA	./cpu/gdt.h	10;"	d
+FILES	./mem/subsys.mk	/^FILES := mem.c paging.c$/;"	m
+GDT_KERNEL_CODE_INDEX	./cpu/gdt.h	9;"	d
+GDT_KERNEL_CODE_OFFSET	./cpu/gdt.h	18;"	d
+GDT_KERNEL_DATA_INDEX	./cpu/gdt.h	10;"	d
+GDT_KERNEL_DATA_OFFSET	./cpu/gdt.h	19;"	d
 GDT_MAX_DESCRIPTORS	./cpu/gdt.h	5;"	d
-GDT_NULL	./cpu/gdt.h	8;"	d
-GiB	./mem/mem.h	31;"	d
-HALT	./lib/libc.h	25;"	d
+GDT_NULL_INDEX	./cpu/gdt.h	8;"	d
+GDT_NULL_OFFSET	./cpu/gdt.h	17;"	d
+GDT_TSS_INDEX	./cpu/gdt.h	13;"	d
+GDT_TSS_OFFSET	./cpu/gdt.h	22;"	d
+GDT_USER_CODE_INDEX	./cpu/gdt.h	11;"	d
+GDT_USER_CODE_OFFSET	./cpu/gdt.h	20;"	d
+GDT_USER_DATA_INDEX	./cpu/gdt.h	12;"	d
+GDT_USER_DATA_OFFSET	./cpu/gdt.h	21;"	d
+GET_UINT16	./lib/libc.h	30;"	d
+GET_UINT32	./lib/libc.h	31;"	d
+GET_UINT64	./lib/libc.h	32;"	d
+GET_UINT8	./lib/libc.h	29;"	d
+GiB	./mem/paging.h	30;"	d
+HALT	./lib/libc.h	64;"	d
 Height	./drivers/font.h	/^	unsigned char Height;		\/\/\/< character height$/;"	m	struct:bitmap_font
 IDTE_DPL_RING0	./cpu/idt.h	16;"	d
 IDTE_DPL_RING1	./cpu/idt.h	17;"	d
@@ -39,20 +138,30 @@ IDTE_TYPE_INTERRUPT_32	./cpu/idt.h	24;"	d
 IDTE_TYPE_TRAP_32	./cpu/idt.h	23;"	d
 IDT_NUM_ENTRIES	./cpu/idt.h	7;"	d
 INC	./Makefile	/^INC             = -I.\/include -I. -I.\/lib$/;"	m
-INTERRUPTS_MAX	./cpu/interrupt.h	5;"	d
+INTERRUPTS_MAX	./kernel/interrupt.h	5;"	d
 Index	./drivers/font.h	/^	const unsigned short *Index;	\/\/\/< encoding to character index$/;"	m	struct:bitmap_font
 KLIB_H	./lib/libc.h	2;"	d
-KiB	./mem/mem.h	29;"	d
+KiB	./mem/paging.h	28;"	d
+LAPIC_REGISTER_SIVR	./cpu/apic.h	9;"	d
 LD	./Makefile	/^LD              = ld$/;"	m
 LDFLAGS	./Makefile	/^LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000$/;"	m
 LDSCRIPT	./Makefile	/^LDSCRIPT        = .\/linker.ld$/;"	m
-LOG	./lib/libc.h	27;"	d
+LOG	./lib/libc.h	36;"	d
+LOGF	./lib/libc.h	45;"	d
+MADT_ENTRY_TYPE_IOAPIC	./kernel/acpi.h	104;"	d
+MADT_ENTRY_TYPE_IO_APIC	./cpu/apic.h	5;"	d
+MADT_ENTRY_TYPE_ISO	./cpu/apic.h	6;"	d
+MADT_ENTRY_TYPE_ISO	./kernel/acpi.h	115;"	d
+MADT_ENTRY_TYPE_LAPIC	./cpu/apic.h	4;"	d
+MADT_ENTRY_TYPE_LAPIC	./kernel/acpi.h	94;"	d
+MADT_ENTRY_TYPE_NMI	./kernel/acpi.h	126;"	d
 MODULE	./cpu/subsys.mk	/^MODULE := cpu$/;"	m
 MODULE	./drivers/subsys.mk	/^MODULE := drivers$/;"	m
 MODULE	./init/subsys.mk	/^MODULE := init$/;"	m
+MODULE	./kernel/subsys.mk	/^MODULE := kernel$/;"	m
 MODULE	./lib/subsys.mk	/^MODULE := lib$/;"	m
 MODULE	./mem/subsys.mk	/^MODULE := mem$/;"	m
-MODULES	./Makefile	/^MODULES         := init lib drivers mem cpu$/;"	m
+MODULES	./Makefile	/^MODULES         := init lib drivers mem cpu kernel$/;"	m
 MULTIBOOT2_BOOTLOADER_MAGIC	./lib/multiboot2.h	33;"	d
 MULTIBOOT2_HEADER_MAGIC	./lib/multiboot2.h	30;"	d
 MULTIBOOT_ARCHITECTURE_I386	./lib/multiboot2.h	73;"	d
@@ -101,314 +210,340 @@ MULTIBOOT_TAG_TYPE_MODULE	./lib/multiboot2.h	47;"	d
 MULTIBOOT_TAG_TYPE_NETWORK	./lib/multiboot2.h	60;"	d
 MULTIBOOT_TAG_TYPE_SMBIOS	./lib/multiboot2.h	57;"	d
 MULTIBOOT_TAG_TYPE_VBE	./lib/multiboot2.h	51;"	d
-MiB	./mem/mem.h	30;"	d
+MiB	./mem/paging.h	29;"	d
 NULL	./lib/types.h	4;"	d
-NUM_GIB	./mem/mem.h	7;"	d
+NUM_GIB	./mem/paging.h	6;"	d
 OBJS	./Makefile	/^OBJS    := $(patsubst %.asm,%.o,$(filter %.asm,$(SRC))) \\$/;"	m
-PAGE_A	./mem/mem.h	20;"	d
-PAGE_D	./mem/mem.h	21;"	d
-PAGE_G	./mem/mem.h	23;"	d
-PAGE_NX	./mem/mem.h	24;"	d
-PAGE_PCD	./mem/mem.h	19;"	d
-PAGE_PRESENT	./mem/mem.h	15;"	d
-PAGE_PS	./mem/mem.h	22;"	d
-PAGE_PWT	./mem/mem.h	18;"	d
-PAGE_RW	./mem/mem.h	16;"	d
-PAGE_US	./mem/mem.h	17;"	d
+PAGE_A	./mem/paging.h	19;"	d
+PAGE_D	./mem/paging.h	20;"	d
+PAGE_G	./mem/paging.h	22;"	d
+PAGE_NX	./mem/paging.h	23;"	d
+PAGE_PCD	./mem/paging.h	18;"	d
+PAGE_PRESENT	./mem/paging.h	14;"	d
+PAGE_PS	./mem/paging.h	21;"	d
+PAGE_PWT	./mem/paging.h	17;"	d
+PAGE_RW	./mem/paging.h	15;"	d
+PAGE_US	./mem/paging.h	16;"	d
 PDPT	./init/boot.asm	/^PDPT:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PDPE$/;"	l
-PDPT_SIZE	./mem/mem.h	11;"	d
+PDPT_SIZE	./mem/paging.h	10;"	d
 PDT	./init/boot.asm	/^PDT:	resb (PAGE_ENTRY_SIZE * NUM_PDE * NUM_PDPE * NUM_PML4E)	; 512 PDE$/;"	l
 PML4T	./init/boot.asm	/^PML4T:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PML4E$/;"	l
-PML4T_SIZE	./mem/mem.h	10;"	d
+PML4T_SIZE	./mem/paging.h	9;"	d
+RSDP_REV_1	./kernel/acpi.h	40;"	d
+RSDP_REV_1_SIZE	./kernel/acpi.h	33;"	d
+RSDP_REV_2	./kernel/acpi.h	41;"	d
+RSDP_REV_2_SIZE	./kernel/acpi.h	34;"	d
 SRC	./Makefile	/^SRC             := main.c$/;"	m
-STI	./lib/libc.h	39;"	d
+STI	./lib/libc.h	63;"	d
+TSS_MAX_SEGMENTS	./cpu/tss.h	3;"	d
 Width	./drivers/font.h	/^	unsigned char Width;		\/\/\/< max. character width$/;"	m	struct:bitmap_font
 Widths	./drivers/font.h	/^	const unsigned char *Widths;	\/\/\/< width of each character$/;"	m	struct:bitmap_font
-XXXXXXXX	./drivers/font.h	269;"	d
-XXXXXXX_	./drivers/font.h	268;"	d
-XXXXXX_X	./drivers/font.h	267;"	d
-XXXXXX__	./drivers/font.h	266;"	d
-XXXXX_XX	./drivers/font.h	265;"	d
-XXXXX_X_	./drivers/font.h	264;"	d
-XXXXX__X	./drivers/font.h	263;"	d
-XXXXX___	./drivers/font.h	262;"	d
-XXXX_XXX	./drivers/font.h	261;"	d
-XXXX_XX_	./drivers/font.h	260;"	d
-XXXX_X_X	./drivers/font.h	259;"	d
-XXXX_X__	./drivers/font.h	258;"	d
-XXXX__XX	./drivers/font.h	257;"	d
-XXXX__X_	./drivers/font.h	256;"	d
-XXXX___X	./drivers/font.h	255;"	d
-XXXX____	./drivers/font.h	254;"	d
-XXX_XXXX	./drivers/font.h	253;"	d
-XXX_XXX_	./drivers/font.h	252;"	d
-XXX_XX_X	./drivers/font.h	251;"	d
-XXX_XX__	./drivers/font.h	250;"	d
-XXX_X_XX	./drivers/font.h	249;"	d
-XXX_X_X_	./drivers/font.h	248;"	d
-XXX_X__X	./drivers/font.h	247;"	d
-XXX_X___	./drivers/font.h	246;"	d
-XXX__XXX	./drivers/font.h	245;"	d
-XXX__XX_	./drivers/font.h	244;"	d
-XXX__X_X	./drivers/font.h	243;"	d
-XXX__X__	./drivers/font.h	242;"	d
-XXX___XX	./drivers/font.h	241;"	d
-XXX___X_	./drivers/font.h	240;"	d
-XXX____X	./drivers/font.h	239;"	d
-XXX_____	./drivers/font.h	238;"	d
-XX_XXXXX	./drivers/font.h	237;"	d
-XX_XXXX_	./drivers/font.h	236;"	d
-XX_XXX_X	./drivers/font.h	235;"	d
-XX_XXX__	./drivers/font.h	234;"	d
-XX_XX_XX	./drivers/font.h	233;"	d
-XX_XX_X_	./drivers/font.h	232;"	d
-XX_XX__X	./drivers/font.h	231;"	d
-XX_XX___	./drivers/font.h	230;"	d
-XX_X_XXX	./drivers/font.h	229;"	d
-XX_X_XX_	./drivers/font.h	228;"	d
-XX_X_X_X	./drivers/font.h	227;"	d
-XX_X_X__	./drivers/font.h	226;"	d
-XX_X__XX	./drivers/font.h	225;"	d
-XX_X__X_	./drivers/font.h	224;"	d
-XX_X___X	./drivers/font.h	223;"	d
-XX_X____	./drivers/font.h	222;"	d
-XX__XXXX	./drivers/font.h	221;"	d
-XX__XXX_	./drivers/font.h	220;"	d
-XX__XX_X	./drivers/font.h	219;"	d
-XX__XX__	./drivers/font.h	218;"	d
-XX__X_XX	./drivers/font.h	217;"	d
-XX__X_X_	./drivers/font.h	216;"	d
-XX__X__X	./drivers/font.h	215;"	d
-XX__X___	./drivers/font.h	214;"	d
-XX___XXX	./drivers/font.h	213;"	d
-XX___XX_	./drivers/font.h	212;"	d
-XX___X_X	./drivers/font.h	211;"	d
-XX___X__	./drivers/font.h	210;"	d
-XX____XX	./drivers/font.h	209;"	d
-XX____X_	./drivers/font.h	208;"	d
-XX_____X	./drivers/font.h	207;"	d
-XX______	./drivers/font.h	206;"	d
-X_XXXXXX	./drivers/font.h	205;"	d
-X_XXXXX_	./drivers/font.h	204;"	d
-X_XXXX_X	./drivers/font.h	203;"	d
-X_XXXX__	./drivers/font.h	202;"	d
-X_XXX_XX	./drivers/font.h	201;"	d
-X_XXX_X_	./drivers/font.h	200;"	d
-X_XXX__X	./drivers/font.h	199;"	d
-X_XXX___	./drivers/font.h	198;"	d
-X_XX_XXX	./drivers/font.h	197;"	d
-X_XX_XX_	./drivers/font.h	196;"	d
-X_XX_X_X	./drivers/font.h	195;"	d
-X_XX_X__	./drivers/font.h	194;"	d
-X_XX__XX	./drivers/font.h	193;"	d
-X_XX__X_	./drivers/font.h	192;"	d
-X_XX___X	./drivers/font.h	191;"	d
-X_XX____	./drivers/font.h	190;"	d
-X_X_XXXX	./drivers/font.h	189;"	d
-X_X_XXX_	./drivers/font.h	188;"	d
-X_X_XX_X	./drivers/font.h	187;"	d
-X_X_XX__	./drivers/font.h	186;"	d
-X_X_X_XX	./drivers/font.h	185;"	d
-X_X_X_X_	./drivers/font.h	184;"	d
-X_X_X__X	./drivers/font.h	183;"	d
-X_X_X___	./drivers/font.h	182;"	d
-X_X__XXX	./drivers/font.h	181;"	d
-X_X__XX_	./drivers/font.h	180;"	d
-X_X__X_X	./drivers/font.h	179;"	d
-X_X__X__	./drivers/font.h	178;"	d
-X_X___XX	./drivers/font.h	177;"	d
-X_X___X_	./drivers/font.h	176;"	d
-X_X____X	./drivers/font.h	175;"	d
-X_X_____	./drivers/font.h	174;"	d
-X__XXXXX	./drivers/font.h	173;"	d
-X__XXXX_	./drivers/font.h	172;"	d
-X__XXX_X	./drivers/font.h	171;"	d
-X__XXX__	./drivers/font.h	170;"	d
-X__XX_XX	./drivers/font.h	169;"	d
-X__XX_X_	./drivers/font.h	168;"	d
-X__XX__X	./drivers/font.h	167;"	d
-X__XX___	./drivers/font.h	166;"	d
-X__X_XXX	./drivers/font.h	165;"	d
-X__X_XX_	./drivers/font.h	164;"	d
-X__X_X_X	./drivers/font.h	163;"	d
-X__X_X__	./drivers/font.h	162;"	d
-X__X__XX	./drivers/font.h	161;"	d
-X__X__X_	./drivers/font.h	160;"	d
-X__X___X	./drivers/font.h	159;"	d
-X__X____	./drivers/font.h	158;"	d
-X___XXXX	./drivers/font.h	157;"	d
-X___XXX_	./drivers/font.h	156;"	d
-X___XX_X	./drivers/font.h	155;"	d
-X___XX__	./drivers/font.h	154;"	d
-X___X_XX	./drivers/font.h	153;"	d
-X___X_X_	./drivers/font.h	152;"	d
-X___X__X	./drivers/font.h	151;"	d
-X___X___	./drivers/font.h	150;"	d
-X____XXX	./drivers/font.h	149;"	d
-X____XX_	./drivers/font.h	148;"	d
-X____X_X	./drivers/font.h	147;"	d
-X____X__	./drivers/font.h	146;"	d
-X_____XX	./drivers/font.h	145;"	d
-X_____X_	./drivers/font.h	144;"	d
-X______X	./drivers/font.h	143;"	d
-X_______	./drivers/font.h	142;"	d
-_XXXXXXX	./drivers/font.h	141;"	d
-_XXXXXX_	./drivers/font.h	140;"	d
-_XXXXX_X	./drivers/font.h	139;"	d
-_XXXXX__	./drivers/font.h	138;"	d
-_XXXX_XX	./drivers/font.h	137;"	d
-_XXXX_X_	./drivers/font.h	136;"	d
-_XXXX__X	./drivers/font.h	135;"	d
-_XXXX___	./drivers/font.h	134;"	d
-_XXX_XXX	./drivers/font.h	133;"	d
-_XXX_XX_	./drivers/font.h	132;"	d
-_XXX_X_X	./drivers/font.h	131;"	d
-_XXX_X__	./drivers/font.h	130;"	d
-_XXX__XX	./drivers/font.h	129;"	d
-_XXX__X_	./drivers/font.h	128;"	d
-_XXX___X	./drivers/font.h	127;"	d
-_XXX____	./drivers/font.h	126;"	d
-_XX_XXXX	./drivers/font.h	125;"	d
-_XX_XXX_	./drivers/font.h	124;"	d
-_XX_XX_X	./drivers/font.h	123;"	d
-_XX_XX__	./drivers/font.h	122;"	d
-_XX_X_XX	./drivers/font.h	121;"	d
-_XX_X_X_	./drivers/font.h	120;"	d
-_XX_X__X	./drivers/font.h	119;"	d
-_XX_X___	./drivers/font.h	118;"	d
-_XX__XXX	./drivers/font.h	117;"	d
-_XX__XX_	./drivers/font.h	116;"	d
-_XX__X_X	./drivers/font.h	115;"	d
-_XX__X__	./drivers/font.h	114;"	d
-_XX___XX	./drivers/font.h	113;"	d
-_XX___X_	./drivers/font.h	112;"	d
-_XX____X	./drivers/font.h	111;"	d
-_XX_____	./drivers/font.h	110;"	d
-_X_XXXXX	./drivers/font.h	109;"	d
-_X_XXXX_	./drivers/font.h	108;"	d
-_X_XXX_X	./drivers/font.h	107;"	d
-_X_XXX__	./drivers/font.h	106;"	d
-_X_XX_XX	./drivers/font.h	105;"	d
-_X_XX_X_	./drivers/font.h	104;"	d
-_X_XX__X	./drivers/font.h	103;"	d
-_X_XX___	./drivers/font.h	102;"	d
-_X_X_XXX	./drivers/font.h	101;"	d
-_X_X_XX_	./drivers/font.h	100;"	d
-_X_X_X_X	./drivers/font.h	99;"	d
-_X_X_X__	./drivers/font.h	98;"	d
-_X_X__XX	./drivers/font.h	97;"	d
-_X_X__X_	./drivers/font.h	96;"	d
-_X_X___X	./drivers/font.h	95;"	d
-_X_X____	./drivers/font.h	94;"	d
-_X__XXXX	./drivers/font.h	93;"	d
-_X__XXX_	./drivers/font.h	92;"	d
-_X__XX_X	./drivers/font.h	91;"	d
-_X__XX__	./drivers/font.h	90;"	d
-_X__X_XX	./drivers/font.h	89;"	d
-_X__X_X_	./drivers/font.h	88;"	d
-_X__X__X	./drivers/font.h	87;"	d
-_X__X___	./drivers/font.h	86;"	d
-_X___XXX	./drivers/font.h	85;"	d
-_X___XX_	./drivers/font.h	84;"	d
-_X___X_X	./drivers/font.h	83;"	d
-_X___X__	./drivers/font.h	82;"	d
-_X____XX	./drivers/font.h	81;"	d
-_X____X_	./drivers/font.h	80;"	d
-_X_____X	./drivers/font.h	79;"	d
-_X______	./drivers/font.h	78;"	d
-__XXXXXX	./drivers/font.h	77;"	d
-__XXXXX_	./drivers/font.h	76;"	d
-__XXXX_X	./drivers/font.h	75;"	d
-__XXXX__	./drivers/font.h	74;"	d
-__XXX_XX	./drivers/font.h	73;"	d
-__XXX_X_	./drivers/font.h	72;"	d
-__XXX__X	./drivers/font.h	71;"	d
-__XXX___	./drivers/font.h	70;"	d
-__XX_XXX	./drivers/font.h	69;"	d
-__XX_XX_	./drivers/font.h	68;"	d
-__XX_X_X	./drivers/font.h	67;"	d
-__XX_X__	./drivers/font.h	66;"	d
-__XX__XX	./drivers/font.h	65;"	d
-__XX__X_	./drivers/font.h	64;"	d
-__XX___X	./drivers/font.h	63;"	d
-__XX____	./drivers/font.h	62;"	d
-__X_XXXX	./drivers/font.h	61;"	d
-__X_XXX_	./drivers/font.h	60;"	d
-__X_XX_X	./drivers/font.h	59;"	d
-__X_XX__	./drivers/font.h	58;"	d
-__X_X_XX	./drivers/font.h	57;"	d
-__X_X_X_	./drivers/font.h	56;"	d
-__X_X__X	./drivers/font.h	55;"	d
-__X_X___	./drivers/font.h	54;"	d
-__X__XXX	./drivers/font.h	53;"	d
-__X__XX_	./drivers/font.h	52;"	d
-__X__X_X	./drivers/font.h	51;"	d
-__X__X__	./drivers/font.h	50;"	d
-__X___XX	./drivers/font.h	49;"	d
-__X___X_	./drivers/font.h	48;"	d
-__X____X	./drivers/font.h	47;"	d
-__X_____	./drivers/font.h	46;"	d
-___XXXXX	./drivers/font.h	45;"	d
-___XXXX_	./drivers/font.h	44;"	d
-___XXX_X	./drivers/font.h	43;"	d
-___XXX__	./drivers/font.h	42;"	d
-___XX_XX	./drivers/font.h	41;"	d
-___XX_X_	./drivers/font.h	40;"	d
-___XX__X	./drivers/font.h	39;"	d
-___XX___	./drivers/font.h	38;"	d
-___X_XXX	./drivers/font.h	37;"	d
-___X_XX_	./drivers/font.h	36;"	d
-___X_X_X	./drivers/font.h	35;"	d
-___X_X__	./drivers/font.h	34;"	d
-___X__XX	./drivers/font.h	33;"	d
-___X__X_	./drivers/font.h	32;"	d
-___X___X	./drivers/font.h	31;"	d
-___X____	./drivers/font.h	30;"	d
-____XXXX	./drivers/font.h	29;"	d
-____XXX_	./drivers/font.h	28;"	d
-____XX_X	./drivers/font.h	27;"	d
-____XX__	./drivers/font.h	26;"	d
-____X_XX	./drivers/font.h	25;"	d
-____X_X_	./drivers/font.h	24;"	d
-____X__X	./drivers/font.h	23;"	d
-____X___	./drivers/font.h	22;"	d
-_____XXX	./drivers/font.h	21;"	d
-_____XX_	./drivers/font.h	20;"	d
-_____X_X	./drivers/font.h	19;"	d
-_____X__	./drivers/font.h	18;"	d
-______XX	./drivers/font.h	17;"	d
-______X_	./drivers/font.h	16;"	d
-_______X	./drivers/font.h	15;"	d
-________	./drivers/font.h	14;"	d
+XXXXXXXX	./drivers/font.h	271;"	d
+XXXXXXX_	./drivers/font.h	270;"	d
+XXXXXX_X	./drivers/font.h	269;"	d
+XXXXXX__	./drivers/font.h	268;"	d
+XXXXX_XX	./drivers/font.h	267;"	d
+XXXXX_X_	./drivers/font.h	266;"	d
+XXXXX__X	./drivers/font.h	265;"	d
+XXXXX___	./drivers/font.h	264;"	d
+XXXX_XXX	./drivers/font.h	263;"	d
+XXXX_XX_	./drivers/font.h	262;"	d
+XXXX_X_X	./drivers/font.h	261;"	d
+XXXX_X__	./drivers/font.h	260;"	d
+XXXX__XX	./drivers/font.h	259;"	d
+XXXX__X_	./drivers/font.h	258;"	d
+XXXX___X	./drivers/font.h	257;"	d
+XXXX____	./drivers/font.h	256;"	d
+XXX_XXXX	./drivers/font.h	255;"	d
+XXX_XXX_	./drivers/font.h	254;"	d
+XXX_XX_X	./drivers/font.h	253;"	d
+XXX_XX__	./drivers/font.h	252;"	d
+XXX_X_XX	./drivers/font.h	251;"	d
+XXX_X_X_	./drivers/font.h	250;"	d
+XXX_X__X	./drivers/font.h	249;"	d
+XXX_X___	./drivers/font.h	248;"	d
+XXX__XXX	./drivers/font.h	247;"	d
+XXX__XX_	./drivers/font.h	246;"	d
+XXX__X_X	./drivers/font.h	245;"	d
+XXX__X__	./drivers/font.h	244;"	d
+XXX___XX	./drivers/font.h	243;"	d
+XXX___X_	./drivers/font.h	242;"	d
+XXX____X	./drivers/font.h	241;"	d
+XXX_____	./drivers/font.h	240;"	d
+XX_XXXXX	./drivers/font.h	239;"	d
+XX_XXXX_	./drivers/font.h	238;"	d
+XX_XXX_X	./drivers/font.h	237;"	d
+XX_XXX__	./drivers/font.h	236;"	d
+XX_XX_XX	./drivers/font.h	235;"	d
+XX_XX_X_	./drivers/font.h	234;"	d
+XX_XX__X	./drivers/font.h	233;"	d
+XX_XX___	./drivers/font.h	232;"	d
+XX_X_XXX	./drivers/font.h	231;"	d
+XX_X_XX_	./drivers/font.h	230;"	d
+XX_X_X_X	./drivers/font.h	229;"	d
+XX_X_X__	./drivers/font.h	228;"	d
+XX_X__XX	./drivers/font.h	227;"	d
+XX_X__X_	./drivers/font.h	226;"	d
+XX_X___X	./drivers/font.h	225;"	d
+XX_X____	./drivers/font.h	224;"	d
+XX__XXXX	./drivers/font.h	223;"	d
+XX__XXX_	./drivers/font.h	222;"	d
+XX__XX_X	./drivers/font.h	221;"	d
+XX__XX__	./drivers/font.h	220;"	d
+XX__X_XX	./drivers/font.h	219;"	d
+XX__X_X_	./drivers/font.h	218;"	d
+XX__X__X	./drivers/font.h	217;"	d
+XX__X___	./drivers/font.h	216;"	d
+XX___XXX	./drivers/font.h	215;"	d
+XX___XX_	./drivers/font.h	214;"	d
+XX___X_X	./drivers/font.h	213;"	d
+XX___X__	./drivers/font.h	212;"	d
+XX____XX	./drivers/font.h	211;"	d
+XX____X_	./drivers/font.h	210;"	d
+XX_____X	./drivers/font.h	209;"	d
+XX______	./drivers/font.h	208;"	d
+X_XXXXXX	./drivers/font.h	207;"	d
+X_XXXXX_	./drivers/font.h	206;"	d
+X_XXXX_X	./drivers/font.h	205;"	d
+X_XXXX__	./drivers/font.h	204;"	d
+X_XXX_XX	./drivers/font.h	203;"	d
+X_XXX_X_	./drivers/font.h	202;"	d
+X_XXX__X	./drivers/font.h	201;"	d
+X_XXX___	./drivers/font.h	200;"	d
+X_XX_XXX	./drivers/font.h	199;"	d
+X_XX_XX_	./drivers/font.h	198;"	d
+X_XX_X_X	./drivers/font.h	197;"	d
+X_XX_X__	./drivers/font.h	196;"	d
+X_XX__XX	./drivers/font.h	195;"	d
+X_XX__X_	./drivers/font.h	194;"	d
+X_XX___X	./drivers/font.h	193;"	d
+X_XX____	./drivers/font.h	192;"	d
+X_X_XXXX	./drivers/font.h	191;"	d
+X_X_XXX_	./drivers/font.h	190;"	d
+X_X_XX_X	./drivers/font.h	189;"	d
+X_X_XX__	./drivers/font.h	188;"	d
+X_X_X_XX	./drivers/font.h	187;"	d
+X_X_X_X_	./drivers/font.h	186;"	d
+X_X_X__X	./drivers/font.h	185;"	d
+X_X_X___	./drivers/font.h	184;"	d
+X_X__XXX	./drivers/font.h	183;"	d
+X_X__XX_	./drivers/font.h	182;"	d
+X_X__X_X	./drivers/font.h	181;"	d
+X_X__X__	./drivers/font.h	180;"	d
+X_X___XX	./drivers/font.h	179;"	d
+X_X___X_	./drivers/font.h	178;"	d
+X_X____X	./drivers/font.h	177;"	d
+X_X_____	./drivers/font.h	176;"	d
+X__XXXXX	./drivers/font.h	175;"	d
+X__XXXX_	./drivers/font.h	174;"	d
+X__XXX_X	./drivers/font.h	173;"	d
+X__XXX__	./drivers/font.h	172;"	d
+X__XX_XX	./drivers/font.h	171;"	d
+X__XX_X_	./drivers/font.h	170;"	d
+X__XX__X	./drivers/font.h	169;"	d
+X__XX___	./drivers/font.h	168;"	d
+X__X_XXX	./drivers/font.h	167;"	d
+X__X_XX_	./drivers/font.h	166;"	d
+X__X_X_X	./drivers/font.h	165;"	d
+X__X_X__	./drivers/font.h	164;"	d
+X__X__XX	./drivers/font.h	163;"	d
+X__X__X_	./drivers/font.h	162;"	d
+X__X___X	./drivers/font.h	161;"	d
+X__X____	./drivers/font.h	160;"	d
+X___XXXX	./drivers/font.h	159;"	d
+X___XXX_	./drivers/font.h	158;"	d
+X___XX_X	./drivers/font.h	157;"	d
+X___XX__	./drivers/font.h	156;"	d
+X___X_XX	./drivers/font.h	155;"	d
+X___X_X_	./drivers/font.h	154;"	d
+X___X__X	./drivers/font.h	153;"	d
+X___X___	./drivers/font.h	152;"	d
+X____XXX	./drivers/font.h	151;"	d
+X____XX_	./drivers/font.h	150;"	d
+X____X_X	./drivers/font.h	149;"	d
+X____X__	./drivers/font.h	148;"	d
+X_____XX	./drivers/font.h	147;"	d
+X_____X_	./drivers/font.h	146;"	d
+X______X	./drivers/font.h	145;"	d
+X_______	./drivers/font.h	144;"	d
+_XXXXXXX	./drivers/font.h	143;"	d
+_XXXXXX_	./drivers/font.h	142;"	d
+_XXXXX_X	./drivers/font.h	141;"	d
+_XXXXX__	./drivers/font.h	140;"	d
+_XXXX_XX	./drivers/font.h	139;"	d
+_XXXX_X_	./drivers/font.h	138;"	d
+_XXXX__X	./drivers/font.h	137;"	d
+_XXXX___	./drivers/font.h	136;"	d
+_XXX_XXX	./drivers/font.h	135;"	d
+_XXX_XX_	./drivers/font.h	134;"	d
+_XXX_X_X	./drivers/font.h	133;"	d
+_XXX_X__	./drivers/font.h	132;"	d
+_XXX__XX	./drivers/font.h	131;"	d
+_XXX__X_	./drivers/font.h	130;"	d
+_XXX___X	./drivers/font.h	129;"	d
+_XXX____	./drivers/font.h	128;"	d
+_XX_XXXX	./drivers/font.h	127;"	d
+_XX_XXX_	./drivers/font.h	126;"	d
+_XX_XX_X	./drivers/font.h	125;"	d
+_XX_XX__	./drivers/font.h	124;"	d
+_XX_X_XX	./drivers/font.h	123;"	d
+_XX_X_X_	./drivers/font.h	122;"	d
+_XX_X__X	./drivers/font.h	121;"	d
+_XX_X___	./drivers/font.h	120;"	d
+_XX__XXX	./drivers/font.h	119;"	d
+_XX__XX_	./drivers/font.h	118;"	d
+_XX__X_X	./drivers/font.h	117;"	d
+_XX__X__	./drivers/font.h	116;"	d
+_XX___XX	./drivers/font.h	115;"	d
+_XX___X_	./drivers/font.h	114;"	d
+_XX____X	./drivers/font.h	113;"	d
+_XX_____	./drivers/font.h	112;"	d
+_X_XXXXX	./drivers/font.h	111;"	d
+_X_XXXX_	./drivers/font.h	110;"	d
+_X_XXX_X	./drivers/font.h	109;"	d
+_X_XXX__	./drivers/font.h	108;"	d
+_X_XX_XX	./drivers/font.h	107;"	d
+_X_XX_X_	./drivers/font.h	106;"	d
+_X_XX__X	./drivers/font.h	105;"	d
+_X_XX___	./drivers/font.h	104;"	d
+_X_X_XXX	./drivers/font.h	103;"	d
+_X_X_XX_	./drivers/font.h	102;"	d
+_X_X_X_X	./drivers/font.h	101;"	d
+_X_X_X__	./drivers/font.h	100;"	d
+_X_X__XX	./drivers/font.h	99;"	d
+_X_X__X_	./drivers/font.h	98;"	d
+_X_X___X	./drivers/font.h	97;"	d
+_X_X____	./drivers/font.h	96;"	d
+_X__XXXX	./drivers/font.h	95;"	d
+_X__XXX_	./drivers/font.h	94;"	d
+_X__XX_X	./drivers/font.h	93;"	d
+_X__XX__	./drivers/font.h	92;"	d
+_X__X_XX	./drivers/font.h	91;"	d
+_X__X_X_	./drivers/font.h	90;"	d
+_X__X__X	./drivers/font.h	89;"	d
+_X__X___	./drivers/font.h	88;"	d
+_X___XXX	./drivers/font.h	87;"	d
+_X___XX_	./drivers/font.h	86;"	d
+_X___X_X	./drivers/font.h	85;"	d
+_X___X__	./drivers/font.h	84;"	d
+_X____XX	./drivers/font.h	83;"	d
+_X____X_	./drivers/font.h	82;"	d
+_X_____X	./drivers/font.h	81;"	d
+_X______	./drivers/font.h	80;"	d
+__XXXXXX	./drivers/font.h	79;"	d
+__XXXXX_	./drivers/font.h	78;"	d
+__XXXX_X	./drivers/font.h	77;"	d
+__XXXX__	./drivers/font.h	76;"	d
+__XXX_XX	./drivers/font.h	75;"	d
+__XXX_X_	./drivers/font.h	74;"	d
+__XXX__X	./drivers/font.h	73;"	d
+__XXX___	./drivers/font.h	72;"	d
+__XX_XXX	./drivers/font.h	71;"	d
+__XX_XX_	./drivers/font.h	70;"	d
+__XX_X_X	./drivers/font.h	69;"	d
+__XX_X__	./drivers/font.h	68;"	d
+__XX__XX	./drivers/font.h	67;"	d
+__XX__X_	./drivers/font.h	66;"	d
+__XX___X	./drivers/font.h	65;"	d
+__XX____	./drivers/font.h	64;"	d
+__X_XXXX	./drivers/font.h	63;"	d
+__X_XXX_	./drivers/font.h	62;"	d
+__X_XX_X	./drivers/font.h	61;"	d
+__X_XX__	./drivers/font.h	60;"	d
+__X_X_XX	./drivers/font.h	59;"	d
+__X_X_X_	./drivers/font.h	58;"	d
+__X_X__X	./drivers/font.h	57;"	d
+__X_X___	./drivers/font.h	56;"	d
+__X__XXX	./drivers/font.h	55;"	d
+__X__XX_	./drivers/font.h	54;"	d
+__X__X_X	./drivers/font.h	53;"	d
+__X__X__	./drivers/font.h	52;"	d
+__X___XX	./drivers/font.h	51;"	d
+__X___X_	./drivers/font.h	50;"	d
+__X____X	./drivers/font.h	49;"	d
+__X_____	./drivers/font.h	48;"	d
+___XXXXX	./drivers/font.h	47;"	d
+___XXXX_	./drivers/font.h	46;"	d
+___XXX_X	./drivers/font.h	45;"	d
+___XXX__	./drivers/font.h	44;"	d
+___XX_XX	./drivers/font.h	43;"	d
+___XX_X_	./drivers/font.h	42;"	d
+___XX__X	./drivers/font.h	41;"	d
+___XX___	./drivers/font.h	40;"	d
+___X_XXX	./drivers/font.h	39;"	d
+___X_XX_	./drivers/font.h	38;"	d
+___X_X_X	./drivers/font.h	37;"	d
+___X_X__	./drivers/font.h	36;"	d
+___X__XX	./drivers/font.h	35;"	d
+___X__X_	./drivers/font.h	34;"	d
+___X___X	./drivers/font.h	33;"	d
+___X____	./drivers/font.h	32;"	d
+____XXXX	./drivers/font.h	31;"	d
+____XXX_	./drivers/font.h	30;"	d
+____XX_X	./drivers/font.h	29;"	d
+____XX__	./drivers/font.h	28;"	d
+____X_XX	./drivers/font.h	27;"	d
+____X_X_	./drivers/font.h	26;"	d
+____X__X	./drivers/font.h	25;"	d
+____X___	./drivers/font.h	24;"	d
+_____XXX	./drivers/font.h	23;"	d
+_____XX_	./drivers/font.h	22;"	d
+_____X_X	./drivers/font.h	21;"	d
+_____X__	./drivers/font.h	20;"	d
+______XX	./drivers/font.h	19;"	d
+______X_	./drivers/font.h	18;"	d
+_______X	./drivers/font.h	17;"	d
+________	./drivers/font.h	16;"	d
 __font_bitmap__	./drivers/font.c	/^static const unsigned char __font_bitmap__[] = {$/;"	v	file:
 __font_index__	./drivers/font.c	/^static const unsigned short __font_index__[] = {$/;"	v	file:
 __font_widths__	./drivers/font.c	/^static const unsigned char __font_widths__[] = {$/;"	v	file:
-_interrupt_handler	./cpu/_interrupt.asm	/^_interrupt_handler:$/;"	l
+_interrupt_handler	./kernel/_interrupt.asm	/^_interrupt_handler:$/;"	l
 _pause	./lib/libc.c	/^void _pause(void)$/;"	f
 access	./cpu/gdt.h	/^	uint8_t access;$/;"	m	struct:gdt_entry
+acpi_get_rsdp	./kernel/acpi.c	/^rsdp_t *acpi_get_rsdp()$/;"	f
+acpi_get_rsdt	./kernel/acpi.c	/^rsdt_t *acpi_get_rsdt()$/;"	f
+acpi_get_table	./kernel/acpi.c	/^void* acpi_get_table(uint8_t *signature)$/;"	f
+acpi_init	./kernel/acpi.c	/^void acpi_init(void)$/;"	f
+acpi_sdt	./kernel/acpi.h	/^typedef struct acpi_sdt {$/;"	s
+acpi_sdt_t	./kernel/acpi.h	/^} __attribute__((packed)) acpi_sdt_t;$/;"	t	typeref:struct:acpi_sdt
 addr	./lib/multiboot2.h	/^  multiboot_uint64_t addr;$/;"	m	struct:multiboot_mmap_entry
+apic_disable_pic	./cpu/apic.c	/^void apic_disable_pic(void)$/;"	f
+apic_init	./cpu/apic.c	/^void apic_init(void)$/;"	f
+apic_processor_id	./kernel/acpi.h	/^	uint8_t apic_processor_id;$/;"	m	struct:madt_entry_lapic
+apid_id	./kernel/acpi.h	/^	uint8_t apid_id;$/;"	m	struct:madt_entry_lapic
 architecture	./lib/multiboot2.h	/^  multiboot_uint32_t architecture;$/;"	m	struct:multiboot_header
 base	./cpu/gdt.h	/^	uint64_t base;$/;"	m	struct:__anon5
 base	./cpu/idt.h	/^	uint64_t base;$/;"	m	struct:__anon4
 base0	./cpu/gdt.h	/^	uint16_t base0;$/;"	m	struct:gdt_entry
+base0	./cpu/gdt.h	/^	uint16_t base0;$/;"	m	struct:gdt_system_entry
 base1	./cpu/gdt.h	/^	uint8_t base1;$/;"	m	struct:gdt_entry
+base1	./cpu/gdt.h	/^	uint8_t base1;$/;"	m	struct:gdt_system_entry
 base2	./cpu/gdt.h	/^	uint8_t base2;$/;"	m	struct:gdt_entry
+base2	./cpu/gdt.h	/^	uint8_t base2;$/;"	m	struct:gdt_system_entry
+base3	./cpu/gdt.h	/^	uint32_t base3;$/;"	m	struct:gdt_system_entry
 biosdev	./lib/multiboot2.h	/^  multiboot_uint32_t biosdev;$/;"	m	struct:multiboot_tag_bootdev
 bitmap_font	./drivers/font.h	/^struct bitmap_font {$/;"	s
 blue	./lib/multiboot2.h	/^  multiboot_uint8_t blue;$/;"	m	struct:multiboot_color
 bpp	./drivers/screen.c	/^static uint8_t bpp = 0;$/;"	v	file:
 bss_end_addr	./lib/multiboot2.h	/^  multiboot_uint32_t bss_end_addr;$/;"	m	struct:multiboot_header_tag_address
 buffer	./drivers/screen.c	/^static uint32_t *buffer = NULL;$/;"	v	file:
+bus_source	./kernel/acpi.h	/^	uint8_t bus_source;$/;"	m	struct:madt_entry_iso
+check_apic	./init/boot.asm	/^check_apic:$/;"	l
 check_cpuid	./init/boot.asm	/^check_cpuid:$/;"	l
 check_gbyte_paging	./init/boot.asm	/^check_gbyte_paging:$/;"	l
 check_long_mode	./init/boot.asm	/^check_long_mode:$/;"	l
 check_multiboot	./init/boot.asm	/^check_multiboot:$/;"	l
+checksum	./kernel/acpi.h	/^	uint8_t checksum;$/;"	m	struct:acpi_sdt
+checksum	./kernel/acpi.h	/^	uint8_t checksum;$/;"	m	struct:rsdp
 checksum	./lib/multiboot2.h	/^  multiboot_uint32_t checksum;$/;"	m	struct:multiboot_header
+checksum_zero	./lib/libc.c	/^uint8_t checksum_zero(uint8_t *b, uint64_t count)$/;"	f
 clear_screen	./lib/kprintf.c	/^void clear_screen()$/;"	f
 cmdline	./lib/multiboot2.h	/^  char cmdline[0];$/;"	m	struct:multiboot_tag_module
 common	./lib/multiboot2.h	/^  struct multiboot_tag_framebuffer_common common;$/;"	m	struct:multiboot_tag_framebuffer	typeref:struct:multiboot_tag_framebuffer::multiboot_tag_framebuffer_common
 console_flags	./lib/multiboot2.h	/^  multiboot_uint32_t console_flags;$/;"	m	struct:multiboot_header_tag_console_flags
-cs	./cpu/interrupt.h	/^	uint64_t cs;$/;"	m	struct:pt_regs
+creator_id	./kernel/acpi.h	/^	uint32_t creator_id;$/;"	m	struct:acpi_sdt
+creator_revision	./kernel/acpi.h	/^	uint32_t creator_revision;$/;"	m	struct:acpi_sdt
+cs	./kernel/interrupt.h	/^	uint64_t cs;$/;"	m	struct:pt_regs
 cseg	./lib/multiboot2.h	/^  multiboot_uint16_t cseg;$/;"	m	struct:multiboot_tag_apm
 cseg_16	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_16;$/;"	m	struct:multiboot_tag_apm
 cseg_16_len	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_16_len;$/;"	m	struct:multiboot_tag_apm
@@ -420,7 +555,7 @@ dhcpack	./lib/multiboot2.h	/^  multiboot_uint8_t dhcpack[0];$/;"	m	struct:multib
 dseg	./lib/multiboot2.h	/^  multiboot_uint16_t dseg;$/;"	m	struct:multiboot_tag_apm
 dseg_len	./lib/multiboot2.h	/^  multiboot_uint16_t dseg_len;$/;"	m	struct:multiboot_tag_apm
 efi_mmap	./lib/multiboot2.h	/^  multiboot_uint8_t efi_mmap[0];$/;"	m	struct:multiboot_tag_efi_mmap
-eflags	./cpu/interrupt.h	/^	uint64_t eflags;$/;"	m	struct:pt_regs
+eflags	./kernel/interrupt.h	/^	uint64_t eflags;$/;"	m	struct:pt_regs
 enable_paging	./init/boot.asm	/^enable_paging:$/;"	l
 entries	./lib/multiboot2.h	/^  struct multiboot_mmap_entry entries[0];$/;"	m	struct:multiboot_tag_mmap	typeref:struct:multiboot_tag_mmap::multiboot_mmap_entry
 entry_addr	./lib/multiboot2.h	/^  multiboot_uint32_t entry_addr;$/;"	m	struct:multiboot_header_tag_entry_address
@@ -428,12 +563,38 @@ entry_size	./lib/multiboot2.h	/^  multiboot_uint32_t entry_size;$/;"	m	struct:mu
 entry_version	./lib/multiboot2.h	/^  multiboot_uint32_t entry_version;$/;"	m	struct:multiboot_tag_mmap
 entsize	./lib/multiboot2.h	/^  multiboot_uint32_t entsize;$/;"	m	struct:multiboot_tag_elf_sections
 error	./init/boot.asm	/^error:$/;"	l
-error_code	./cpu/interrupt.h	/^	uint64_t error_code;$/;"	m	struct:pt_regs
-extern	./cpu/_interrupt.asm	/^extern interrupt_handler$/;"	l
+error_code	./kernel/interrupt.h	/^	uint64_t error_code;$/;"	m	struct:pt_regs
+exception_handler_ac	./kernel/exception.c	/^uint8_t exception_handler_ac(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_bp	./kernel/exception.c	/^uint8_t exception_handler_bp(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_br	./kernel/exception.c	/^uint8_t exception_handler_br(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_db	./kernel/exception.c	/^uint8_t exception_handler_db(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_de	./kernel/exception.c	/^uint8_t exception_handler_de(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_df	./kernel/exception.c	/^uint8_t exception_handler_df(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_gp	./kernel/exception.c	/^uint8_t exception_handler_gp(pt_regs_t *regs)$/;"	f
+exception_handler_mc	./kernel/exception.c	/^uint8_t exception_handler_mc(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_mf	./kernel/exception.c	/^uint8_t exception_handler_mf(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_nm	./kernel/exception.c	/^uint8_t exception_handler_nm(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_nmi	./kernel/exception.c	/^uint8_t exception_handler_nmi(pt_regs_t *regs){return EOK;}$/;"	f
+exception_handler_np	./kernel/exception.c	/^uint8_t exception_handler_np(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_of	./kernel/exception.c	/^uint8_t exception_handler_of(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_pf	./kernel/exception.c	/^uint8_t exception_handler_pf(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_reserved	./kernel/exception.c	/^uint8_t exception_handler_reserved(pt_regs_t *regs) {LOG("Reserved exception caught");return EOK;}$/;"	f
+exception_handler_ss	./kernel/exception.c	/^uint8_t exception_handler_ss(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_ts	./kernel/exception.c	/^uint8_t exception_handler_ts(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_ud	./kernel/exception.c	/^uint8_t exception_handler_ud(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_ve	./kernel/exception.c	/^uint8_t exception_handler_ve(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_handler_xm	./kernel/exception.c	/^uint8_t exception_handler_xm(pt_regs_t *regs) {return EOK;}$/;"	f
+exception_init	./kernel/exception.c	/^void exception_init()$/;"	f
 extern	./init/boot.asm	/^extern main$/;"	l
+extern	./kernel/_interrupt.asm	/^extern interrupt_handler$/;"	l
 external_specification	./lib/multiboot2.h	/^  multiboot_uint8_t external_specification[256];$/;"	m	struct:multiboot_vbe_mode_info_block
 external_specification	./lib/multiboot2.h	/^  multiboot_uint8_t external_specification[512];$/;"	m	struct:multiboot_vbe_info_block
+extra_checksum	./kernel/acpi.h	/^	uint8_t extra_checksum;$/;"	m	struct:rsdp
 flags	./cpu/gdt.h	/^	uint8_t flags:4;$/;"	m	struct:gdt_entry
+flags	./kernel/acpi.h	/^	uint16_t flags;$/;"	m	struct:madt_entry_iso
+flags	./kernel/acpi.h	/^	uint16_t flags;$/;"	m	struct:madt_entry_nmi
+flags	./kernel/acpi.h	/^	uint32_t flags;$/;"	m	struct:madt
+flags	./kernel/acpi.h	/^	uint32_t flags;$/;"	m	struct:madt_entry_lapic
 flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag
 flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_address
 flags	./lib/multiboot2.h	/^  multiboot_uint16_t flags;$/;"	m	struct:multiboot_header_tag_console_flags
@@ -465,13 +626,21 @@ gdt_entry	./cpu/gdt.h	/^typedef struct gdt_entry {$/;"	s
 gdt_entry_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_entry_t;$/;"	t	typeref:struct:gdt_entry
 gdt_init	./cpu/gdt.c	/^void gdt_init()$/;"	f
 gdt_install_descriptor	./cpu/gdt.c	/^void gdt_install_descriptor(uint8_t num, uint32_t base, uint32_t limit,$/;"	f
+gdt_install_tss	./cpu/gdt.c	/^void gdt_install_tss(uint8_t num, uint64_t base, uint64_t limit)$/;"	f
 gdt_load	./cpu/gdt.c	/^void gdt_load(uint64_t new_gdt_ptr)$/;"	f
 gdt_pointer_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_pointer_t;$/;"	t	typeref:struct:__anon5
 gdt_ptr	./cpu/gdt.c	/^static gdt_pointer_t gdt_ptr __attribute__ ((aligned (8)));;$/;"	v	file:
-global	./cpu/_interrupt.asm	/^global interrupt_handler_%1$/;"	l
-global	./cpu/_interrupt.asm	/^global interrupt_handler_ec_%1$/;"	l
+gdt_system_entry	./cpu/gdt.h	/^typedef struct gdt_system_entry {$/;"	s
+gdt_system_entry_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_system_entry_t;$/;"	t	typeref:struct:gdt_system_entry
 global	./init/boot.asm	/^global start$/;"	l
+global	./kernel/_interrupt.asm	/^global interrupt_handler_%1$/;"	l
+global	./kernel/_interrupt.asm	/^global interrupt_handler_ec_%1$/;"	l
+global_system_interrupt	./kernel/acpi.h	/^	uint32_t global_system_interrupt;$/;"	m	struct:madt_entry_iso
+global_system_interrupt_base	./kernel/acpi.h	/^	uint32_t global_system_interrupt_base;$/;"	m	struct:madt_entry_ioapic
 green	./lib/multiboot2.h	/^  multiboot_uint8_t green;$/;"	m	struct:multiboot_color
+header	./kernel/acpi.h	/^	acpi_sdt_t header;$/;"	m	struct:madt
+header	./kernel/acpi.h	/^	acpi_sdt_t header;$/;"	m	struct:rsdt
+header	./kernel/acpi.h	/^	acpi_sdt_t header;$/;"	m	struct:xsdt
 header_addr	./lib/multiboot2.h	/^  multiboot_uint32_t header_addr;$/;"	m	struct:multiboot_header_tag_address
 header_end	./init/multiboot_header.asm	/^header_end:$/;"	l
 header_length	./lib/multiboot2.h	/^  multiboot_uint32_t header_length;$/;"	m	struct:multiboot_header
@@ -492,295 +661,326 @@ int16_t	./lib/stdint.h	/^typedef signed short int16_t;$/;"	t
 int32_t	./lib/stdint.h	/^typedef signed int int32_t;$/;"	t
 int64_t	./lib/stdint.h	/^typedef signed long long int64_t;$/;"	t
 int8_t	./lib/stdint.h	/^typedef signed char int8_t;$/;"	t
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 0$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 1$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 100$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 101$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 102$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 103$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 104$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 105$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 106$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 107$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 108$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 109$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 110$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 111$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 112$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 113$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 114$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 115$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 116$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 117$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 118$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 119$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 120$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 121$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 122$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 123$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 124$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 125$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 126$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 127$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 128$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 129$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 130$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 131$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 132$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 133$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 134$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 135$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 136$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 137$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 138$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 139$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 140$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 141$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 142$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 143$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 144$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 145$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 146$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 147$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 148$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 149$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 15$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 150$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 151$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 152$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 153$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 154$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 155$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 156$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 157$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 158$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 159$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 16$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 160$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 161$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 162$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 163$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 164$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 165$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 166$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 167$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 168$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 169$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 170$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 171$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 172$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 173$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 174$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 175$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 176$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 177$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 178$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 179$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 18$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 180$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 181$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 182$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 183$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 184$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 185$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 186$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 187$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 188$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 189$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 19$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 190$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 191$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 192$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 193$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 194$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 195$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 196$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 197$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 198$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 199$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 2$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 20$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 200$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 201$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 202$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 203$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 204$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 205$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 206$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 207$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 208$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 209$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 21$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 210$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 211$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 212$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 213$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 214$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 215$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 216$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 217$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 218$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 219$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 22$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 220$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 221$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 222$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 223$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 224$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 225$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 226$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 227$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 228$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 229$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 23$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 230$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 231$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 232$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 233$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 234$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 235$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 236$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 237$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 238$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 239$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 24$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 240$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 241$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 242$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 243$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 244$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 245$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 246$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 247$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 248$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 249$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 25$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 250$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 251$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 252$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 253$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 254$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 255$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 26$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 27$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 28$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 29$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 3$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 30$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 31$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 32$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 33$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 34$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 35$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 36$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 37$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 38$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 39$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 4$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 40$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 41$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 42$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 43$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 44$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 45$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 46$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 47$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 48$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 49$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 5$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 50$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 51$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 52$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 53$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 54$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 55$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 56$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 57$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 58$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 59$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 6$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 60$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 61$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 62$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 63$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 64$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 65$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 66$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 67$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 68$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 69$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 7$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 70$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 71$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 72$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 73$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 74$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 75$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 76$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 77$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 78$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 79$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 80$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 81$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 82$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 83$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 84$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 85$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 86$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 87$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 88$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 89$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 9$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 90$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 91$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 92$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 93$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 94$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 95$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 96$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 97$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 98$/;"	l
-interrupt_handler	./cpu/_interrupt.asm	/^interrupt_handler 99$/;"	l
-interrupt_handler	./cpu/interrupt.c	/^void interrupt_handler(pt_regs_t *regs)$/;"	f
-interrupt_handler_ec	./cpu/_interrupt.asm	/^interrupt_handler_ec 10$/;"	l
-interrupt_handler_ec	./cpu/_interrupt.asm	/^interrupt_handler_ec 11$/;"	l
-interrupt_handler_ec	./cpu/_interrupt.asm	/^interrupt_handler_ec 12$/;"	l
-interrupt_handler_ec	./cpu/_interrupt.asm	/^interrupt_handler_ec 13$/;"	l
-interrupt_handler_ec	./cpu/_interrupt.asm	/^interrupt_handler_ec 14$/;"	l
-interrupt_handler_ec	./cpu/_interrupt.asm	/^interrupt_handler_ec 17$/;"	l
-interrupt_handler_ec	./cpu/_interrupt.asm	/^interrupt_handler_ec 8$/;"	l
-interrupt_handler_t	./cpu/interrupt.h	/^typedef void (*interrupt_handler_t)(pt_regs_t *regs);$/;"	t
-interrupt_handlers	./cpu/interrupt.c	/^static interrupt_handler_t interrupt_handlers[INTERRUPTS_MAX] = {NULL};$/;"	v	file:
-interrupt_init	./cpu/interrupt.c	/^void interrupt_init()$/;"	f
-interrupt_install_jumper_gates	./cpu/interrupt.c	/^void interrupt_install_jumper_gates()$/;"	f
-interrupt_num	./cpu/interrupt.h	/^	uint64_t interrupt_num;$/;"	m	struct:pt_regs
-interrupt_set	./cpu/interrupt.c	/^uint8_t interrupt_set(uint8_t irq, interrupt_handler_t handler)$/;"	f
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 0$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 1$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 100$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 101$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 102$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 103$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 104$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 105$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 106$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 107$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 108$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 109$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 110$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 111$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 112$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 113$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 114$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 115$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 116$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 117$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 118$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 119$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 120$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 121$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 122$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 123$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 124$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 125$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 126$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 127$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 128$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 129$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 130$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 131$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 132$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 133$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 134$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 135$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 136$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 137$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 138$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 139$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 140$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 141$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 142$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 143$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 144$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 145$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 146$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 147$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 148$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 149$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 15$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 150$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 151$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 152$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 153$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 154$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 155$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 156$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 157$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 158$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 159$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 16$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 160$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 161$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 162$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 163$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 164$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 165$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 166$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 167$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 168$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 169$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 170$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 171$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 172$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 173$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 174$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 175$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 176$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 177$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 178$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 179$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 18$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 180$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 181$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 182$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 183$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 184$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 185$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 186$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 187$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 188$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 189$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 19$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 190$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 191$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 192$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 193$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 194$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 195$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 196$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 197$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 198$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 199$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 2$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 20$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 200$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 201$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 202$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 203$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 204$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 205$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 206$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 207$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 208$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 209$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 21$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 210$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 211$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 212$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 213$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 214$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 215$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 216$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 217$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 218$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 219$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 22$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 220$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 221$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 222$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 223$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 224$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 225$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 226$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 227$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 228$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 229$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 23$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 230$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 231$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 232$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 233$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 234$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 235$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 236$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 237$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 238$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 239$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 24$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 240$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 241$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 242$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 243$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 244$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 245$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 246$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 247$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 248$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 249$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 25$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 250$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 251$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 252$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 253$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 254$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 255$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 26$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 27$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 28$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 29$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 3$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 30$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 31$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 32$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 33$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 34$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 35$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 36$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 37$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 38$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 39$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 4$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 40$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 41$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 42$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 43$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 44$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 45$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 46$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 47$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 48$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 49$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 5$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 50$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 51$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 52$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 53$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 54$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 55$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 56$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 57$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 58$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 59$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 6$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 60$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 61$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 62$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 63$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 64$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 65$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 66$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 67$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 68$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 69$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 7$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 70$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 71$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 72$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 73$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 74$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 75$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 76$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 77$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 78$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 79$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 80$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 81$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 82$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 83$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 84$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 85$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 86$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 87$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 88$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 89$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 9$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 90$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 91$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 92$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 93$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 94$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 95$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 96$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 97$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 98$/;"	l
+interrupt_handler	./kernel/_interrupt.asm	/^interrupt_handler 99$/;"	l
+interrupt_handler	./kernel/interrupt.c	/^void interrupt_handler(pt_regs_t *regs)$/;"	f
+interrupt_handler_ec	./kernel/_interrupt.asm	/^interrupt_handler_ec 10$/;"	l
+interrupt_handler_ec	./kernel/_interrupt.asm	/^interrupt_handler_ec 11$/;"	l
+interrupt_handler_ec	./kernel/_interrupt.asm	/^interrupt_handler_ec 12$/;"	l
+interrupt_handler_ec	./kernel/_interrupt.asm	/^interrupt_handler_ec 13$/;"	l
+interrupt_handler_ec	./kernel/_interrupt.asm	/^interrupt_handler_ec 14$/;"	l
+interrupt_handler_ec	./kernel/_interrupt.asm	/^interrupt_handler_ec 17$/;"	l
+interrupt_handler_ec	./kernel/_interrupt.asm	/^interrupt_handler_ec 8$/;"	l
+interrupt_handler_t	./kernel/interrupt.h	/^typedef uint8_t (*interrupt_handler_t)(pt_regs_t *regs);$/;"	t
+interrupt_handlers	./kernel/interrupt.c	/^static interrupt_handler_t interrupt_handlers[INTERRUPTS_MAX] = {NULL};$/;"	v	file:
+interrupt_init	./kernel/interrupt.c	/^void interrupt_init()$/;"	f
+interrupt_install	./kernel/interrupt.c	/^uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler)$/;"	f
+interrupt_install_jumper_gates	./kernel/interrupt.c	/^void interrupt_install_jumper_gates()$/;"	f
+interrupt_num	./kernel/interrupt.h	/^	uint64_t interrupt_num;$/;"	m	struct:pt_regs
+interrupt_print_regs	./kernel/interrupt.c	/^void interrupt_print_regs(pt_regs_t *regs)$/;"	f
+interrupt_uninstall	./kernel/interrupt.c	/^void interrupt_uninstall(uint8_t irq)$/;"	f
 intptr_t	./lib/stdint.h	/^typedef int64_t intptr_t;$/;"	t
+io_apic_addr	./kernel/acpi.h	/^	uint32_t io_apic_addr;$/;"	m	struct:madt_entry_ioapic
+io_apic_id	./kernel/acpi.h	/^	uint8_t io_apic_id;$/;"	m	struct:madt_entry_ioapic
+io_map	./cpu/tss.h	/^	uint16_t io_map;$/;"	m	struct:tss
 io_wait	./lib/libc.c	/^inline void io_wait(void)$/;"	f
+irq_source	./kernel/acpi.h	/^	uint8_t irq_source;$/;"	m	struct:madt_entry_iso
 ist	./cpu/idt.h	/^	uint8_t ist; \/* bit 0 and 1 used. Rest is reserved *\/$/;"	m	struct:idt_entry
+ist	./cpu/tss.h	/^	uint64_t ist[7];$/;"	m	struct:tss
 itoa	./lib/libc.c	/^void itoa(char *buf, int base, int64_t n)$/;"	f
 kprint	./lib/kprintf.c	/^void kprint(char *str)$/;"	f
 kprintf	./lib/kprintf.c	/^void kprintf(const char *fmt, ...)$/;"	f
+lapic_addr	./cpu/apic.c	/^uint64_t* lapic_addr;$/;"	v
+lapic_addr	./kernel/acpi.h	/^	uint32_t lapic_addr;$/;"	m	struct:madt
+lapic_enable	./cpu/apic.c	/^void lapic_enable(void)$/;"	f
 len	./lib/multiboot2.h	/^  multiboot_uint64_t len;$/;"	m	struct:multiboot_mmap_entry
+length	./kernel/acpi.h	/^	uint32_t length;$/;"	m	struct:acpi_sdt
+length	./kernel/acpi.h	/^	uint32_t length;$/;"	m	struct:rsdp
+length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_ioapic
+length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_iso
+length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_lapic
+length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_nmi
 limit	./cpu/gdt.h	/^	uint16_t limit;$/;"	m	struct:__anon5
 limit	./cpu/idt.h	/^	uint16_t limit;$/;"	m	struct:__anon4
 limit0	./cpu/gdt.h	/^	uint16_t limit0;$/;"	m	struct:gdt_entry
+limit0	./cpu/gdt.h	/^	uint16_t limit0;$/;"	m	struct:gdt_system_entry
 limit1	./cpu/gdt.h	/^	uint8_t limit1:4;$/;"	m	struct:gdt_entry
+limit1	./cpu/gdt.h	/^	uint8_t limit1;$/;"	m	struct:gdt_system_entry
+lint	./kernel/acpi.h	/^	uint8_t lint;$/;"	m	struct:madt_entry_nmi
 load_addr	./lib/multiboot2.h	/^  multiboot_uint32_t load_addr;$/;"	m	struct:multiboot_header_tag_address
 load_end_addr	./lib/multiboot2.h	/^  multiboot_uint32_t load_end_addr;$/;"	m	struct:multiboot_header_tag_address
 long_mode_start	./init/boot.asm	/^long_mode_start:$/;"	l
+madt	./cpu/apic.c	/^madt_t *madt = NULL;$/;"	v
+madt	./kernel/acpi.h	/^typedef struct madt {$/;"	s
+madt_entry_ioapic	./kernel/acpi.h	/^typedef struct madt_entry_ioapic {$/;"	s
+madt_entry_ioapic_t	./kernel/acpi.h	/^} __attribute__((packed)) madt_entry_ioapic_t;$/;"	t	typeref:struct:madt_entry_ioapic
+madt_entry_iso	./kernel/acpi.h	/^typedef struct madt_entry_iso {$/;"	s
+madt_entry_iso_t	./kernel/acpi.h	/^} __attribute__((packed)) madt_entry_iso_t;$/;"	t	typeref:struct:madt_entry_iso
+madt_entry_lapic	./kernel/acpi.h	/^typedef struct madt_entry_lapic {$/;"	s
+madt_entry_lapic_t	./kernel/acpi.h	/^} __attribute__((packed)) madt_entry_lapic_t;$/;"	t	typeref:struct:madt_entry_lapic
+madt_entry_nmi	./kernel/acpi.h	/^typedef struct madt_entry_nmi {$/;"	s
+madt_entry_nmi_t	./kernel/acpi.h	/^} __attribute__((packed)) madt_entry_nmi_t;$/;"	t	typeref:struct:madt_entry_nmi
+madt_t	./kernel/acpi.h	/^} __attribute__((packed)) madt_t;$/;"	t	typeref:struct:madt
 magic	./lib/multiboot2.h	/^  multiboot_uint32_t magic;$/;"	m	struct:multiboot_header
 main	./main.c	/^int main(uint64_t mb_info_struct_addr)$/;"	f
 major	./lib/multiboot2.h	/^  multiboot_uint8_t major;$/;"	m	struct:multiboot_tag_smbios
 mb_first_tag	./lib/multiboot_parser.c	/^static struct multiboot_tag *mb_first_tag = NULL;$/;"	v	typeref:struct:multiboot_tag	file:
 mb_info_size	./lib/multiboot_parser.c	/^static uint32_t mb_info_size = 0;$/;"	v	file:
+mem_init	./mem/mem.c	/^void mem_init()$/;"	f
 mem_lower	./lib/multiboot2.h	/^  multiboot_uint32_t mem_lower;$/;"	m	struct:multiboot_tag_basic_meminfo
 mem_upper	./lib/multiboot2.h	/^  multiboot_uint32_t mem_upper;$/;"	m	struct:multiboot_tag_basic_meminfo
 memcmp	./lib/libc.c	/^uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n)$/;"	f
-memcmp2	./lib/libc.c	/^uint8_t memcmp2(const void *s1, const void *s2, uint64_t n)$/;"	f
 memcpy	./lib/libc.c	/^void *memcpy(void *dst, void *src, uint64_t count)$/;"	f
 memset	./lib/libc.c	/^void memset(uint8_t *s, uint8_t c, uint64_t n)$/;"	f
 minor	./lib/multiboot2.h	/^  multiboot_uint8_t minor;$/;"	m	struct:multiboot_tag_smbios
+mmap	./mem/mem.c	/^multiboot_memory_map_t *mmap = NULL;$/;"	v
 mod_end	./lib/multiboot2.h	/^  multiboot_uint32_t mod_end;$/;"	m	struct:multiboot_tag_module
 mod_start	./lib/multiboot2.h	/^  multiboot_uint32_t mod_start;$/;"	m	struct:multiboot_tag_module
 multiboot_arch	./init/multiboot_header.asm	/^	multiboot_arch		dd MULTIBOOT_ARCHITECTURE_I386$/;"	d
@@ -825,44 +1025,68 @@ multiboot_uint8_t	./lib/multiboot2.h	/^typedef unsigned char		multiboot_uint8_t;
 multiboot_vbe_info_block	./lib/multiboot2.h	/^struct multiboot_vbe_info_block$/;"	s
 multiboot_vbe_mode_info_block	./lib/multiboot2.h	/^struct multiboot_vbe_mode_info_block$/;"	s
 num	./lib/multiboot2.h	/^  multiboot_uint32_t num;$/;"	m	struct:multiboot_tag_elf_sections
+oem	./kernel/acpi.h	/^	uint8_t oem[6];$/;"	m	struct:rsdp
+oem_id	./kernel/acpi.h	/^	uint8_t oem_id[6];$/;"	m	struct:acpi_sdt
+oem_revision	./kernel/acpi.h	/^	uint32_t oem_revision;$/;"	m	struct:acpi_sdt
+oem_table_id	./kernel/acpi.h	/^	uint8_t oem_table_id[8];$/;"	m	struct:acpi_sdt
 offset	./lib/multiboot2.h	/^  multiboot_uint32_t offset;$/;"	m	struct:multiboot_tag_apm
 offset0	./cpu/idt.h	/^	uint16_t offset0;$/;"	m	struct:idt_entry
 offset1	./cpu/idt.h	/^	uint16_t offset1;$/;"	m	struct:idt_entry
 offset2	./cpu/idt.h	/^	uint32_t offset2;$/;"	m	struct:idt_entry
 outb	./lib/libc.c	/^inline void outb(uint16_t port, uint8_t val)$/;"	f
 outd	./lib/libc.c	/^inline void outd(uint16_t port, uint32_t val)$/;"	f
-paging_init	./mem/mem.c	/^void paging_init()$/;"	f
-paging_reload_pml4t	./mem/mem.c	/^static void paging_reload_pml4t(uint64_t pml4t_start_phys)$/;"	f	file:
+paging_init	./mem/paging.c	/^void paging_init()$/;"	f
+paging_reload_pml4t	./mem/paging.c	/^static void paging_reload_pml4t(uint64_t pml4t_start_phys)$/;"	f	file:
 part	./lib/multiboot2.h	/^  multiboot_uint32_t part;$/;"	m	struct:multiboot_tag_bootdev
-pdpt	./mem/mem.h	/^uint64_t pdpt[PDPT_SIZE] __attribute__((aligned(4096))); ;$/;"	v
-pml4t	./mem/mem.h	/^uint64_t pml4t[PML4T_SIZE] __attribute__((aligned(4096))); ;$/;"	v
+pdpt	./mem/paging.h	/^uint64_t pdpt[PDPT_SIZE] __attribute__((aligned(4096))); ;$/;"	v
+pml4t	./mem/paging.h	/^uint64_t pml4t[PML4T_SIZE] __attribute__((aligned(4096))); ;$/;"	v
 pointer	./lib/multiboot2.h	/^  multiboot_uint32_t pointer;$/;"	m	struct:multiboot_tag_efi32
 pointer	./lib/multiboot2.h	/^  multiboot_uint64_t pointer;$/;"	m	struct:multiboot_tag_efi64
-pt_regs	./cpu/interrupt.h	/^typedef struct pt_regs {$/;"	s
-pt_regs_t	./cpu/interrupt.h	/^} __attribute__((packed)) pt_regs_t;$/;"	t	typeref:struct:pt_regs
-r10	./cpu/interrupt.h	/^	unsigned long r10;$/;"	m	struct:pt_regs
-r11	./cpu/interrupt.h	/^	unsigned long r11;$/;"	m	struct:pt_regs
-r12	./cpu/interrupt.h	/^	unsigned long r12;$/;"	m	struct:pt_regs
-r13	./cpu/interrupt.h	/^	unsigned long r13;$/;"	m	struct:pt_regs
-r14	./cpu/interrupt.h	/^	unsigned long r14;$/;"	m	struct:pt_regs
-r15	./cpu/interrupt.h	/^	unsigned long r15;$/;"	m	struct:pt_regs
-r8	./cpu/interrupt.h	/^	unsigned long r8;$/;"	m	struct:pt_regs
-r9	./cpu/interrupt.h	/^	unsigned long r9;$/;"	m	struct:pt_regs
-rax	./cpu/interrupt.h	/^	unsigned long rax;$/;"	m	struct:pt_regs
-rbp	./cpu/interrupt.h	/^	unsigned long rbp;$/;"	m	struct:pt_regs
-rbx	./cpu/interrupt.h	/^	unsigned long rbx;$/;"	m	struct:pt_regs
-rcx	./cpu/interrupt.h	/^	unsigned long rcx;$/;"	m	struct:pt_regs
-rdi	./cpu/interrupt.h	/^	unsigned long rdi;$/;"	m	struct:pt_regs
-rdx	./cpu/interrupt.h	/^	unsigned long rdx;$/;"	m	struct:pt_regs
+processor	./kernel/acpi.h	/^	uint8_t processor;$/;"	m	struct:madt_entry_nmi
+pt_regs	./kernel/interrupt.h	/^typedef struct pt_regs {$/;"	s
+pt_regs_t	./kernel/interrupt.h	/^} __attribute__((packed)) pt_regs_t;$/;"	t	typeref:struct:pt_regs
+r10	./kernel/interrupt.h	/^	unsigned long r10;$/;"	m	struct:pt_regs
+r11	./kernel/interrupt.h	/^	unsigned long r11;$/;"	m	struct:pt_regs
+r12	./kernel/interrupt.h	/^	unsigned long r12;$/;"	m	struct:pt_regs
+r13	./kernel/interrupt.h	/^	unsigned long r13;$/;"	m	struct:pt_regs
+r14	./kernel/interrupt.h	/^	unsigned long r14;$/;"	m	struct:pt_regs
+r15	./kernel/interrupt.h	/^	unsigned long r15;$/;"	m	struct:pt_regs
+r8	./kernel/interrupt.h	/^	unsigned long r8;$/;"	m	struct:pt_regs
+r9	./kernel/interrupt.h	/^	unsigned long r9;$/;"	m	struct:pt_regs
+rax	./kernel/interrupt.h	/^	unsigned long rax;$/;"	m	struct:pt_regs
+rbp	./kernel/interrupt.h	/^	unsigned long rbp;$/;"	m	struct:pt_regs
+rbx	./kernel/interrupt.h	/^	unsigned long rbx;$/;"	m	struct:pt_regs
+rcx	./kernel/interrupt.h	/^	unsigned long rcx;$/;"	m	struct:pt_regs
+rdi	./kernel/interrupt.h	/^	unsigned long rdi;$/;"	m	struct:pt_regs
+rdx	./kernel/interrupt.h	/^	unsigned long rdx;$/;"	m	struct:pt_regs
 red	./lib/multiboot2.h	/^  multiboot_uint8_t red;$/;"	m	struct:multiboot_color
 requests	./lib/multiboot2.h	/^  multiboot_uint32_t requests[0];$/;"	m	struct:multiboot_header_tag_information_request
+reserved	./cpu/gdt.h	/^	uint32_t reserved;$/;"	m	struct:gdt_system_entry
+reserved	./kernel/acpi.h	/^	uint8_t reserved;$/;"	m	struct:madt_entry_ioapic
+reserved	./kernel/acpi.h	/^	uint8_t reserved[3];$/;"	m	struct:rsdp
 reserved	./lib/multiboot2.h	/^  multiboot_uint16_t reserved;$/;"	m	struct:multiboot_tag_framebuffer_common
 reserved	./lib/multiboot2.h	/^  multiboot_uint8_t reserved[6];$/;"	m	struct:multiboot_tag_smbios
-rip	./cpu/interrupt.h	/^	uint64_t rip;$/;"	m	struct:pt_regs
+reserved0	./cpu/tss.h	/^	uint32_t reserved0;$/;"	m	struct:tss
+reserved1	./cpu/tss.h	/^	uint64_t reserved1;$/;"	m	struct:tss
+reserved2	./cpu/tss.h	/^	uint64_t reserved2;$/;"	m	struct:tss
+reserved3	./cpu/tss.h	/^	uint16_t reserved3;$/;"	m	struct:tss
+revision	./kernel/acpi.h	/^	uint8_t revision;$/;"	m	struct:acpi_sdt
+revision	./kernel/acpi.h	/^	uint8_t revision;$/;"	m	struct:rsdp
+rip	./kernel/interrupt.h	/^	uint64_t rip;$/;"	m	struct:pt_regs
+rsdp	./kernel/acpi.c	/^rsdp_t *rsdp = NULL;$/;"	v
+rsdp	./kernel/acpi.h	/^typedef struct rsdp {$/;"	s
 rsdp	./lib/multiboot2.h	/^  multiboot_uint8_t rsdp[0];$/;"	m	struct:multiboot_tag_new_acpi
 rsdp	./lib/multiboot2.h	/^  multiboot_uint8_t rsdp[0];$/;"	m	struct:multiboot_tag_old_acpi
-rsi	./cpu/interrupt.h	/^	unsigned long rsi;$/;"	m	struct:pt_regs
-rsp	./cpu/interrupt.h	/^	uint64_t rsp;$/;"	m	struct:pt_regs
+rsdp_t	./kernel/acpi.h	/^} __attribute__((packed)) rsdp_t;$/;"	t	typeref:struct:rsdp
+rsdt	./kernel/acpi.c	/^rsdt_t *rsdt = NULL;$/;"	v
+rsdt	./kernel/acpi.h	/^typedef struct rsdt {$/;"	s
+rsdt_ptr	./kernel/acpi.h	/^	uint32_t rsdt_ptr;$/;"	m	struct:rsdp
+rsdt_t	./kernel/acpi.h	/^} __attribute__((packed)) rsdt_t;$/;"	t	typeref:struct:rsdt
+rsi	./kernel/interrupt.h	/^	unsigned long rsi;$/;"	m	struct:pt_regs
+rsp	./kernel/interrupt.h	/^	uint64_t rsp;$/;"	m	struct:pt_regs
+rsp0	./cpu/tss.h	/^	uint64_t rsp0;$/;"	m	struct:tss
+rsp1	./cpu/tss.h	/^	uint64_t rsp1;$/;"	m	struct:tss
+rsp2	./cpu/tss.h	/^	uint64_t rsp2;$/;"	m	struct:tss
 screen_clear	./drivers/screen.c	/^void screen_clear()$/;"	f
 screen_get_bpp	./drivers/screen.c	/^uint8_t screen_get_bpp()$/;"	f
 screen_get_height	./drivers/screen.c	/^uint32_t screen_get_height()$/;"	f
@@ -878,6 +1102,8 @@ sections	./lib/multiboot2.h	/^  char sections[0];$/;"	m	struct:multiboot_tag_elf
 selector	./cpu/idt.h	/^	uint16_t selector;$/;"	m	struct:idt_entry
 setup_page_tables	./init/boot.asm	/^setup_page_tables:$/;"	l
 shndx	./lib/multiboot2.h	/^  multiboot_uint32_t shndx;$/;"	m	struct:multiboot_tag_elf_sections
+signature	./kernel/acpi.h	/^	uint8_t signature[4];$/;"	m	struct:acpi_sdt
+signature	./kernel/acpi.h	/^	uint8_t signature[8];$/;"	m	struct:rsdp
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_address
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_header_tag_console_flags
@@ -903,12 +1129,23 @@ size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_string
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_vbe
 slice	./lib/multiboot2.h	/^  multiboot_uint32_t slice;$/;"	m	struct:multiboot_tag_bootdev
-ss	./cpu/interrupt.h	/^	uint64_t ss;$/;"	m	struct:pt_regs
+ss	./kernel/interrupt.h	/^	uint64_t ss;$/;"	m	struct:pt_regs
 stack_bottom	./init/boot.asm	/^stack_bottom:$/;"	l
 stack_top	./init/boot.asm	/^stack_top:$/;"	l
 start	./init/boot.asm	/^start:$/;"	l
 string	./lib/multiboot2.h	/^  char string[0];$/;"	m	struct:multiboot_tag_string
+tables	./kernel/acpi.h	/^	uint32_t tables[ ];$/;"	m	struct:rsdt
+tables	./kernel/acpi.h	/^	uint64_t tables[ ];$/;"	m	struct:xsdt
 tables	./lib/multiboot2.h	/^  multiboot_uint8_t tables[0];$/;"	m	struct:multiboot_tag_smbios
+tss	./cpu/tss.c	/^tss_t tss[TSS_MAX_SEGMENTS];$/;"	v
+tss	./cpu/tss.h	/^struct tss {$/;"	s
+tss_init	./cpu/tss.c	/^void tss_init(void)$/;"	f
+tss_install	./cpu/tss.c	/^void tss_install(uint8_t num, uint8_t aasd)$/;"	f
+tss_t	./cpu/tss.h	/^} __attribute__((packed)) tss_t;$/;"	v	typeref:struct:tss
+type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_ioapic
+type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_iso
+type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_lapic
+type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_nmi
 type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag
 type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_address
 type	./lib/multiboot2.h	/^  multiboot_uint16_t type;$/;"	m	struct:multiboot_header_tag_console_flags
@@ -934,6 +1171,7 @@ type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_
 type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_smbios
 type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_string
 type	./lib/multiboot2.h	/^  multiboot_uint32_t type;$/;"	m	struct:multiboot_tag_vbe
+type0	./cpu/gdt.h	/^	uint8_t type0;$/;"	m	struct:gdt_system_entry
 type_attr	./cpu/idt.h	/^	uint8_t type_attr;$/;"	m	struct:idt_entry
 uint16_t	./lib/stdint.h	/^typedef unsigned short uint16_t;$/;"	t
 uint32_t	./lib/stdint.h	/^typedef unsigned int uint32_t;$/;"	t
@@ -956,6 +1194,9 @@ width	./drivers/screen.c	/^static uint32_t width = 0;$/;"	v	file:
 width	./lib/multiboot2.h	/^  multiboot_uint32_t width;$/;"	m	struct:multiboot_header_tag_framebuffer
 write_char	./lib/kprintf.c	/^void write_char(uint8_t c)$/;"	f
 x	./lib/kprintf.c	/^static uint32_t x = 0;$/;"	v	file:
+xsdt	./kernel/acpi.h	/^typedef struct xsdt {$/;"	s
+xsdt_ptr	./kernel/acpi.h	/^	uint64_t xsdt_ptr;$/;"	m	struct:rsdp
+xsdt_t	./kernel/acpi.h	/^} __attribute__((packed)) xsdt_t;$/;"	t	typeref:struct:xsdt
 y	./lib/kprintf.c	/^static uint32_t y = 0;$/;"	v	file:
 zero	./cpu/idt.h	/^	uint32_t zero;$/;"	m	struct:idt_entry
 zero	./lib/multiboot2.h	/^  multiboot_uint32_t zero;$/;"	m	struct:multiboot_mmap_entry

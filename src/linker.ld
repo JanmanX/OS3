@@ -33,4 +33,9 @@ SECTIONS {
 		*(COMMON)
 		*(.bss)
 	}
+
+
+	/* The very end of kernel */
+	kernel_end = .;
+
 }

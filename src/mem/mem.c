@@ -9,6 +9,11 @@
 static struct multiboot_tag_mmap *mb_tag_mmap = NULL;
 static struct multiboot_tag_basic_meminfo *mb_tag_meminfo = NULL;
 
+/* End of kernel. Defined in linker script */
+extern uint64_t kernel_end;
+
+static uint64_t mem_heap_start = 0x00;
+
 
 void mem_init(void)
 {
@@ -40,18 +45,28 @@ void mem_init(void)
 	for (mmap = mb_tag_mmap->entries;
 	     (uint8_t *) mmap < (uint8_t *) mb_tag_mmap + mb_tag_mmap->size;
 	     mmap = (multiboot_memory_map_t*)((uint64_t)mmap+mb_tag_mmap->entry_size)) {
-
-		/* Print split in two, because kprintf cannot
-		 * handle this many format strings */
-		kprintf (" base_addr = 0x%x%x,"
-			 " length = 0x%x%x ",
+		kprintf (" base_addr = 0x%x%x, length = 0x%x%x, type = 0x%x\n",
 			 (unsigned) (mmap->addr >> 32),
 			 (unsigned) (mmap->addr & 0xffffffff),
 			 (unsigned) (mmap->len >> 32),
-			 (unsigned) (mmap->len & 0xffffffff));
-		if((unsigned)mmap->type < 4) {
-			kprintf("type = 0x%x\n", (unsigned) mmap->type);
-		}
+			 (unsigned) (mmap->len & 0xffffffff),
+			 (unsigned) mmap->type);
+
 	}
+}
+
+
+void malloc_init(void *start, uint64_t size)
+{
+
+}
+
+void *malloc(uint64_t size)
+{
+
+}
+
+void free(void *ptr)
+{
 
 }

@@ -294,8 +294,10 @@ section .bss
 align 4096	; ensures the tables are page-aligned
 
 stack_bottom:
-	resb 4096
+	resb  32768
 stack_top:
+global stack_top
+
 
 ; Temporary page tables
 PML4T:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PML4E
