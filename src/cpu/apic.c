@@ -1,7 +1,7 @@
 #include "apic.h"
 #include <kernel/acpi.h>
 #include <libc.h>
-
+#include <cpu/pic.h>
 
 /* Multiple APIC Descriptor Table */
 madt_t *madt = NULL;
@@ -20,20 +20,6 @@ void lapic_enable(void)
 	kprintf("SIVR: 0x%x\n", SIVr);
 }
 
-void apic_disable_pic(void)
-{
-	LOG("Disabling PIC");
-	/*
-	 mov al, 0xff
-	out 0xa1, al
-	out 0x21, al
-	 */
-	outb(0xa1, 0xff);
-	outb(0x21, 0xff);
-
-	LOG("PIC disabled");
-}
-
 void apic_init(void)
 {
 	/* Get the MADT */
@@ -46,8 +32,9 @@ void apic_init(void)
 	lapic_addr = (uint64_t*)(uint64_t)madt->lapic_addr;
 	LOGF("LAPIC_ADDR: 0x%x\n", lapic_addr);
 
-
-	apic_disable_pic();
+	/* Disable PIC. I think must be initialized before */
+	pic_init();
+	pic_disable();
 
 	lapic_enable();
 
