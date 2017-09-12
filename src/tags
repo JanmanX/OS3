@@ -103,7 +103,7 @@ EXCEPTION_UD	./kernel/exception.h	13;"	d
 EXCEPTION_VE	./kernel/exception.h	27;"	d
 EXCEPTION_XM	./kernel/exception.h	26;"	d
 EXDEV	./lib/errno.h	22;"	d
-FILES	./cpu/subsys.mk	/^FILES := gdt.c idt.c apic.c$/;"	m
+FILES	./cpu/subsys.mk	/^FILES := gdt.c idt.c apic.c tss.c pic.c$/;"	m
 FILES	./drivers/subsys.mk	/^FILES := screen.c font.c$/;"	m
 FILES	./init/subsys.mk	/^FILES := boot.asm multiboot_header.asm$/;"	m
 FILES	./kernel/subsys.mk	/^FILES := interrupt.c _interrupt.asm exception.c acpi.c$/;"	m
@@ -129,6 +129,16 @@ GET_UINT8	./lib/libc.h	29;"	d
 GiB	./mem/paging.h	30;"	d
 HALT	./lib/libc.h	64;"	d
 Height	./drivers/font.h	/^	unsigned char Height;		\/\/\/< character height$/;"	m	struct:bitmap_font
+ICW1_ICW4	./cpu/pic.h	8;"	d
+ICW1_INIT	./cpu/pic.h	12;"	d
+ICW1_INTERVAL4	./cpu/pic.h	10;"	d
+ICW1_LEVEL	./cpu/pic.h	11;"	d
+ICW1_SINGLE	./cpu/pic.h	9;"	d
+ICW4_8086	./cpu/pic.h	14;"	d
+ICW4_AUTO	./cpu/pic.h	15;"	d
+ICW4_BUF_MASTER	./cpu/pic.h	17;"	d
+ICW4_BUF_SLAVE	./cpu/pic.h	16;"	d
+ICW4_SFNM	./cpu/pic.h	18;"	d
 IDTE_DPL_RING0	./cpu/idt.h	16;"	d
 IDTE_DPL_RING1	./cpu/idt.h	17;"	d
 IDTE_DPL_RING2	./cpu/idt.h	18;"	d
@@ -140,6 +150,7 @@ IDT_NUM_ENTRIES	./cpu/idt.h	7;"	d
 INC	./Makefile	/^INC             = -I.\/include -I. -I.\/lib$/;"	m
 INTERRUPTS_MAX	./kernel/interrupt.h	5;"	d
 Index	./drivers/font.h	/^	const unsigned short *Index;	\/\/\/< encoding to character index$/;"	m	struct:bitmap_font
+KERNEL_MEM_START	./mem/mem.h	5;"	d
 KLIB_H	./lib/libc.h	2;"	d
 KiB	./mem/paging.h	28;"	d
 LAPIC_REGISTER_SIVR	./cpu/apic.h	9;"	d
@@ -227,6 +238,10 @@ PAGE_US	./mem/paging.h	16;"	d
 PDPT	./init/boot.asm	/^PDPT:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PDPE$/;"	l
 PDPT_SIZE	./mem/paging.h	10;"	d
 PDT	./init/boot.asm	/^PDT:	resb (PAGE_ENTRY_SIZE * NUM_PDE * NUM_PDPE * NUM_PML4E)	; 512 PDE$/;"	l
+PIC1_COMMAND	./cpu/pic.h	3;"	d
+PIC1_DATA	./cpu/pic.h	4;"	d
+PIC2_COMMAND	./cpu/pic.h	5;"	d
+PIC2_DATA	./cpu/pic.h	6;"	d
 PML4T	./init/boot.asm	/^PML4T:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PML4E$/;"	l
 PML4T_SIZE	./mem/paging.h	9;"	d
 RSDP_REV_1	./kernel/acpi.h	40;"	d
@@ -235,7 +250,7 @@ RSDP_REV_2	./kernel/acpi.h	41;"	d
 RSDP_REV_2_SIZE	./kernel/acpi.h	34;"	d
 SRC	./Makefile	/^SRC             := main.c$/;"	m
 STI	./lib/libc.h	63;"	d
-TSS_MAX_SEGMENTS	./cpu/tss.h	3;"	d
+TSS_MAX_SEGMENTS	./cpu/tss.h	6;"	d
 Width	./drivers/font.h	/^	unsigned char Width;		\/\/\/< max. character width$/;"	m	struct:bitmap_font
 Widths	./drivers/font.h	/^	const unsigned char *Widths;	\/\/\/< width of each character$/;"	m	struct:bitmap_font
 XXXXXXXX	./drivers/font.h	271;"	d
@@ -507,7 +522,6 @@ acpi_init	./kernel/acpi.c	/^void acpi_init(void)$/;"	f
 acpi_sdt	./kernel/acpi.h	/^typedef struct acpi_sdt {$/;"	s
 acpi_sdt_t	./kernel/acpi.h	/^} __attribute__((packed)) acpi_sdt_t;$/;"	t	typeref:struct:acpi_sdt
 addr	./lib/multiboot2.h	/^  multiboot_uint64_t addr;$/;"	m	struct:multiboot_mmap_entry
-apic_disable_pic	./cpu/apic.c	/^void apic_disable_pic(void)$/;"	f
 apic_init	./cpu/apic.c	/^void apic_init(void)$/;"	f
 apic_processor_id	./kernel/acpi.h	/^	uint8_t apic_processor_id;$/;"	m	struct:madt_entry_lapic
 apid_id	./kernel/acpi.h	/^	uint8_t apid_id;$/;"	m	struct:madt_entry_lapic
@@ -620,6 +634,7 @@ framebuffer_tag_end	./init/multiboot_header.asm	/^framebuffer_tag_end:$/;"	l
 framebuffer_tag_start	./init/multiboot_header.asm	/^framebuffer_tag_start:$/;"	l
 framebuffer_type	./lib/multiboot2.h	/^  multiboot_uint8_t framebuffer_type;$/;"	m	struct:multiboot_tag_framebuffer_common
 framebuffer_width	./lib/multiboot2.h	/^  multiboot_uint32_t framebuffer_width;$/;"	m	struct:multiboot_tag_framebuffer_common
+free	./mem/mem.c	/^void free(void *ptr)$/;"	f
 gdt	./cpu/gdt.c	/^static gdt_entry_t gdt[GDT_MAX_DESCRIPTORS] __attribute__ ((aligned (8)));;$/;"	v	file:
 gdt64	./init/boot.asm	/^gdt64:                               ; Global Descriptor Table (64-bit).$/;"	l
 gdt_entry	./cpu/gdt.h	/^typedef struct gdt_entry {$/;"	s
@@ -632,6 +647,7 @@ gdt_pointer_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_pointer_t;$/;"	t	typer
 gdt_ptr	./cpu/gdt.c	/^static gdt_pointer_t gdt_ptr __attribute__ ((aligned (8)));;$/;"	v	file:
 gdt_system_entry	./cpu/gdt.h	/^typedef struct gdt_system_entry {$/;"	s
 gdt_system_entry_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_system_entry_t;$/;"	t	typeref:struct:gdt_system_entry
+global	./init/boot.asm	/^global stack_top$/;"	l
 global	./init/boot.asm	/^global start$/;"	l
 global	./kernel/_interrupt.asm	/^global interrupt_handler_%1$/;"	l
 global	./kernel/_interrupt.asm	/^global interrupt_handler_ec_%1$/;"	l
@@ -971,16 +987,20 @@ madt_t	./kernel/acpi.h	/^} __attribute__((packed)) madt_t;$/;"	t	typeref:struct:
 magic	./lib/multiboot2.h	/^  multiboot_uint32_t magic;$/;"	m	struct:multiboot_header
 main	./main.c	/^int main(uint64_t mb_info_struct_addr)$/;"	f
 major	./lib/multiboot2.h	/^  multiboot_uint8_t major;$/;"	m	struct:multiboot_tag_smbios
+malloc	./mem/mem.c	/^void *malloc(uint64_t size)$/;"	f
+malloc_init	./mem/mem.c	/^void malloc_init(void *start, uint64_t size)$/;"	f
 mb_first_tag	./lib/multiboot_parser.c	/^static struct multiboot_tag *mb_first_tag = NULL;$/;"	v	typeref:struct:multiboot_tag	file:
 mb_info_size	./lib/multiboot_parser.c	/^static uint32_t mb_info_size = 0;$/;"	v	file:
-mem_init	./mem/mem.c	/^void mem_init()$/;"	f
+mb_tag_meminfo	./mem/mem.c	/^static struct multiboot_tag_basic_meminfo *mb_tag_meminfo = NULL;$/;"	v	typeref:struct:multiboot_tag_basic_meminfo	file:
+mb_tag_mmap	./mem/mem.c	/^static struct multiboot_tag_mmap *mb_tag_mmap = NULL;$/;"	v	typeref:struct:multiboot_tag_mmap	file:
+mem_heap_start	./mem/mem.c	/^static uint64_t mem_heap_start = 0x00;$/;"	v	file:
+mem_init	./mem/mem.c	/^void mem_init(void)$/;"	f
 mem_lower	./lib/multiboot2.h	/^  multiboot_uint32_t mem_lower;$/;"	m	struct:multiboot_tag_basic_meminfo
 mem_upper	./lib/multiboot2.h	/^  multiboot_uint32_t mem_upper;$/;"	m	struct:multiboot_tag_basic_meminfo
 memcmp	./lib/libc.c	/^uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n)$/;"	f
 memcpy	./lib/libc.c	/^void *memcpy(void *dst, void *src, uint64_t count)$/;"	f
 memset	./lib/libc.c	/^void memset(uint8_t *s, uint8_t c, uint64_t n)$/;"	f
 minor	./lib/multiboot2.h	/^  multiboot_uint8_t minor;$/;"	m	struct:multiboot_tag_smbios
-mmap	./mem/mem.c	/^multiboot_memory_map_t *mmap = NULL;$/;"	v
 mod_end	./lib/multiboot2.h	/^  multiboot_uint32_t mod_end;$/;"	m	struct:multiboot_tag_module
 mod_start	./lib/multiboot2.h	/^  multiboot_uint32_t mod_start;$/;"	m	struct:multiboot_tag_module
 multiboot_arch	./init/multiboot_header.asm	/^	multiboot_arch		dd MULTIBOOT_ARCHITECTURE_I386$/;"	d
@@ -1039,6 +1059,8 @@ paging_init	./mem/paging.c	/^void paging_init()$/;"	f
 paging_reload_pml4t	./mem/paging.c	/^static void paging_reload_pml4t(uint64_t pml4t_start_phys)$/;"	f	file:
 part	./lib/multiboot2.h	/^  multiboot_uint32_t part;$/;"	m	struct:multiboot_tag_bootdev
 pdpt	./mem/paging.h	/^uint64_t pdpt[PDPT_SIZE] __attribute__((aligned(4096))); ;$/;"	v
+pic_disable	./cpu/pic.c	/^void pic_disable(void)$/;"	f
+pic_init	./cpu/pic.c	/^void pic_init(void)$/;"	f
 pml4t	./mem/paging.h	/^uint64_t pml4t[PML4T_SIZE] __attribute__((aligned(4096))); ;$/;"	v
 pointer	./lib/multiboot2.h	/^  multiboot_uint32_t pointer;$/;"	m	struct:multiboot_tag_efi32
 pointer	./lib/multiboot2.h	/^  multiboot_uint64_t pointer;$/;"	m	struct:multiboot_tag_efi64
@@ -1138,10 +1160,11 @@ tables	./kernel/acpi.h	/^	uint32_t tables[ ];$/;"	m	struct:rsdt
 tables	./kernel/acpi.h	/^	uint64_t tables[ ];$/;"	m	struct:xsdt
 tables	./lib/multiboot2.h	/^  multiboot_uint8_t tables[0];$/;"	m	struct:multiboot_tag_smbios
 tss	./cpu/tss.c	/^tss_t tss[TSS_MAX_SEGMENTS];$/;"	v
-tss	./cpu/tss.h	/^struct tss {$/;"	s
+tss	./cpu/tss.h	/^typedef struct tss {$/;"	s
 tss_init	./cpu/tss.c	/^void tss_init(void)$/;"	f
-tss_install	./cpu/tss.c	/^void tss_install(uint8_t num, uint8_t aasd)$/;"	f
-tss_t	./cpu/tss.h	/^} __attribute__((packed)) tss_t;$/;"	v	typeref:struct:tss
+tss_install	./cpu/tss.c	/^void tss_install(uint8_t num)$/;"	f
+tss_reload	./cpu/tss.c	/^void tss_reload(uint16_t selector)$/;"	f
+tss_t	./cpu/tss.h	/^} __attribute__((packed)) tss_t;$/;"	t	typeref:struct:tss
 type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_ioapic
 type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_iso
 type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_lapic

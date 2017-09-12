@@ -51,7 +51,6 @@ void mem_init(void)
 			 (unsigned) (mmap->len >> 32),
 			 (unsigned) (mmap->len & 0xffffffff),
 			 (unsigned) mmap->type);
-
 	}
 }
 

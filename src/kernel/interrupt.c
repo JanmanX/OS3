@@ -290,8 +290,6 @@ void interrupt_init()
 	tss_init();
 	tss_install(0);
 
-
-
 	/* TODO:
 	 *	syscall
 	*/

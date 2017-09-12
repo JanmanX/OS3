@@ -9,7 +9,7 @@ export PREFIX="$HOME/opt/cross"
 export TARGET=x86_64-elf
 export PATH="$PREFIX/bin:$PATH"
 
-export GCC=gcc-7.2.0
+export GCC=gcc-6.3.0
 export BINUTILS=binutils-2.29
 
 #### BINUTILS

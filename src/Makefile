@@ -22,7 +22,7 @@ OBJS    := $(patsubst %.asm,%.o,$(filter %.asm,$(SRC))) \
         $(patsubst %.S,%.o,$(filter %.S,$(SRC))) \
         $(patsubst %.c,%.o,$(filter %.c,$(SRC)))
 
-
+.PHONY: clean all tags
 
 
 # $<  --- Input file
@@ -49,3 +49,7 @@ clean:
 	rm -f $(OBJS)
 	rm -f *.map
 	rm -f *.objdump
+
+
+
+
