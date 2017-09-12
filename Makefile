@@ -1,7 +1,7 @@
 TARGET=os.iso
 
 QEMU=qemu-system-x86_64
-QEMU_FLAGS=-m 6G -s -vga std # -cpu host -enable-kvm
+QEMU_FLAGS=-m 6G -s -vga std -cpu host -enable-kvm
 
 GRUB=grub2
 BOCHS=bochs

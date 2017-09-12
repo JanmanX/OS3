@@ -56,6 +56,7 @@ start:
 	; Check that the CPU is up for x86_64
 	call check_multiboot
 	call check_cpuid
+	call check_gbyte_paging
 	call check_long_mode
 	call check_apic
 
