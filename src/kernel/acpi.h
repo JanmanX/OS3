@@ -86,8 +86,6 @@ typedef struct madt {
 
 	uint32_t lapic_addr;
 	uint32_t flags;
-
-
 } __attribute__((packed)) madt_t;
 
 typedef struct madt_entry_lapic {
@@ -123,7 +121,7 @@ typedef struct madt_entry_iso {
 } __attribute__((packed)) madt_entry_iso_t;
 
 typedef struct madt_entry_nmi {
-#define MADT_ENTRY_TYPE_NMI	(0x03)
+#define MADT_ENTRY_TYPE_NMI	(0x04)
 	uint8_t type;
 	uint8_t length;
 
