@@ -1,6 +1,8 @@
 #pragma once
 #include <stdint.h>
 
+/* APIC vector offset */
+#define APIC_VECTOR_OFFSET	(0x28)	/* 40. IRQ 0 will be vector 0+40 = 40*/
 
 /* MADT Entries */
 #define MADT_ENTRY_TYPE_LAPIC	(0x00)
@@ -28,7 +30,9 @@ void lapic_eoi(void);
 void ioapic_init(void);
 void ioapic_write(uint32_t reg, uint32_t data);
 uint32_t ioapic_read(uint32_t addr);
-void ioapic_set_irq(uint8_t irq, uint64_t apic_id, uint8_t vector);
+void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector);
+void ioapic_reset_irq(uint8_t irq);
+
 
 void apic_init(void);
 

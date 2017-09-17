@@ -116,7 +116,7 @@ typedef struct madt_entry_iso {
 
 	uint8_t bus_source;
 	uint8_t irq_source;
-	uint32_t global_system_interrupt;
+	uint32_t target_vector;
 	uint16_t flags;
 } __attribute__((packed)) madt_entry_iso_t;
 

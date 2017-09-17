@@ -41,10 +41,9 @@ void lapic_init(void)
 
 	/* Spuriour Interrupt Vector Register */
 	uint32_t SIVr = GET_UINT32(lapic_addr, LAPIC_REGISTER_SIVR);
-	SIVr = 0x100 | LAPIC_SPURIOUS_IRQ;
+	SIVr |= 0x100 | LAPIC_SPURIOUS_IRQ;
 	//SIVr |= (1 << 8); /* Set the 8'th bit (Enable APIC) */
 	GET_UINT32(lapic_addr, LAPIC_REGISTER_SIVR) = SIVr;
-
 }
 
 void lapic_eoi(void)
@@ -80,7 +79,28 @@ uint32_t ioapic_read(uint32_t offset)
 	return GET_UINT32(ioapic_addr, IOAPIC_WINDOW_OFFSET);
 }
 
-void ioapic_set_irq(uint8_t irq, uint64_t apic_id, uint8_t vector)
+void ioapic_reset_irq(uint8_t irq)
+{
+	/* Calculate the register offsets, given the IRQ.
+	 * Remember that even though offset is only 1, the register is still
+	 * 32 bits. */
+	const uint32_t low_index = 0x10 + irq * 2;
+	const uint32_t high_index = low_index + 1;
+
+	uint32_t high = ioapic_read(high_index);
+	high &= ~(0x00FFFFFF); /* Set destination ID to 0x00 */
+
+	uint32_t low = ioapic_read(low_index);
+	low &= ~(0x1FF); /* Reset last 17 bits */
+
+
+	/* Write */
+	ioapic_write(high_index, high);
+	ioapic_write(low_index, low);
+
+}
+
+void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector)
 {
 	/* Calculate the register offsets, given the IRQ.
 	 * Remember that even though offset is only 1, the register is still
@@ -94,7 +114,7 @@ void ioapic_set_irq(uint8_t irq, uint64_t apic_id, uint8_t vector)
 	/* Keep the lower 3 bytes (reserved) */
 	high &= ~0xFF000000;
 	/* Set the destination APIC */
-	high |= (apic_id) << 24;
+	high |= (lapic_id) << 24;
 
 	/* Read bottom bits (0-31) */
 	uint8_t low = ioapic_read(low_index);
@@ -121,7 +141,22 @@ void ioapic_set_irq(uint8_t irq, uint64_t apic_id, uint8_t vector)
 
 void ioapic_init(void)
 {
-	ioapic_set_irq(0x01, 0xFF, 0x40);
+	ASSERT(ioapic_addr != NULL, "ioapic_addr == NULL");
+
+	uint16_t i = 0;
+
+	for(i = 0; i < 256; i++) {
+		ioapic_reset_irq(i);
+	}
+
+#if 0
+	/* XXX: Maps 215 IRQs to vectors 40-254 on LAPIC */
+	for(i = 0; i < 215; i++) {
+		/* XXX: Installing to LAPIC ID = 0x00 */
+		ioapic_set_irq(i, 0x00, i + 40);
+	}
+
+#endif
 }
 
 void apic_init(void)
@@ -137,6 +172,8 @@ void apic_init(void)
 	LOGF("LAPIC_ADDR: 0x%x\n", lapic_addr);
 
 	/* Loop over each entry */
+	/* We do this loop twice, as NMI and ISO are handled after LAPIC and
+	 * IOAPIC has been setup */
 	/* Cast to lapic_entry, because start is always the same, and we can
 	 * retrieve the entry length */
 	struct madt_entry_lapic* madt_entry = NULL;
@@ -150,32 +187,14 @@ void apic_init(void)
 
 		case MADT_ENTRY_TYPE_IOAPIC:
 			ioapic_addr = (uint32_t*)(uint64_t)(
-							    (madt_entry_ioapic_t*)madt_entry)->io_apic_addr;
+					    (madt_entry_ioapic_t*)madt_entry)->io_apic_addr;
 
 			LOGF("ioapic_addr = 0x%x\n", ioapic_addr);
 			break;
-
-		case MADT_ENTRY_TYPE_ISO: {
-			struct madt_entry_iso* madt_iso =
-				(struct madt_entry*)madt_entry;
-			kprintf("iso found: irq source : 0x%x\tbus source :0x%x\n",
-			       	madt_iso->irq_source,
-				madt_iso->bus_source);
-
-			break;
 		}
-		case MADT_ENTRY_TYPE_NMI:
-			LOG("madt nmi found");
-
-			break;
-		}
-
 	}
 
-	if(ioapic_addr == NULL) {
-		ERROR("NO IOAPIC FOUND!");
-		return;
-	}
+	ASSERT(ioapic_addr != NULL, "ioapic_addr == NULL");
 
 	/* Disable PIC. I think must be initialized before */
 	pic_init();
@@ -189,4 +208,29 @@ void apic_init(void)
 	/* IO APIC */
 	ioapic_init();
 
+
+	/* Loop over each entry */
+	/* We do this loop twice, as NMI and ISO are handled after LAPIC and
+	 * IOAPIC has been setup */
+	/* Cast to lapic_entry, because start is always the same, and we can
+	 * retrieve the entry length */
+	for(madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt + sizeof(madt_t));
+	    madt_entry < (madt_entry_lapic_t*)((uintptr_t)madt + madt->header.length);
+	    madt_entry = (madt_entry_lapic_t* )((uintptr_t)madt_entry + madt_entry->length)) {
+		switch(madt_entry->type) {
+		case MADT_ENTRY_TYPE_ISO: {
+			struct madt_entry_iso* madt_iso =
+				(struct madt_entry*)madt_entry;
+			kprintf("iso found: irq source : 0x%x\ttarget vector: 0x%x\n",
+				madt_iso->irq_source,
+				madt_iso->target_vector);
+
+			/* TODO: What to do here? */
+			break;
+		}
+		case MADT_ENTRY_TYPE_NMI:
+			LOG("madt nmi found");
+			break;
+		}
+	}
 }
