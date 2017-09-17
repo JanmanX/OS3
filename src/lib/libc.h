@@ -57,6 +57,15 @@ void outd(uint16_t port, uint32_t val);
 		kprintf(m, __VA_ARGS__);\
 		HALT;\
 		} while(0);
+#define ASSERT(a, m) if(!a) {\
+			kprintf("%s", m);\
+			HALT;\
+		}
+#define ASSERTF(a, m, ...) if(!a) {\
+			kprintf("[ASSERTION %s():%d]: ", __func__, __LINE__);\
+			kprintf(m, __VA_ARGS__);\
+		}
+
 
 /* Assembly instructions */
 #define CLI asm volatile ("cli")

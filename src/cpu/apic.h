@@ -9,9 +9,17 @@
 
 /* LAPIC */
 /* LAPIC Address space register offsets */
+#define LAPIC_SPURIOUS_IRQ	(0xFF)
+
+#define LAPIC_REGISTER_ID	(0x020) /* LAPIC ID Register */
+#define LAPIC_REGISTER_VERSION	(0x030) /* LAPIC Version Register  */
+#define LAPIC_REGISTER_EOI	(0x0B0) /* End of Interrupt register */
 #define LAPIC_REGISTER_SIVR	(0x0F0)	/* Spurious Interrupt Vector Register */
 
+
 void lapic_init(void);
+void lapic_eoi(void);
+
 
 /* IO APIC */
 #define IOAPIC_SELECT_OFFSET	(0x00)

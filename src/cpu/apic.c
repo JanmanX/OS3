@@ -3,31 +3,55 @@
 #include <libc.h>
 #include <cpu/pic.h>
 #include <stdint.h>
+#include <kernel/interrupt.h>
 
 /* Multiple APIC Descriptor Table */
 madt_t *madt = NULL;
 
+/* LAPIC */
 /* LAPIC address (Can be same for multiple processors ) */
 uint64_t* lapic_addr = NULL;
+uint8_t lapic_num = 0x00;	/* Number of active LAPICS in the system.
+				 *  Holds the next value for LAPIC ID.
+				 *  Additionally, ID = 0 is bootstrap processor  */
+
 
 /* IO APIC */
 /* TODO: Multiple APICS?*/
 uint32_t* ioapic_addr = NULL;
 
-void lapic_enable(void)
+
+uint8_t spurious_interrupt_handler(pt_regs_t *regs)
 {
-	/* Spuriour Interrupt Vector Register */
-	uint32_t SIVr = GET_UINT32(lapic_addr, LAPIC_REGISTER_SIVR);
-	SIVr |= (1 << 8); /* Set the 8'th bit (Enable APIC) */
-
-	GET_UINT32(lapic_addr, LAPIC_REGISTER_SIVR) = SIVr;
-
-	kprintf("SIVR: 0x%x\n", SIVr);
+	/* Do nothing, dont even send an EOI */
+	LOG("Spurious interrupt happened!");
 }
+
 
 void lapic_init(void)
 {
+	ASSERT(lapic_addr != NULL, "lapic_addr == NULL!");
 
+	/* Set the ID */
+	uint32_t lapic_id = GET_UINT32(lapic_addr, LAPIC_REGISTER_ID);
+	lapic_id &= 0xFFFFFF;		/* Preserve reserved bits 0:23 */
+	lapic_id |= (lapic_num << 24);	/* Set top 24-31 bits to ID */
+	GET_UINT32(lapic_addr, LAPIC_REGISTER_ID) = lapic_id; /* Write the ID */
+	lapic_num++; /* Increment number of LAPICs */
+
+	/* Spuriour Interrupt Vector Register */
+	uint32_t SIVr = GET_UINT32(lapic_addr, LAPIC_REGISTER_SIVR);
+	SIVr = 0x100 | LAPIC_SPURIOUS_IRQ;
+	//SIVr |= (1 << 8); /* Set the 8'th bit (Enable APIC) */
+	GET_UINT32(lapic_addr, LAPIC_REGISTER_SIVR) = SIVr;
+
+}
+
+void lapic_eoi(void)
+{
+	ASSERT(lapic_addr != NULL, "lapic_addr not set.");
+
+	GET_UINT32(lapic_addr, LAPIC_REGISTER_EOI) = 0;
 }
 
 void ioapic_write(uint32_t offset, uint32_t data)
@@ -98,15 +122,6 @@ void ioapic_set_irq(uint8_t irq, uint64_t apic_id, uint8_t vector)
 void ioapic_init(void)
 {
 	ioapic_set_irq(0x01, 0xFF, 0x40);
-	uint8_t a = inb(0x61);
-	a |= 0x82;
-	outb(0x61, a);
-	a &= 0x7f;
-	outb(0x61, a);
-
-
-	/*  */
-	LOG("GOGO?");
 }
 
 void apic_init(void)
@@ -130,22 +145,25 @@ void apic_init(void)
 	    madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt_entry + madt_entry->length)) {
 		switch(madt_entry->type) {
 		case MADT_ENTRY_TYPE_LAPIC:
-			LOG("lapic found");
+			LOGF("lapic apid_id: 0x%x\n", madt_entry->apid_id);
 			break;
 
 		case MADT_ENTRY_TYPE_IOAPIC:
-			LOG("ioapic found");
 			ioapic_addr = (uint32_t*)(uint64_t)(
 							    (madt_entry_ioapic_t*)madt_entry)->io_apic_addr;
 
 			LOGF("ioapic_addr = 0x%x\n", ioapic_addr);
 			break;
 
-		case MADT_ENTRY_TYPE_ISO:
-			LOG("iso found");
+		case MADT_ENTRY_TYPE_ISO: {
+			struct madt_entry_iso* madt_iso =
+				(struct madt_entry*)madt_entry;
+			kprintf("iso found: irq source : 0x%x\tbus source :0x%x\n",
+			       	madt_iso->irq_source,
+				madt_iso->bus_source);
 
 			break;
-
+		}
 		case MADT_ENTRY_TYPE_NMI:
 			LOG("madt nmi found");
 
@@ -158,14 +176,17 @@ void apic_init(void)
 		ERROR("NO IOAPIC FOUND!");
 		return;
 	}
+
 	/* Disable PIC. I think must be initialized before */
 	pic_init();
 	pic_disable();
 
-	/* */
-	lapic_enable();
+	/* LAPIC */
 	lapic_init();
+	/* Install spurious interrupt handler (which should not raise EOI) */
+	interrupt_install(LAPIC_SPURIOUS_IRQ, spurious_interrupt_handler);
 
+	/* IO APIC */
 	ioapic_init();
 
 }
