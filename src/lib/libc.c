@@ -122,14 +122,13 @@ inline void outd(uint16_t port, uint32_t val)
 	asm volatile ( "out %0, %1" : : "a"(val), "Nd"(port) );
 }
 
-
-/* XXX: Do not use. Intended for *old* machines (25+ years) */
-inline void io_wait(void)
+/* CPU-speed independant.
+ * From osdev.org */
+static inline void io_wait(void)
 {
-	/* TODO: This is probably fragile. */
-	asm volatile ( "jmp 1f\n\t"
-		       "1:jmp 2f\n\t"
-		       "2:" );
+    /* Port 0x80 is used for 'checkpoints' during POST. */
+    /* The Linux kernel seems to think it is free for use :-/ */
+    asm volatile ( "outb %%al, $0x80" : : "a"(0) );
 }
 
 void _pause(void)
