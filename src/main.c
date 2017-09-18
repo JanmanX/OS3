@@ -29,6 +29,8 @@ int main(uint64_t mb_info_struct_addr)
 	/* Initialize Interrupts */
 	interrupt_init();
 
+	keyboard_init();
+
 	/* Done initializing */
 	LOG("Done initializing.\n");
 

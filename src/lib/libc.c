@@ -124,7 +124,7 @@ inline void outd(uint16_t port, uint32_t val)
 
 /* CPU-speed independant.
  * From osdev.org */
-static inline void io_wait(void)
+void io_wait(void)
 {
     /* Port 0x80 is used for 'checkpoints' during POST. */
     /* The Linux kernel seems to think it is free for use :-/ */

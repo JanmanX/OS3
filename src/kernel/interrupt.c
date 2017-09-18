@@ -293,7 +293,6 @@ void interrupt_init()
 	/* TODO:
 	 *	syscall
 	*/
-
 	apic_init();
 
 
@@ -302,13 +301,11 @@ void interrupt_init()
 
 
 	/* Enable interrupts */
-	//STI;
+	STI;
 }
 
 void interrupt_handler(pt_regs_t *regs)
 {
-	kprintf("Interrupt: 0x%x caught\n", regs->interrupt_num);
-
 	interrupt_handler_t handler = interrupt_handlers[regs->interrupt_num];
 	if(handler != NULL) {
 		handler(regs);

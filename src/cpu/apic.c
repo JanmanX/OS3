@@ -102,6 +102,9 @@ void ioapic_reset_irq(uint8_t irq)
 
 void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector)
 {
+	if(vector < APIC_VECTOR_OFFSET) {
+		LOG("Vector very low. Are you sure to install irq?");
+	}
 	/* Calculate the register offsets, given the IRQ.
 	 * Remember that even though offset is only 1, the register is still
 	 * 32 bits. */
@@ -145,7 +148,8 @@ void ioapic_init(void)
 
 	uint16_t i = 0;
 
-	for(i = 0; i < 256; i++) {
+	/* How many IRQs? */
+	for(i = 0; i < 0x10; i++) {
 		ioapic_reset_irq(i);
 	}
 
@@ -155,7 +159,6 @@ void ioapic_init(void)
 		/* XXX: Installing to LAPIC ID = 0x00 */
 		ioapic_set_irq(i, 0x00, i + 40);
 	}
-
 #endif
 }
 

@@ -2,7 +2,8 @@
 #include <stdint.h>
 
 /* APIC vector offset */
-#define APIC_VECTOR_OFFSET	(0x28)	/* 40. IRQ 0 will be vector 0+40 = 40*/
+#define APIC_VECTOR_OFFSET	(0x20)	/* 32. IRQ 0 will be just after reserved
+					   exceptions */
 
 /* MADT Entries */
 #define MADT_ENTRY_TYPE_LAPIC	(0x00)

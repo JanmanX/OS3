@@ -30,7 +30,6 @@ void idt_init()
 
 	/* Reload it */
 	idt_load((uint64_t)&idt_ptr);
-	BOCHS_DEBUG;
 	LOG("IDT LOADED");
 }
 
