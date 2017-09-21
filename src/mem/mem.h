@@ -1,10 +1,21 @@
 #pragma once
 
 #include <stdint.h>
+#include <types.h>
 
-#define KERNEL_MEM_START 0x100000
+#define KERNEL_MEM_START	(0x100000)
+#define KERNEL_HEAP_END		(GiB)
+#define MALLOC_MIN_SIZE		(0x04)
+
+typedef struct memory_control_block {
+	uint8_t used;
+	uint64_t size;
+	struct memory_control_block *next;
+	struct memory_control_block *prev;
+} __attribute__((packed))  memory_control_block_t;
+typedef memory_control_block_t mcb_t;
 
 void mem_init(void);
 
-void *malloc(uint64_t size);
-void free(void* ptr);
+uintptr_t *malloc(uint64_t size);
+void free(uintptr_t* ptr);
