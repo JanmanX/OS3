@@ -36,6 +36,5 @@ SECTIONS {
 
 
 	/* The very end of kernel */
-	kernel_end = .;
-
+	PROVIDE(kernel_end_addr = .);
 }

@@ -19,7 +19,7 @@
 #define SCAN_RELEASE		(0x80)
 
 
-void keyboard_init(void);
+void ps2keyboard_init(void);
 
 
 

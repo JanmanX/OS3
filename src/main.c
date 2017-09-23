@@ -7,6 +7,9 @@
 #include <cpu/idt.h>
 #include <kernel/interrupt.h>
 #include <kernel/acpi.h>
+#include <spinlock.h>
+#include <drivers/ps2mouse.h>
+#include <drivers/ps2keyboard.h>
 
 
 int main(uint64_t mb_info_struct_addr)
@@ -29,10 +32,12 @@ int main(uint64_t mb_info_struct_addr)
 	/* Initialize Interrupts */
 	interrupt_init();
 
-	keyboard_init();
+	/* Keyboard :) */
+	ps2keyboard_init();
 
 	/* Done initializing */
 	LOG("Done initializing.\n");
+
 
 
 	/* Stop the machine */

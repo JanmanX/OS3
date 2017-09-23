@@ -1,11 +1,11 @@
-#include "mouse.h"
+#include "ps2mouse.h"
 #include <drivers/ps2.h>
 #include <stdint.h>
 #include <libc.h>
 #include <kernel/interrupt.h>
 #include <cpu/apic.h>
 
-uint8_t mouse_interrupt_handler(pt_regs_t *regs)
+uint8_t ps2mouse_interrupt_handler(pt_regs_t *regs)
 {
 	LOG("Mouse event!");
 
@@ -19,7 +19,7 @@ uint8_t mouse_interrupt_handler(pt_regs_t *regs)
 }
 
 
-uint8_t mouse_write(uint8_t data)
+uint8_t ps2mouse_write(uint8_t data)
 {
 	ps2_write(PS2_COMMAND, PS2_MOUSE_PREFIX);
 
@@ -29,7 +29,7 @@ uint8_t mouse_write(uint8_t data)
 }
 
 
-void mouse_init(void)
+void ps2mouse_init(void)
 {
 	LOG("Mouse init");
 	uint8_t reply;
@@ -37,18 +37,18 @@ void mouse_init(void)
 
 	/* Install interrupt gate */
 	interrupt_install(PS2_IRQ + APIC_VECTOR_OFFSET,
-			  mouse_interrupt_handler);
+			  ps2mouse_interrupt_handler);
 
 	/* Setup IRQ in APIC */
 	ioapic_set_irq(PS2_IRQ, 0x00, PS2_IRQ + APIC_VECTOR_OFFSET);
 
 
 	/* Init mouse */
-	reply = mouse_write(PS2_MOUSE_RESET);
+	reply = ps2mouse_write(PS2_MOUSE_RESET);
 	LOGF("mouse reset -  0x%x\n", reply);
 
 	/* Enable command */
-	reply = mouse_write(PS2_MOUSE_ENABLE);
+	reply = ps2mouse_write(PS2_MOUSE_ENABLE);
 	LOGF("mouse enable - 0x%x\n", reply);
 
 

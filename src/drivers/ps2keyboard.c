@@ -1,4 +1,4 @@
-#include "keyboard.h"
+#include "ps2keyboard.h"
 #include <stdint.h>
 #include <libc.h>
 #include <cpu/apic.h>
@@ -23,7 +23,7 @@ static uint8_t key_map_upper[] = { 0x00, 0, '!', '@', '#', '$', '%', '^', '&',
         '<', '>', '?', 0, 0, 0, ' ', 0 };
 
 
-uint8_t keyboard_interrupt_handler(pt_regs_t *regs)
+uint8_t ps2keyboard_interrupt_handler(pt_regs_t *regs)
 {
 	uint8_t code = ps2_read(PS2_KB_COMMAND);
 
@@ -46,13 +46,13 @@ uint8_t keyboard_interrupt_handler(pt_regs_t *regs)
 	lapic_eoi();
 }
 
-uint8_t keyboard_write(uint8_t data)
+uint8_t ps2keyboard_write(uint8_t data)
 {
 	ps2_write(PS2_KB_COMMAND, data);
 	return ps2_read(PS2_KB_COMMAND);
 }
 
-void keyboard_init(void)
+void ps2keyboard_init(void)
 {
 	CLI;
 
@@ -64,7 +64,7 @@ void keyboard_init(void)
 
 	/* Setup interrupt handler */
 	interrupt_install(APIC_VECTOR_OFFSET + PS2_KB_IRQ,
-			  keyboard_interrupt_handler);
+			  ps2keyboard_interrupt_handler);
 
 
 	/* Reset keyboard controller */

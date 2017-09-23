@@ -6,4 +6,5 @@
 #define PS2_MOUSE_PORT		(0x60)
 #define PS2_MOUSE_RESET		(0xFF)
 #define PS2_MOUSE_ENABLE	(0xF4)
-void mouse_init(void);
+
+void ps2mouse_init(void);
