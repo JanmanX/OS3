@@ -1,11 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MEMORY AREAS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; VGA Video memory
 %define VGA_TEXT_BUFFER	0xB8000
+%define STACK_TOP	(1024 * 1024 * 1024)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PAGING ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 %define PAGE_PRESENT    0x01
 %define PAGE_WRITE      0x02
 %define PAGE_SIZE_2MIB   (1 << 7)
+%define PAGE_PS		(1 << 7)
 
 %define PAGE_ENTRY_SIZE 8
 %define PAGE_TABLE_SIZE 512
@@ -267,6 +269,8 @@ section .text
 ;
 ;
 long_mode_start:
+
+
 	; Clear long-mode registers
 	; Setup data segments
         mov ax, gdt64.km_data
@@ -285,6 +289,24 @@ long_mode_start:
         xor r14, r14
         xor r15, r15
         cld
+
+	; MAP the first GiB (So that we can use it for stack )
+	; Set PML4
+	mov rax, PDPT
+	or rax, PAGE_PRESENT | PAGE_WRITE
+	mov [PML4T], rax
+
+	; Set PDPT
+	mov rax, PAGE_PRESENT | PAGE_WRITE | PAGE_PS
+	mov [PDPT], rax
+
+	; Set page
+	mov rax, PML4T
+	mov cr3, rax
+
+	; Setup stack
+	mov rsp, STACK_TOP
+
 
 	; mb_info_ptr is already in edi (rdi)
 	call main

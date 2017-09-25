@@ -4,7 +4,7 @@
 #include <types.h>
 
 #define KERNEL_MEM_START	(0x100000)
-#define KERNEL_HEAP_END		(GiB)
+#define KERNEL_HEAP_END		(GiB/2)
 #define MALLOC_MIN_SIZE		(0x04)
 
 typedef struct memory_control_block {
