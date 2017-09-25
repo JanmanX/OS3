@@ -19,3 +19,6 @@ void mem_init(void);
 
 uintptr_t *malloc(uint64_t size);
 void free(uintptr_t* ptr);
+
+/* Miscellaneous functions */
+uint8_t* mem_under_mib(uint64_t length);

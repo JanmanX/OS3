@@ -4,6 +4,8 @@
 #include <multiboot_parser.h>
 #include <stdint.h>
 #include <libc.h>
+#include <types.h>
+
 
 /* Pointer to the MB MMAP TAG */
 static struct multiboot_tag_mmap *mb_tag_mmap = NULL;
@@ -147,5 +149,24 @@ void free(uintptr_t *ptr)
 		/* Link prev and next, effectivelly deleting this node */
 		node->prev->next = node->next;
 		node->next->prev = node->prev;
+	}
+}
+
+uint8_t* mem_under_mib(uint64_t length)
+{
+	ASSERT(mb_tag_mmap != NULL, "mb_tag_mmap == NULL");
+
+		/* Parse the map */
+	multiboot_memory_map_t *mmap = NULL;
+	for (mmap = mb_tag_mmap->entries;
+	     (uint8_t *) mmap < (uint8_t *) mb_tag_mmap + mb_tag_mmap->size;
+	     mmap = (multiboot_memory_map_t*)((uint64_t)mmap+mb_tag_mmap->entry_size)) {
+
+		if(mmap->addr < MiB
+		   && mmap->len >= length) {
+			LOGF("<MiB: 0x%x\n", mmap->addr);
+			return (uint8_t*)mmap->addr;
+		}
+
 	}
 }
