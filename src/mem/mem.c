@@ -72,22 +72,44 @@ void heap_init(uint64_t *start, uint64_t size)
 	heap->used = 0x00;
 	heap->size = size;
 	heap->next = NULL;
-	heap->prev = NULL;
 
 	LOGF("heap @ 0x%x\theap->used = 0x%x\theap->size = 0x%x\n",
 	     heap, heap->used, heap->size);
 
 }
 
+/* Collapse consecutive free blocks into one block */
+void mem_heap_collapse(void)
+{
+	mcb_t* node = NULL;
+
+	for(node = heap; node != NULL; node = node->next) {
+		/* No next block = no more to collapse. Exit */
+		if(node->next == NULL) {
+			break;
+		}
+
+		/* If both next blocks are free, collapse them into 1 */
+		while(node->used == 0x00 && node->next->used == 0x00) {
+			node->size += sizeof(mcb_t) + node->next->size;
+			node->next = node->next->next;
+		}
+	}
+}
+
 
 uintptr_t* malloc(uint64_t size)
 {
-	mcb_t *node = heap;
+	mcb_t* node = NULL;
+	uint8_t retry = 0x01;
 
+RETRY:
 	for(node = heap; node != NULL; node = node->next) {
 		if(node->used == 0x00 && node->size >= size) {
+			/*
 			LOGF("node @ 0x%x\tnode->used = 0x%x\tnode->size = 0x%x\n",
 			     node, node->used, node->size);
+			*/
 
 
 			/* If next = NULL, create a new one */
@@ -97,7 +119,6 @@ uintptr_t* malloc(uint64_t size)
 						      + size);
 				node->next->used = 0x00;
 				node->next->next = NULL;
-				node->next->prev = node;
 				node->next->size = node->size
 					- sizeof(mcb_t)
 					- size;
@@ -108,11 +129,21 @@ uintptr_t* malloc(uint64_t size)
 			node->size = size;
 			return (uintptr_t*)(((uint64_t)node) + sizeof(mcb_t));
 		}
+	}
 
+
+	/* We have reached this point without any valid pointer.
+	 * Collapse memory and try again. */
+	if(retry) {
+		retry = 0x00;
+		mem_heap_collapse();
+		goto RETRY;
 	}
 
 	return NULL;
 }
+
+
 
 void free(uintptr_t *ptr)
 {
@@ -122,41 +153,17 @@ void free(uintptr_t *ptr)
 		LOG("Cannot free outside heap bounds!");
 		return;
 	}
+
 	/* Get the address of the MCB */
 	mcb_t* node = (mcb_t*)(((uint64_t)ptr) - sizeof(mcb_t));
-
 	node->used = 0x00;
-
-	/* Collapse with surrounding free nodes */
-	/* If next node is not used, delete it from linked list, and extend
-	 * the current node. */
-	if(node->next != NULL && node->next->used == 0x00) {
-		/* Extend the size */
-		node->size += sizeof(mcb_t) + node->next->size;
-
-		/* Update pointers */
-		node->next = node->next->next;
-		if(node->next != NULL && node->next->next != NULL) {
-			node->next->next->prev = node;
-		}
-	}
-
-	/* If the previous node is not used, delete the current node, expanding
-	 * the previous node. */
-	if(node->prev != NULL && node->prev->used == 0x00) {
-		node->prev->size += sizeof(mcb_t) + node->size;
-
-		/* Link prev and next, effectivelly deleting this node */
-		node->prev->next = node->next;
-		node->next->prev = node->prev;
-	}
 }
 
 uint8_t* mem_under_mib(uint64_t length)
 {
 	ASSERT(mb_tag_mmap != NULL, "mb_tag_mmap == NULL");
 
-		/* Parse the map */
+	/* Parse the map */
 	multiboot_memory_map_t *mmap = NULL;
 	for (mmap = mb_tag_mmap->entries;
 	     (uint8_t *) mmap < (uint8_t *) mb_tag_mmap + mb_tag_mmap->size;
@@ -164,7 +171,6 @@ uint8_t* mem_under_mib(uint64_t length)
 
 		if(mmap->addr < MiB
 		   && mmap->len >= length) {
-			LOGF("<MiB: 0x%x\n", mmap->addr);
 			return (uint8_t*)mmap->addr;
 		}
 
