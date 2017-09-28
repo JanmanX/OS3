@@ -12,7 +12,7 @@ LDSCRIPT        = ./linker.ld
 LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000
 
 
-MODULES         := init lib drivers mem cpu kernel fs
+MODULES         := init include lib drivers mem cpu kernel fs test
 INC             = -I./include -I. -I./lib
 SRC             := main.c
 
@@ -40,6 +40,9 @@ all: $(OBJS)
 	echo $(OBJS)
 	$(LD) -o kernel.bin $(LDFLAGS) $^
 	objdump -DMintel kernel.bin > kernel.objdump
+
+print_objs: $(OBJS)
+	echo $(OBJS)
 
 tags:
 	rm -f tags
