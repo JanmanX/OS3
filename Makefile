@@ -24,7 +24,11 @@ run: iso
 
 debug: iso
 	$(QEMU) $(GRUB_KERNEL) $(QEMU_FLAGS)  -S -cdrom  $(TARGET)
-
+debug2: iso
+	gdb $(KERNEL) -ex "target remote :1234"\
+			-ex "hbreak main"\
+			-ex "layout src"\
+			-ex "continue"
 
 
 bochs: iso
