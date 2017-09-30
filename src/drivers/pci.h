@@ -1,4 +1,6 @@
 #pragma once
+#include <stdint.h>
+
 
 #define PCI_ADDRESS_PORT		(0xCF8)
 #define PCI_DATA_PORT			(0xCFC)
@@ -21,12 +23,23 @@
 #define PCI_REGISTER_INTERRUPT_LINE     0x3C
 #define PCI_REGISTER_INTERRUPT_PIN      0x3D
 
+/* CLASS CODES */
+#define PCI_CLASS_STORAGE		(0x01)
+#define PCI_SUBCLASS_IDE		(0x01)
+#define PCI_SUBCLASS_RAID		(0x04)
+#define PCI_SUBCLASS_ATA		(0x05)
+#define PCI_SUBCLASS_SOLID_STATE	(0x08)
 
-
+typedef void (*pci_func_t)(uint8_t bus, uint8_t dev, uint8_t func);
 
 uint32_t pci_read(const uint8_t bus,
 		  const uint8_t dev,
 		  const uint8_t func,
-		  const uint8_t reg,
-		  const uint8_t len);
+		  const uint8_t reg);
 
+void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass);
+
+void pci_bar_write(uint32_t bar, uint32_t val);
+uint32_t pci_bar_read(uint32_t bar);
+
+void pci_init_devices(void);
