@@ -162,6 +162,7 @@ void ioapic_init(void)
 #endif
 }
 
+
 void apic_init(void)
 {
 	/* Get the MADT */
@@ -236,4 +237,29 @@ void apic_init(void)
 			break;
 		}
 	}
+}
+
+uint8_t apic_get_iso(uint8_t irq)
+{
+	ASSERT(madt != NULL, "MADT not setup!");
+
+	struct madt_entry_lapic* madt_entry = NULL;
+	for(madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt + sizeof(madt_t));
+	    madt_entry < (madt_entry_lapic_t*)((uintptr_t)madt + madt->header.length);
+	    madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt_entry + madt_entry->length)) {
+		switch(madt_entry->type) {
+		case MADT_ENTRY_TYPE_ISO: {
+			struct madt_entry_iso* madt_iso =
+				(struct madt_entry*)madt_entry;
+
+			if(madt_iso->irq_source == irq) {
+				return madt_iso->target_vector;
+			}
+		}
+		}
+
+
+	}
+
+	return irq;
 }

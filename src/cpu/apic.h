@@ -35,6 +35,8 @@ void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector);
 void ioapic_reset_irq(uint8_t irq);
 
 
+/* Get the Interrupt Source Override */
+uint8_t apic_get_iso(uint8_t irq);
 void apic_init(void);
 
 
