@@ -275,7 +275,7 @@ void apic_init(void)
 	}
 }
 
-uint8_t apic_get_iso(uint8_t irq)
+uint8_t ioapic_get_iso(uint8_t irq)
 {
 	ASSERT(madt != NULL, "MADT not setup!");
 
@@ -299,3 +299,6 @@ uint8_t apic_get_iso(uint8_t irq)
 
 	return irq;
 }
+
+
+

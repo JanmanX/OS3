@@ -11,6 +11,7 @@
 #define MADT_ENTRY_TYPE_ISO	(0x02)
 
 /* LAPIC */
+#define LAPIC_BSP		(0x00)
 /* LAPIC Address space register offsets */
 #define LAPIC_SPURIOUS_IRQ	(0xFF)
 
@@ -39,9 +40,8 @@ uint8_t ioapic_is_irq_free(uint8_t irq);
 uint8_t ioapic_get_free_irq(void);
 uint8_t ioapic_get_num_entries(void);
 
-
 /* Get the Interrupt Source Override */
-uint8_t apic_get_iso(uint8_t irq);
+uint8_t ioapic_get_iso(uint8_t irq);
 
 
 void apic_init(void);
