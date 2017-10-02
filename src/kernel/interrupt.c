@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <cpu/apic.h>
 #include <cpu/tss.h>
-
+#include <types.h>
 
 static interrupt_handler_t interrupt_handlers[INTERRUPTS_MAX] = {NULL};
 
@@ -314,18 +314,35 @@ void interrupt_handler(pt_regs_t *regs)
 	}
 }
 
-uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler)
+uint8_t interrupt_install(uint8_t vector, interrupt_handler_t handler)
 {
-	/* SANITY CHECK */
-	if(irq >= INTERRUPTS_MAX) {
-		ERRORF("Could not install interrupt. IRQ: 0x%x >= 0x%0x", irq,
-		      INTERRUPTS_MAX);
-		return EPERM;
-	}
-
-	interrupt_handlers[irq] = handler;
+	interrupt_handlers[vector] = handler;
 
 	return EOK;
+}
+
+uint8_t interrupt_is_vector_free(uint8_t vector)
+{
+	if(interrupt_handlers[vector] == NULL) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+
+uint8_t interrupt_get_free_vector(void)
+{
+	int8_t vector;
+
+	/* Start at 31 for safety */
+	for(vector = 31; vector < INTERRUPTS_MAX - 1; vector++) {
+		if(interrupt_is_vector_free(vector)) {
+			return vector;
+		}
+	}
+
+	return 0xFF;
 }
 
 void interrupt_uninstall(uint8_t irq)

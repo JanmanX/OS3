@@ -48,6 +48,8 @@ typedef uint8_t (*interrupt_handler_t)(pt_regs_t *regs);
 void interrupt_init();
 void interrupt_handler(pt_regs_t *regs);
 uint8_t interrupt_install(uint8_t irq, interrupt_handler_t handler);
+uint8_t interrupt_is_vector_free(uint8_t irq);
+uint8_t interrupt_get_free_vector(void);
 void interrupt_uninstall(uint8_t irq);
 void interrupt_print_regs(pt_regs_t *regs);
 
