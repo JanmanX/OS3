@@ -3,6 +3,7 @@
 #include <libc.h>
 #include <cpu/pic.h>
 #include <stdint.h>
+#include <types.h>
 #include <kernel/interrupt.h>
 
 /* Multiple APIC Descriptor Table */
@@ -91,13 +92,13 @@ void ioapic_reset_irq(uint8_t irq)
 	high &= ~(0x00FFFFFF); /* Set destination ID to 0x00 */
 
 	uint32_t low = ioapic_read(low_index);
-	low &= ~(0x1FF); /* Reset last 17 bits */
+	low &= ~(0xFF); /* Reset last 16 bits */
 
+	low |= (1 << 16); /* Mask interrupt (ignore signal) */
 
 	/* Write */
 	ioapic_write(high_index, high);
 	ioapic_write(low_index, low);
-
 }
 
 void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector)
@@ -141,6 +142,41 @@ void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector)
 	ioapic_write(low_index, low);
 }
 
+uint8_t ioapic_is_irq_free(uint8_t irq)
+{
+	uint32_t entry = ioapic_read(0x10 + irq * 2);
+
+	if(entry & (1<<16)) {
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+uint8_t ioapic_get_free_irq(void)
+{
+	/* Retrieve Maximum redirection entry number */
+	uint8_t num_entries = ioapic_get_num_entries();
+	uint8_t i;
+
+	for(i = 0; i < num_entries; i++) {
+		if(ioapic_is_irq_free(i)) {
+			//return i;
+			LOGF("IOAPIC %d is free\n", i);
+		} else {
+			LOGF("IOAPIC %d is used\n", i);
+		}
+	}
+
+	return 0xFF;
+}
+
+uint8_t ioapic_get_num_entries(void)
+{
+	/* Retrieve Maximum redirection entry number */
+	uint8_t num_entries = (ioapic_read(IOAPIC_REGISTER_VERSION) >> 16) + 1;
+	return num_entries;
+}
 
 void ioapic_init(void)
 {
@@ -149,7 +185,7 @@ void ioapic_init(void)
 	uint16_t i = 0;
 
 	/* How many IRQs? */
-	for(i = 0; i < 0x10; i++) {
+	for(i = 0; i < ioapic_get_num_entries(); i++) {
 		ioapic_reset_irq(i);
 	}
 
@@ -191,7 +227,7 @@ void apic_init(void)
 
 		case MADT_ENTRY_TYPE_IOAPIC:
 			ioapic_addr = (uint32_t*)(uint64_t)(
-					    (madt_entry_ioapic_t*)madt_entry)->io_apic_addr;
+							    (madt_entry_ioapic_t*)madt_entry)->io_apic_addr;
 
 			LOGF("ioapic_addr = 0x%x\n", ioapic_addr);
 			break;

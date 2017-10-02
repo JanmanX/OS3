@@ -28,15 +28,22 @@ void lapic_eoi(void);
 #define IOAPIC_SELECT_OFFSET	(0x00)
 #define IOAPIC_WINDOW_OFFSET	(0x10)
 
+#define IOAPIC_REGISTER_VERSION	(0x01)
+
 void ioapic_init(void);
 void ioapic_write(uint32_t reg, uint32_t data);
 uint32_t ioapic_read(uint32_t addr);
 void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector);
 void ioapic_reset_irq(uint8_t irq);
+uint8_t ioapic_is_irq_free(uint8_t irq);
+uint8_t ioapic_get_free_irq(void);
+uint8_t ioapic_get_num_entries(void);
 
 
 /* Get the Interrupt Source Override */
 uint8_t apic_get_iso(uint8_t irq);
+
+
 void apic_init(void);
 
 
