@@ -31,20 +31,23 @@ ACPI_SIGNATURE_SLIT	./kernel/acpi.h	26;"	d
 ACPI_SIGNATURE_SRAT	./kernel/acpi.h	27;"	d
 ACPI_SIGNATURE_SSDT	./kernel/acpi.h	28;"	d
 ACPI_SIGNATURE_XSDT	./kernel/acpi.h	29;"	d
+APIC_VECTOR_OFFSET	./cpu/apic.h	5;"	d
 AS	./Makefile	/^AS              = nasm$/;"	m
 ASFLAGS	./Makefile	/^ASFLAGS         = -f elf64$/;"	m
-BOCHS_DEBUG	./lib/libc.h	68;"	d
+ASSERT	./lib/libc.h	68;"	d
+ASSERTF	./lib/libc.h	72;"	d
+BOCHS_DEBUG	./lib/libc.h	85;"	d
 Bitmap	./drivers/font.h	/^	const unsigned char *Bitmap;	\/\/\/< bitmap of all characters$/;"	m	struct:bitmap_font
 CC	./Makefile	/^CC              = x86_64-elf-gcc$/;"	m
 CFLAGS	./Makefile	/^CFLAGS          = -std=gnu11 -ffreestanding -O0 -Wall -Wextra -m64 -g -mno-red-zone -nostdinc -H$/;"	m
-CLI	./lib/libc.h	62;"	d
+CLI	./lib/libc.h	79;"	d
 COLOR_ALPHA	./drivers/screen.h	7;"	d
 COLOR_BLUE	./drivers/screen.h	10;"	d
 COLOR_GREEN	./drivers/screen.h	9;"	d
 COLOR_RED	./drivers/screen.h	8;"	d
 Chars	./drivers/font.h	/^	unsigned short Chars;		\/\/\/< number of characters in font$/;"	m	struct:bitmap_font
-DEBUG	./lib/libc.h	38;"	d
-DEBUGF	./lib/libc.h	50;"	d
+DEBUG	./lib/libc.h	46;"	d
+DEBUGF	./lib/libc.h	58;"	d
 E2BIG	./lib/errno.h	11;"	d
 EACCES	./lib/errno.h	17;"	d
 EAGAIN	./lib/errno.h	15;"	d
@@ -76,8 +79,8 @@ EPERM	./lib/errno.h	5;"	d
 EPIPE	./lib/errno.h	36;"	d
 ERANGE	./lib/errno.h	38;"	d
 EROFS	./lib/errno.h	34;"	d
-ERROR	./lib/libc.h	40;"	d
-ERRORF	./lib/libc.h	55;"	d
+ERROR	./lib/libc.h	48;"	d
+ERRORF	./lib/libc.h	63;"	d
 ESPIPE	./lib/errno.h	33;"	d
 ESRCH	./lib/errno.h	7;"	d
 ETXTBSY	./lib/errno.h	30;"	d
@@ -103,12 +106,18 @@ EXCEPTION_UD	./kernel/exception.h	13;"	d
 EXCEPTION_VE	./kernel/exception.h	27;"	d
 EXCEPTION_XM	./kernel/exception.h	26;"	d
 EXDEV	./lib/errno.h	22;"	d
+FALSE	./lib/types.h	6;"	d
 FILES	./cpu/subsys.mk	/^FILES := gdt.c idt.c apic.c tss.c pic.c$/;"	m
-FILES	./drivers/subsys.mk	/^FILES := screen.c font.c$/;"	m
+FILES	./drivers/subsys.mk	/^FILES := screen.c font.c ps2keyboard.c ps2.c ps2mouse.c$/;"	m
+FILES	./fs/subsys.mk	/^FILES := vfs.c$/;"	m
+FILES	./include/subsys.mk	/^FILES := list.c tree.c$/;"	m
 FILES	./init/subsys.mk	/^FILES := boot.asm multiboot_header.asm$/;"	m
 FILES	./kernel/subsys.mk	/^FILES := interrupt.c _interrupt.asm exception.c acpi.c$/;"	m
-FILES	./lib/subsys.mk	/^FILES := libc.c kprintf.c multiboot_parser.c$/;"	m
+FILES	./lib/subsys.mk	/^FILES := libc.c kprintf.c multiboot_parser.c spinlock.c$/;"	m
 FILES	./mem/subsys.mk	/^FILES := mem.c paging.c$/;"	m
+FILES	./test/subsys.mk	/^FILES := test.c tree_test.c$/;"	m
+FS_MAX_NAME	./fs/vfs.h	5;"	d
+GDT	./cpu/_smp.asm	/^GDT:$/;"	l
 GDT_KERNEL_CODE_INDEX	./cpu/gdt.h	9;"	d
 GDT_KERNEL_CODE_OFFSET	./cpu/gdt.h	18;"	d
 GDT_KERNEL_DATA_INDEX	./cpu/gdt.h	10;"	d
@@ -122,12 +131,13 @@ GDT_USER_CODE_INDEX	./cpu/gdt.h	11;"	d
 GDT_USER_CODE_OFFSET	./cpu/gdt.h	20;"	d
 GDT_USER_DATA_INDEX	./cpu/gdt.h	12;"	d
 GDT_USER_DATA_OFFSET	./cpu/gdt.h	21;"	d
-GET_UINT16	./lib/libc.h	30;"	d
-GET_UINT32	./lib/libc.h	31;"	d
-GET_UINT64	./lib/libc.h	32;"	d
-GET_UINT8	./lib/libc.h	29;"	d
+GET_UINT16	./lib/libc.h	38;"	d
+GET_UINT32	./lib/libc.h	39;"	d
+GET_UINT64	./lib/libc.h	40;"	d
+GET_UINT8	./lib/libc.h	37;"	d
+GiB	./lib/types.h	14;"	d
 GiB	./mem/paging.h	30;"	d
-HALT	./lib/libc.h	64;"	d
+HALT	./lib/libc.h	81;"	d
 Height	./drivers/font.h	/^	unsigned char Height;		\/\/\/< character height$/;"	m	struct:bitmap_font
 ICW1_ICW4	./cpu/pic.h	8;"	d
 ICW1_INIT	./cpu/pic.h	12;"	d
@@ -139,6 +149,7 @@ ICW4_AUTO	./cpu/pic.h	15;"	d
 ICW4_BUF_MASTER	./cpu/pic.h	17;"	d
 ICW4_BUF_SLAVE	./cpu/pic.h	16;"	d
 ICW4_SFNM	./cpu/pic.h	18;"	d
+IDT	./cpu/_smp.asm	/^IDT:$/;"	l
 IDTE_DPL_RING0	./cpu/idt.h	16;"	d
 IDTE_DPL_RING1	./cpu/idt.h	17;"	d
 IDTE_DPL_RING2	./cpu/idt.h	18;"	d
@@ -148,31 +159,285 @@ IDTE_TYPE_INTERRUPT_32	./cpu/idt.h	24;"	d
 IDTE_TYPE_TRAP_32	./cpu/idt.h	23;"	d
 IDT_NUM_ENTRIES	./cpu/idt.h	7;"	d
 INC	./Makefile	/^INC             = -I.\/include -I. -I.\/lib$/;"	m
+INPUT_BUTTON_1	./drivers/ps2keyboard.h	/^	INPUT_BUTTON_1 = 0x0001,$/;"	e	enum:__anon6
+INPUT_CONS_AC_BACK	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_BACK,$/;"	e	enum:__anon7
+INPUT_CONS_AC_BOOKMARKS	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_BOOKMARKS = 0x022A$/;"	e	enum:__anon7
+INPUT_CONS_AC_FORWARD	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_FORWARD,$/;"	e	enum:__anon7
+INPUT_CONS_AC_GO_TO	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_GO_TO,$/;"	e	enum:__anon7
+INPUT_CONS_AC_HOME	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_HOME,$/;"	e	enum:__anon7
+INPUT_CONS_AC_REFRESH	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_REFRESH,$/;"	e	enum:__anon7
+INPUT_CONS_AC_SEARCH	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_SEARCH = 0x0221,$/;"	e	enum:__anon7
+INPUT_CONS_AC_STOP	./drivers/ps2keyboard.h	/^	INPUT_CONS_AC_STOP,$/;"	e	enum:__anon7
+INPUT_CONS_AL_CALCULATOR	./drivers/ps2keyboard.h	/^	INPUT_CONS_AL_CALCULATOR = 0x0192,$/;"	e	enum:__anon7
+INPUT_CONS_AL_EMAIL_READER	./drivers/ps2keyboard.h	/^	INPUT_CONS_AL_EMAIL_READER = 0x018A,$/;"	e	enum:__anon7
+INPUT_CONS_AL_LOCAL_BROWSER	./drivers/ps2keyboard.h	/^	INPUT_CONS_AL_LOCAL_BROWSER = 0x0194,$/;"	e	enum:__anon7
+INPUT_CONS_AL_MEDIA_SELECT	./drivers/ps2keyboard.h	/^	INPUT_CONS_AL_MEDIA_SELECT = 0x0183,$/;"	e	enum:__anon7
+INPUT_CONS_MUTE	./drivers/ps2keyboard.h	/^	INPUT_CONS_MUTE = 0x00E2,$/;"	e	enum:__anon7
+INPUT_CONS_PLAY_PAUSE	./drivers/ps2keyboard.h	/^	INPUT_CONS_PLAY_PAUSE = 0x00CD,$/;"	e	enum:__anon7
+INPUT_CONS_SCAN_NEXT_TRACK	./drivers/ps2keyboard.h	/^	INPUT_CONS_SCAN_NEXT_TRACK = 0x00B5,$/;"	e	enum:__anon7
+INPUT_CONS_SCAN_PREVIOUS_TRACK	./drivers/ps2keyboard.h	/^	INPUT_CONS_SCAN_PREVIOUS_TRACK,$/;"	e	enum:__anon7
+INPUT_CONS_STOP	./drivers/ps2keyboard.h	/^	INPUT_CONS_STOP,$/;"	e	enum:__anon7
+INPUT_CONS_VOLUME_DOWN	./drivers/ps2keyboard.h	/^	INPUT_CONS_VOLUME_DOWN,$/;"	e	enum:__anon7
+INPUT_CONS_VOLUME_UP	./drivers/ps2keyboard.h	/^	INPUT_CONS_VOLUME_UP = 0x00E9,$/;"	e	enum:__anon7
+INPUT_KEY_0	./drivers/ps2keyboard.h	/^	INPUT_KEY_0,$/;"	e	enum:__anon4
+INPUT_KEY_1	./drivers/ps2keyboard.h	/^	INPUT_KEY_1,$/;"	e	enum:__anon4
+INPUT_KEY_2	./drivers/ps2keyboard.h	/^	INPUT_KEY_2,$/;"	e	enum:__anon4
+INPUT_KEY_3	./drivers/ps2keyboard.h	/^	INPUT_KEY_3,$/;"	e	enum:__anon4
+INPUT_KEY_4	./drivers/ps2keyboard.h	/^	INPUT_KEY_4,$/;"	e	enum:__anon4
+INPUT_KEY_5	./drivers/ps2keyboard.h	/^	INPUT_KEY_5,$/;"	e	enum:__anon4
+INPUT_KEY_6	./drivers/ps2keyboard.h	/^	INPUT_KEY_6,$/;"	e	enum:__anon4
+INPUT_KEY_7	./drivers/ps2keyboard.h	/^	INPUT_KEY_7,$/;"	e	enum:__anon4
+INPUT_KEY_8	./drivers/ps2keyboard.h	/^	INPUT_KEY_8,$/;"	e	enum:__anon4
+INPUT_KEY_9	./drivers/ps2keyboard.h	/^	INPUT_KEY_9,$/;"	e	enum:__anon4
+INPUT_KEY_A	./drivers/ps2keyboard.h	/^	INPUT_KEY_A = 0x0004,$/;"	e	enum:__anon4
+INPUT_KEY_AGAIN	./drivers/ps2keyboard.h	/^	INPUT_KEY_AGAIN,$/;"	e	enum:__anon4
+INPUT_KEY_ALT_ERASE	./drivers/ps2keyboard.h	/^	INPUT_KEY_ALT_ERASE,$/;"	e	enum:__anon4
+INPUT_KEY_APOSTROPH	./drivers/ps2keyboard.h	/^	INPUT_KEY_APOSTROPH,$/;"	e	enum:__anon4
+INPUT_KEY_APPLICATION	./drivers/ps2keyboard.h	/^	INPUT_KEY_APPLICATION,$/;"	e	enum:__anon4
+INPUT_KEY_B	./drivers/ps2keyboard.h	/^	INPUT_KEY_B,$/;"	e	enum:__anon4
+INPUT_KEY_BACKSLASH	./drivers/ps2keyboard.h	/^	INPUT_KEY_BACKSLASH,$/;"	e	enum:__anon4
+INPUT_KEY_BACKSPACE	./drivers/ps2keyboard.h	/^	INPUT_KEY_BACKSPACE,$/;"	e	enum:__anon4
+INPUT_KEY_C	./drivers/ps2keyboard.h	/^	INPUT_KEY_C,$/;"	e	enum:__anon4
+INPUT_KEY_CANCEL	./drivers/ps2keyboard.h	/^	INPUT_KEY_CANCEL,$/;"	e	enum:__anon4
+INPUT_KEY_CAPS_LOCK	./drivers/ps2keyboard.h	/^	INPUT_KEY_CAPS_LOCK,$/;"	e	enum:__anon4
+INPUT_KEY_CLEAR	./drivers/ps2keyboard.h	/^	INPUT_KEY_CLEAR,$/;"	e	enum:__anon4
+INPUT_KEY_CLEAR_AGAIN	./drivers/ps2keyboard.h	/^	INPUT_KEY_CLEAR_AGAIN,$/;"	e	enum:__anon4
+INPUT_KEY_CLOSE_BRACKET	./drivers/ps2keyboard.h	/^	INPUT_KEY_CLOSE_BRACKET,$/;"	e	enum:__anon4
+INPUT_KEY_COMMA	./drivers/ps2keyboard.h	/^	INPUT_KEY_COMMA,$/;"	e	enum:__anon4
+INPUT_KEY_COPY	./drivers/ps2keyboard.h	/^	INPUT_KEY_COPY,$/;"	e	enum:__anon4
+INPUT_KEY_CR_SEL	./drivers/ps2keyboard.h	/^	INPUT_KEY_CR_SEL,$/;"	e	enum:__anon4
+INPUT_KEY_CURRENCY_SUBUNIT	./drivers/ps2keyboard.h	/^	INPUT_KEY_CURRENCY_SUBUNIT,$/;"	e	enum:__anon4
+INPUT_KEY_CURRENCY_UNIT	./drivers/ps2keyboard.h	/^	INPUT_KEY_CURRENCY_UNIT,$/;"	e	enum:__anon4
+INPUT_KEY_CUT	./drivers/ps2keyboard.h	/^	INPUT_KEY_CUT,$/;"	e	enum:__anon4
+INPUT_KEY_D	./drivers/ps2keyboard.h	/^	INPUT_KEY_D,$/;"	e	enum:__anon4
+INPUT_KEY_DASH	./drivers/ps2keyboard.h	/^	INPUT_KEY_DASH,$/;"	e	enum:__anon4
+INPUT_KEY_DECIMAL_SEP	./drivers/ps2keyboard.h	/^	INPUT_KEY_DECIMAL_SEP,$/;"	e	enum:__anon4
+INPUT_KEY_DELETE	./drivers/ps2keyboard.h	/^	INPUT_KEY_DELETE,$/;"	e	enum:__anon4
+INPUT_KEY_DOWN_ARROW	./drivers/ps2keyboard.h	/^	INPUT_KEY_DOWN_ARROW,$/;"	e	enum:__anon4
+INPUT_KEY_E	./drivers/ps2keyboard.h	/^	INPUT_KEY_E,$/;"	e	enum:__anon4
+INPUT_KEY_END	./drivers/ps2keyboard.h	/^	INPUT_KEY_END,$/;"	e	enum:__anon4
+INPUT_KEY_ENTER	./drivers/ps2keyboard.h	/^	INPUT_KEY_ENTER,$/;"	e	enum:__anon4
+INPUT_KEY_EQUAL	./drivers/ps2keyboard.h	/^	INPUT_KEY_EQUAL,$/;"	e	enum:__anon4
+INPUT_KEY_EQUAL_SIGN	./drivers/ps2keyboard.h	/^	INPUT_KEY_EQUAL_SIGN,$/;"	e	enum:__anon4
+INPUT_KEY_ESCAPE	./drivers/ps2keyboard.h	/^	INPUT_KEY_ESCAPE,$/;"	e	enum:__anon4
+INPUT_KEY_EUROPE_1	./drivers/ps2keyboard.h	/^	INPUT_KEY_EUROPE_1,$/;"	e	enum:__anon4
+INPUT_KEY_EUROPE_2	./drivers/ps2keyboard.h	/^	INPUT_KEY_EUROPE_2,$/;"	e	enum:__anon4
+INPUT_KEY_EXECUTE	./drivers/ps2keyboard.h	/^	INPUT_KEY_EXECUTE,$/;"	e	enum:__anon4
+INPUT_KEY_EX_SEL	./drivers/ps2keyboard.h	/^	INPUT_KEY_EX_SEL,$/;"	e	enum:__anon4
+INPUT_KEY_F	./drivers/ps2keyboard.h	/^	INPUT_KEY_F,$/;"	e	enum:__anon4
+INPUT_KEY_F1	./drivers/ps2keyboard.h	/^	INPUT_KEY_F1,$/;"	e	enum:__anon4
+INPUT_KEY_F10	./drivers/ps2keyboard.h	/^	INPUT_KEY_F10,$/;"	e	enum:__anon4
+INPUT_KEY_F11	./drivers/ps2keyboard.h	/^	INPUT_KEY_F11,$/;"	e	enum:__anon4
+INPUT_KEY_F12	./drivers/ps2keyboard.h	/^	INPUT_KEY_F12,$/;"	e	enum:__anon4
+INPUT_KEY_F13	./drivers/ps2keyboard.h	/^	INPUT_KEY_F13,$/;"	e	enum:__anon4
+INPUT_KEY_F14	./drivers/ps2keyboard.h	/^	INPUT_KEY_F14,$/;"	e	enum:__anon4
+INPUT_KEY_F15	./drivers/ps2keyboard.h	/^	INPUT_KEY_F15,$/;"	e	enum:__anon4
+INPUT_KEY_F16	./drivers/ps2keyboard.h	/^	INPUT_KEY_F16,$/;"	e	enum:__anon4
+INPUT_KEY_F17	./drivers/ps2keyboard.h	/^	INPUT_KEY_F17,$/;"	e	enum:__anon4
+INPUT_KEY_F18	./drivers/ps2keyboard.h	/^	INPUT_KEY_F18,$/;"	e	enum:__anon4
+INPUT_KEY_F19	./drivers/ps2keyboard.h	/^	INPUT_KEY_F19,$/;"	e	enum:__anon4
+INPUT_KEY_F2	./drivers/ps2keyboard.h	/^	INPUT_KEY_F2,$/;"	e	enum:__anon4
+INPUT_KEY_F20	./drivers/ps2keyboard.h	/^	INPUT_KEY_F20,$/;"	e	enum:__anon4
+INPUT_KEY_F21	./drivers/ps2keyboard.h	/^	INPUT_KEY_F21,$/;"	e	enum:__anon4
+INPUT_KEY_F22	./drivers/ps2keyboard.h	/^	INPUT_KEY_F22,$/;"	e	enum:__anon4
+INPUT_KEY_F23	./drivers/ps2keyboard.h	/^	INPUT_KEY_F23,$/;"	e	enum:__anon4
+INPUT_KEY_F24	./drivers/ps2keyboard.h	/^	INPUT_KEY_F24,$/;"	e	enum:__anon4
+INPUT_KEY_F3	./drivers/ps2keyboard.h	/^	INPUT_KEY_F3,$/;"	e	enum:__anon4
+INPUT_KEY_F4	./drivers/ps2keyboard.h	/^	INPUT_KEY_F4,$/;"	e	enum:__anon4
+INPUT_KEY_F5	./drivers/ps2keyboard.h	/^	INPUT_KEY_F5,$/;"	e	enum:__anon4
+INPUT_KEY_F6	./drivers/ps2keyboard.h	/^	INPUT_KEY_F6,$/;"	e	enum:__anon4
+INPUT_KEY_F7	./drivers/ps2keyboard.h	/^	INPUT_KEY_F7,$/;"	e	enum:__anon4
+INPUT_KEY_F8	./drivers/ps2keyboard.h	/^	INPUT_KEY_F8,$/;"	e	enum:__anon4
+INPUT_KEY_F9	./drivers/ps2keyboard.h	/^	INPUT_KEY_F9,$/;"	e	enum:__anon4
+INPUT_KEY_FIND	./drivers/ps2keyboard.h	/^	INPUT_KEY_FIND,$/;"	e	enum:__anon4
+INPUT_KEY_G	./drivers/ps2keyboard.h	/^	INPUT_KEY_G,$/;"	e	enum:__anon4
+INPUT_KEY_GRAVE_ACCENT	./drivers/ps2keyboard.h	/^	INPUT_KEY_GRAVE_ACCENT,$/;"	e	enum:__anon4
+INPUT_KEY_H	./drivers/ps2keyboard.h	/^	INPUT_KEY_H,$/;"	e	enum:__anon4
+INPUT_KEY_HELP	./drivers/ps2keyboard.h	/^	INPUT_KEY_HELP,$/;"	e	enum:__anon4
+INPUT_KEY_HOME	./drivers/ps2keyboard.h	/^	INPUT_KEY_HOME,$/;"	e	enum:__anon4
+INPUT_KEY_I	./drivers/ps2keyboard.h	/^	INPUT_KEY_I,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_1	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_1,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_2	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_2,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_3	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_3,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_4	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_4,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_5	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_5,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_6	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_6,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_7	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_7,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_8	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_8,$/;"	e	enum:__anon4
+INPUT_KEY_I10L_9	./drivers/ps2keyboard.h	/^	INPUT_KEY_I10L_9,$/;"	e	enum:__anon4
+INPUT_KEY_INSERT	./drivers/ps2keyboard.h	/^	INPUT_KEY_INSERT,$/;"	e	enum:__anon4
+INPUT_KEY_J	./drivers/ps2keyboard.h	/^	INPUT_KEY_J,$/;"	e	enum:__anon4
+INPUT_KEY_K	./drivers/ps2keyboard.h	/^	INPUT_KEY_K,$/;"	e	enum:__anon4
+INPUT_KEY_KP_0	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_0,$/;"	e	enum:__anon4
+INPUT_KEY_KP_00	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_00 = 0x00B0,$/;"	e	enum:__anon4
+INPUT_KEY_KP_000	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_000,$/;"	e	enum:__anon4
+INPUT_KEY_KP_1	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_1,$/;"	e	enum:__anon4
+INPUT_KEY_KP_2	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_2,$/;"	e	enum:__anon4
+INPUT_KEY_KP_3	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_3,$/;"	e	enum:__anon4
+INPUT_KEY_KP_4	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_4,$/;"	e	enum:__anon4
+INPUT_KEY_KP_5	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_5,$/;"	e	enum:__anon4
+INPUT_KEY_KP_6	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_6,$/;"	e	enum:__anon4
+INPUT_KEY_KP_7	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_7,$/;"	e	enum:__anon4
+INPUT_KEY_KP_8	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_8,$/;"	e	enum:__anon4
+INPUT_KEY_KP_9	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_9,$/;"	e	enum:__anon4
+INPUT_KEY_KP_A	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_A,$/;"	e	enum:__anon4
+INPUT_KEY_KP_AMP	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_AMP,$/;"	e	enum:__anon4
+INPUT_KEY_KP_AT	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_AT,$/;"	e	enum:__anon4
+INPUT_KEY_KP_B	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_B,$/;"	e	enum:__anon4
+INPUT_KEY_KP_BACKSPACE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_BACKSPACE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_BIN	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_BIN,$/;"	e	enum:__anon4
+INPUT_KEY_KP_C	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_C,$/;"	e	enum:__anon4
+INPUT_KEY_KP_CARET	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_CARET,$/;"	e	enum:__anon4
+INPUT_KEY_KP_CLEAR	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_CLEAR,$/;"	e	enum:__anon4
+INPUT_KEY_KP_CLEAR_ENTRY	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_CLEAR_ENTRY,$/;"	e	enum:__anon4
+INPUT_KEY_KP_CLOSE_BRACE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_CLOSE_BRACE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_CLOSE_PARENTHESIS	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_CLOSE_PARENTHESIS,$/;"	e	enum:__anon4
+INPUT_KEY_KP_COLON	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_COLON,$/;"	e	enum:__anon4
+INPUT_KEY_KP_COMMA	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_COMMA,$/;"	e	enum:__anon4
+INPUT_KEY_KP_D	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_D,$/;"	e	enum:__anon4
+INPUT_KEY_KP_DASH	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_DASH,$/;"	e	enum:__anon4
+INPUT_KEY_KP_DEC	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_DEC,$/;"	e	enum:__anon4
+INPUT_KEY_KP_DOUBLE_AMP	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_DOUBLE_AMP,$/;"	e	enum:__anon4
+INPUT_KEY_KP_DOUBLE_PIPE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_DOUBLE_PIPE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_E	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_E,$/;"	e	enum:__anon4
+INPUT_KEY_KP_ENTER	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_ENTER,$/;"	e	enum:__anon4
+INPUT_KEY_KP_EQUAL	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_EQUAL,$/;"	e	enum:__anon4
+INPUT_KEY_KP_EXCLAMATION_MARK	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_EXCLAMATION_MARK,$/;"	e	enum:__anon4
+INPUT_KEY_KP_F	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_F,$/;"	e	enum:__anon4
+INPUT_KEY_KP_GREATER_THEN	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_GREATER_THEN,$/;"	e	enum:__anon4
+INPUT_KEY_KP_HEX	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_HEX,$/;"	e	enum:__anon4
+INPUT_KEY_KP_MEM_ADD	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_MEM_ADD,$/;"	e	enum:__anon4
+INPUT_KEY_KP_MEM_CLEAR	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_MEM_CLEAR,$/;"	e	enum:__anon4
+INPUT_KEY_KP_MEM_DIVIDE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_MEM_DIVIDE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_MEM_MULTIPLY	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_MEM_MULTIPLY,$/;"	e	enum:__anon4
+INPUT_KEY_KP_MEM_RECALL	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_MEM_RECALL,$/;"	e	enum:__anon4
+INPUT_KEY_KP_MEM_STORE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_MEM_STORE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_MEM_SUBTRACT	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_MEM_SUBTRACT,$/;"	e	enum:__anon4
+INPUT_KEY_KP_NUMBER	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_NUMBER,$/;"	e	enum:__anon4
+INPUT_KEY_KP_OCT	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_OCT,$/;"	e	enum:__anon4
+INPUT_KEY_KP_OPEN_BRACE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_OPEN_BRACE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_OPEN_PARENTHESIS	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_OPEN_PARENTHESIS,$/;"	e	enum:__anon4
+INPUT_KEY_KP_PERCENT	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_PERCENT,$/;"	e	enum:__anon4
+INPUT_KEY_KP_PERIOD	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_PERIOD,$/;"	e	enum:__anon4
+INPUT_KEY_KP_PIPE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_PIPE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_PLUS	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_PLUS,$/;"	e	enum:__anon4
+INPUT_KEY_KP_PLUS_MINUS	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_PLUS_MINUS,$/;"	e	enum:__anon4
+INPUT_KEY_KP_SLASH	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_SLASH,$/;"	e	enum:__anon4
+INPUT_KEY_KP_SMALLER_THEN	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_SMALLER_THEN,$/;"	e	enum:__anon4
+INPUT_KEY_KP_SPACE	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_SPACE,$/;"	e	enum:__anon4
+INPUT_KEY_KP_STAR	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_STAR,$/;"	e	enum:__anon4
+INPUT_KEY_KP_TAB	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_TAB,$/;"	e	enum:__anon4
+INPUT_KEY_KP_XOR	./drivers/ps2keyboard.h	/^	INPUT_KEY_KP_XOR,$/;"	e	enum:__anon4
+INPUT_KEY_L	./drivers/ps2keyboard.h	/^	INPUT_KEY_L,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_1	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_1,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_2	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_2,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_3	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_3,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_4	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_4,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_5	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_5,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_6	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_6,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_7	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_7,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_8	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_8,$/;"	e	enum:__anon4
+INPUT_KEY_LANG_9	./drivers/ps2keyboard.h	/^	INPUT_KEY_LANG_9,$/;"	e	enum:__anon4
+INPUT_KEY_LEFT_ALT	./drivers/ps2keyboard.h	/^	INPUT_KEY_LEFT_ALT,$/;"	e	enum:__anon4
+INPUT_KEY_LEFT_ARROW	./drivers/ps2keyboard.h	/^	INPUT_KEY_LEFT_ARROW,$/;"	e	enum:__anon4
+INPUT_KEY_LEFT_CTRL	./drivers/ps2keyboard.h	/^	INPUT_KEY_LEFT_CTRL = 0x00E0,$/;"	e	enum:__anon4
+INPUT_KEY_LEFT_GUI	./drivers/ps2keyboard.h	/^	INPUT_KEY_LEFT_GUI,$/;"	e	enum:__anon4
+INPUT_KEY_LEFT_SHIFT	./drivers/ps2keyboard.h	/^	INPUT_KEY_LEFT_SHIFT,$/;"	e	enum:__anon4
+INPUT_KEY_LOCKING_CAPS_LOCK	./drivers/ps2keyboard.h	/^	INPUT_KEY_LOCKING_CAPS_LOCK,$/;"	e	enum:__anon4
+INPUT_KEY_LOCKING_NUM_LOCK	./drivers/ps2keyboard.h	/^	INPUT_KEY_LOCKING_NUM_LOCK,$/;"	e	enum:__anon4
+INPUT_KEY_LOCKING_SCROLL_LOCK	./drivers/ps2keyboard.h	/^	INPUT_KEY_LOCKING_SCROLL_LOCK,$/;"	e	enum:__anon4
+INPUT_KEY_M	./drivers/ps2keyboard.h	/^	INPUT_KEY_M,$/;"	e	enum:__anon4
+INPUT_KEY_MENU	./drivers/ps2keyboard.h	/^	INPUT_KEY_MENU,$/;"	e	enum:__anon4
+INPUT_KEY_MUTE	./drivers/ps2keyboard.h	/^	INPUT_KEY_MUTE,$/;"	e	enum:__anon4
+INPUT_KEY_N	./drivers/ps2keyboard.h	/^	INPUT_KEY_N,$/;"	e	enum:__anon4
+INPUT_KEY_NUM_LOCK	./drivers/ps2keyboard.h	/^	INPUT_KEY_NUM_LOCK,$/;"	e	enum:__anon4
+INPUT_KEY_O	./drivers/ps2keyboard.h	/^	INPUT_KEY_O,$/;"	e	enum:__anon4
+INPUT_KEY_OPEN_BRACKET	./drivers/ps2keyboard.h	/^	INPUT_KEY_OPEN_BRACKET,$/;"	e	enum:__anon4
+INPUT_KEY_OPER	./drivers/ps2keyboard.h	/^	INPUT_KEY_OPER,$/;"	e	enum:__anon4
+INPUT_KEY_OUT	./drivers/ps2keyboard.h	/^	INPUT_KEY_OUT,$/;"	e	enum:__anon4
+INPUT_KEY_P	./drivers/ps2keyboard.h	/^	INPUT_KEY_P,$/;"	e	enum:__anon4
+INPUT_KEY_PAGE_DOWN	./drivers/ps2keyboard.h	/^	INPUT_KEY_PAGE_DOWN,$/;"	e	enum:__anon4
+INPUT_KEY_PAGE_UP	./drivers/ps2keyboard.h	/^	INPUT_KEY_PAGE_UP,$/;"	e	enum:__anon4
+INPUT_KEY_PASTE	./drivers/ps2keyboard.h	/^	INPUT_KEY_PASTE,$/;"	e	enum:__anon4
+INPUT_KEY_PAUSE	./drivers/ps2keyboard.h	/^	INPUT_KEY_PAUSE,$/;"	e	enum:__anon4
+INPUT_KEY_PERIOD	./drivers/ps2keyboard.h	/^	INPUT_KEY_PERIOD,$/;"	e	enum:__anon4
+INPUT_KEY_POWER	./drivers/ps2keyboard.h	/^	INPUT_KEY_POWER,$/;"	e	enum:__anon4
+INPUT_KEY_PRINT_SCREEN	./drivers/ps2keyboard.h	/^	INPUT_KEY_PRINT_SCREEN,$/;"	e	enum:__anon4
+INPUT_KEY_PRIOR	./drivers/ps2keyboard.h	/^	INPUT_KEY_PRIOR,$/;"	e	enum:__anon4
+INPUT_KEY_Q	./drivers/ps2keyboard.h	/^	INPUT_KEY_Q,$/;"	e	enum:__anon4
+INPUT_KEY_R	./drivers/ps2keyboard.h	/^	INPUT_KEY_R,$/;"	e	enum:__anon4
+INPUT_KEY_RETURN	./drivers/ps2keyboard.h	/^	INPUT_KEY_RETURN,$/;"	e	enum:__anon4
+INPUT_KEY_RIGHT_ALT	./drivers/ps2keyboard.h	/^	INPUT_KEY_RIGHT_ALT,$/;"	e	enum:__anon4
+INPUT_KEY_RIGHT_ARROW	./drivers/ps2keyboard.h	/^	INPUT_KEY_RIGHT_ARROW,$/;"	e	enum:__anon4
+INPUT_KEY_RIGHT_CTRL	./drivers/ps2keyboard.h	/^	INPUT_KEY_RIGHT_CTRL,$/;"	e	enum:__anon4
+INPUT_KEY_RIGHT_GUI	./drivers/ps2keyboard.h	/^	INPUT_KEY_RIGHT_GUI$/;"	e	enum:__anon4
+INPUT_KEY_RIGHT_SHIFT	./drivers/ps2keyboard.h	/^	INPUT_KEY_RIGHT_SHIFT,$/;"	e	enum:__anon4
+INPUT_KEY_S	./drivers/ps2keyboard.h	/^	INPUT_KEY_S,$/;"	e	enum:__anon4
+INPUT_KEY_SCROLL_LOCK	./drivers/ps2keyboard.h	/^	INPUT_KEY_SCROLL_LOCK,$/;"	e	enum:__anon4
+INPUT_KEY_SELECT	./drivers/ps2keyboard.h	/^	INPUT_KEY_SELECT,$/;"	e	enum:__anon4
+INPUT_KEY_SEMICOLON	./drivers/ps2keyboard.h	/^	INPUT_KEY_SEMICOLON,$/;"	e	enum:__anon4
+INPUT_KEY_SEPARATOR	./drivers/ps2keyboard.h	/^	INPUT_KEY_SEPARATOR,$/;"	e	enum:__anon4
+INPUT_KEY_SLASH	./drivers/ps2keyboard.h	/^	INPUT_KEY_SLASH,$/;"	e	enum:__anon4
+INPUT_KEY_SPACEBAR	./drivers/ps2keyboard.h	/^	INPUT_KEY_SPACEBAR,$/;"	e	enum:__anon4
+INPUT_KEY_STOP	./drivers/ps2keyboard.h	/^	INPUT_KEY_STOP,$/;"	e	enum:__anon4
+INPUT_KEY_SYSREQ	./drivers/ps2keyboard.h	/^	INPUT_KEY_SYSREQ,$/;"	e	enum:__anon4
+INPUT_KEY_T	./drivers/ps2keyboard.h	/^	INPUT_KEY_T,$/;"	e	enum:__anon4
+INPUT_KEY_TAB	./drivers/ps2keyboard.h	/^	INPUT_KEY_TAB,$/;"	e	enum:__anon4
+INPUT_KEY_THOUSANDS_SEP	./drivers/ps2keyboard.h	/^	INPUT_KEY_THOUSANDS_SEP,$/;"	e	enum:__anon4
+INPUT_KEY_U	./drivers/ps2keyboard.h	/^	INPUT_KEY_U,$/;"	e	enum:__anon4
+INPUT_KEY_UNDO	./drivers/ps2keyboard.h	/^	INPUT_KEY_UNDO,$/;"	e	enum:__anon4
+INPUT_KEY_UP_ARROW	./drivers/ps2keyboard.h	/^	INPUT_KEY_UP_ARROW,$/;"	e	enum:__anon4
+INPUT_KEY_V	./drivers/ps2keyboard.h	/^	INPUT_KEY_V,$/;"	e	enum:__anon4
+INPUT_KEY_VOLUME_DOWN	./drivers/ps2keyboard.h	/^	INPUT_KEY_VOLUME_DOWN,$/;"	e	enum:__anon4
+INPUT_KEY_VOLUME_UP	./drivers/ps2keyboard.h	/^	INPUT_KEY_VOLUME_UP,$/;"	e	enum:__anon4
+INPUT_KEY_W	./drivers/ps2keyboard.h	/^	INPUT_KEY_W,$/;"	e	enum:__anon4
+INPUT_KEY_X	./drivers/ps2keyboard.h	/^	INPUT_KEY_X,$/;"	e	enum:__anon4
+INPUT_KEY_Y	./drivers/ps2keyboard.h	/^	INPUT_KEY_Y,$/;"	e	enum:__anon4
+INPUT_KEY_Z	./drivers/ps2keyboard.h	/^	INPUT_KEY_Z,$/;"	e	enum:__anon4
+INPUT_LED_CAPSLOCK	./drivers/ps2keyboard.h	/^	INPUT_LED_CAPSLOCK,$/;"	e	enum:__anon5
+INPUT_LED_NUMLOCK	./drivers/ps2keyboard.h	/^	INPUT_LED_NUMLOCK = 0x0001,$/;"	e	enum:__anon5
+INPUT_LED_SCROLLLOCK	./drivers/ps2keyboard.h	/^	INPUT_LED_SCROLLLOCK$/;"	e	enum:__anon5
 INTERRUPTS_MAX	./kernel/interrupt.h	5;"	d
+IOAPIC_SELECT_OFFSET	./cpu/apic.h	28;"	d
+IOAPIC_WINDOW_OFFSET	./cpu/apic.h	29;"	d
 Index	./drivers/font.h	/^	const unsigned short *Index;	\/\/\/< encoding to character index$/;"	m	struct:bitmap_font
-KERNEL_MEM_START	./mem/mem.h	5;"	d
+KERNEL_HEAP_END	./mem/mem.h	7;"	d
+KERNEL_MEM_START	./mem/mem.h	6;"	d
 KLIB_H	./lib/libc.h	2;"	d
+KiB	./lib/types.h	12;"	d
 KiB	./mem/paging.h	28;"	d
-LAPIC_REGISTER_SIVR	./cpu/apic.h	9;"	d
+LAPIC_REGISTER_EOI	./cpu/apic.h	19;"	d
+LAPIC_REGISTER_ID	./cpu/apic.h	17;"	d
+LAPIC_REGISTER_SIVR	./cpu/apic.h	20;"	d
+LAPIC_REGISTER_VERSION	./cpu/apic.h	18;"	d
+LAPIC_SPURIOUS_IRQ	./cpu/apic.h	15;"	d
 LD	./Makefile	/^LD              = ld$/;"	m
 LDFLAGS	./Makefile	/^LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000$/;"	m
 LDSCRIPT	./Makefile	/^LDSCRIPT        = .\/linker.ld$/;"	m
-LOG	./lib/libc.h	36;"	d
-LOGF	./lib/libc.h	45;"	d
-MADT_ENTRY_TYPE_IOAPIC	./kernel/acpi.h	104;"	d
-MADT_ENTRY_TYPE_IO_APIC	./cpu/apic.h	5;"	d
-MADT_ENTRY_TYPE_ISO	./cpu/apic.h	6;"	d
-MADT_ENTRY_TYPE_ISO	./kernel/acpi.h	115;"	d
-MADT_ENTRY_TYPE_LAPIC	./cpu/apic.h	4;"	d
-MADT_ENTRY_TYPE_LAPIC	./kernel/acpi.h	94;"	d
-MADT_ENTRY_TYPE_NMI	./kernel/acpi.h	126;"	d
+LIST_FOREACH_NODE	./include/list.h	36;"	d
+LIST_FOREACH_VALUE	./include/list.h	30;"	d
+LOG	./lib/libc.h	44;"	d
+LOGF	./lib/libc.h	53;"	d
+MADT_ENTRY_TYPE_IOAPIC	./kernel/acpi.h	102;"	d
+MADT_ENTRY_TYPE_IO_APIC	./cpu/apic.h	10;"	d
+MADT_ENTRY_TYPE_ISO	./cpu/apic.h	11;"	d
+MADT_ENTRY_TYPE_ISO	./kernel/acpi.h	113;"	d
+MADT_ENTRY_TYPE_LAPIC	./cpu/apic.h	9;"	d
+MADT_ENTRY_TYPE_LAPIC	./kernel/acpi.h	92;"	d
+MADT_ENTRY_TYPE_NMI	./kernel/acpi.h	124;"	d
+MALLOC_MIN_SIZE	./mem/mem.h	8;"	d
+MCB_FREE	./mem/mem.h	9;"	d
+MCB_USED	./mem/mem.h	10;"	d
 MODULE	./cpu/subsys.mk	/^MODULE := cpu$/;"	m
 MODULE	./drivers/subsys.mk	/^MODULE := drivers$/;"	m
+MODULE	./fs/subsys.mk	/^MODULE := fs$/;"	m
+MODULE	./include/subsys.mk	/^MODULE := include$/;"	m
 MODULE	./init/subsys.mk	/^MODULE := init$/;"	m
 MODULE	./kernel/subsys.mk	/^MODULE := kernel$/;"	m
 MODULE	./lib/subsys.mk	/^MODULE := lib$/;"	m
 MODULE	./mem/subsys.mk	/^MODULE := mem$/;"	m
-MODULES	./Makefile	/^MODULES         := init lib drivers mem cpu kernel$/;"	m
+MODULE	./test/subsys.mk	/^MODULE := test$/;"	m
+MODULES	./Makefile	/^MODULES         := init include lib drivers mem cpu kernel fs test$/;"	m
 MULTIBOOT2_BOOTLOADER_MAGIC	./lib/multiboot2.h	33;"	d
 MULTIBOOT2_HEADER_MAGIC	./lib/multiboot2.h	30;"	d
 MULTIBOOT_ARCHITECTURE_I386	./lib/multiboot2.h	73;"	d
@@ -221,6 +486,7 @@ MULTIBOOT_TAG_TYPE_MODULE	./lib/multiboot2.h	47;"	d
 MULTIBOOT_TAG_TYPE_NETWORK	./lib/multiboot2.h	60;"	d
 MULTIBOOT_TAG_TYPE_SMBIOS	./lib/multiboot2.h	57;"	d
 MULTIBOOT_TAG_TYPE_VBE	./lib/multiboot2.h	51;"	d
+MiB	./lib/types.h	13;"	d
 MiB	./mem/paging.h	29;"	d
 NULL	./lib/types.h	4;"	d
 NUM_GIB	./mem/paging.h	6;"	d
@@ -235,6 +501,7 @@ PAGE_PS	./mem/paging.h	21;"	d
 PAGE_PWT	./mem/paging.h	17;"	d
 PAGE_RW	./mem/paging.h	15;"	d
 PAGE_US	./mem/paging.h	16;"	d
+PDPT	./cpu/_smp.asm	/^PDPT:   times 4096 db 0x00$/;"	l
 PDPT	./init/boot.asm	/^PDPT:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PDPE$/;"	l
 PDPT_SIZE	./mem/paging.h	10;"	d
 PDT	./init/boot.asm	/^PDT:	resb (PAGE_ENTRY_SIZE * NUM_PDE * NUM_PDPE * NUM_PML4E)	; 512 PDE$/;"	l
@@ -242,14 +509,39 @@ PIC1_COMMAND	./cpu/pic.h	3;"	d
 PIC1_DATA	./cpu/pic.h	4;"	d
 PIC2_COMMAND	./cpu/pic.h	5;"	d
 PIC2_DATA	./cpu/pic.h	6;"	d
+PML4T	./cpu/_smp.asm	/^PML4T:	times 4096 db 0x00$/;"	l
 PML4T	./init/boot.asm	/^PML4T:	resb PAGE_ENTRY_SIZE * PAGE_TABLE_SIZE * NUM_PML4E$/;"	l
 PML4T_SIZE	./mem/paging.h	9;"	d
+PS2_ACK	./drivers/ps2.h	10;"	d
+PS2_COMMAND	./drivers/ps2.h	6;"	d
+PS2_DATA	./drivers/ps2.h	5;"	d
+PS2_IRQ	./drivers/ps2mouse.h	3;"	d
+PS2_KB_CMD_ACK	./drivers/ps2keyboard.h	14;"	d
+PS2_KB_CMD_ECHO	./drivers/ps2keyboard.h	13;"	d
+PS2_KB_CMD_ENABLE_SCAN	./drivers/ps2keyboard.h	12;"	d
+PS2_KB_CMD_RESEND	./drivers/ps2keyboard.h	15;"	d
+PS2_KB_CMD_RESET	./drivers/ps2keyboard.h	10;"	d
+PS2_KB_CMD_TYPEMATIC	./drivers/ps2keyboard.h	11;"	d
+PS2_KB_COMMAND	./drivers/ps2keyboard.h	8;"	d
+PS2_KB_IRQ	./drivers/ps2keyboard.h	6;"	d
+PS2_KB_STATUS	./drivers/ps2keyboard.h	9;"	d
+PS2_MOUSE_ENABLE	./drivers/ps2mouse.h	8;"	d
+PS2_MOUSE_PORT	./drivers/ps2mouse.h	6;"	d
+PS2_MOUSE_PREFIX	./drivers/ps2mouse.h	5;"	d
+PS2_MOUSE_RESET	./drivers/ps2mouse.h	7;"	d
+PS2_RESEND	./drivers/ps2.h	11;"	d
+PS2_SELF_TEST_OK	./drivers/ps2.h	12;"	d
+PS2_STATUS	./drivers/ps2.h	7;"	d
+PS2_TIMEOUT	./drivers/ps2.h	9;"	d
 RSDP_REV_1	./kernel/acpi.h	40;"	d
 RSDP_REV_1_SIZE	./kernel/acpi.h	33;"	d
 RSDP_REV_2	./kernel/acpi.h	41;"	d
 RSDP_REV_2_SIZE	./kernel/acpi.h	34;"	d
+SCAN_RELEASE	./drivers/ps2keyboard.h	19;"	d
 SRC	./Makefile	/^SRC             := main.c$/;"	m
-STI	./lib/libc.h	63;"	d
+STI	./lib/libc.h	80;"	d
+TEST	./test/test.h	9;"	d
+TRUE	./lib/types.h	5;"	d
 TSS_MAX_SEGMENTS	./cpu/tss.h	6;"	d
 Width	./drivers/font.h	/^	unsigned char Width;		\/\/\/< max. character width$/;"	m	struct:bitmap_font
 Widths	./drivers/font.h	/^	const unsigned char *Widths;	\/\/\/< width of each character$/;"	m	struct:bitmap_font
@@ -515,6 +807,7 @@ __font_widths__	./drivers/font.c	/^static const unsigned char __font_widths__[] 
 _interrupt_handler	./kernel/_interrupt.asm	/^_interrupt_handler:$/;"	l
 _pause	./lib/libc.c	/^void _pause(void)$/;"	f
 access	./cpu/gdt.h	/^	uint8_t access;$/;"	m	struct:gdt_entry
+access_time	./fs/vfs.h	/^	uint64_t access_time;$/;"	m	struct:fs_node
 acpi_get_rsdp	./kernel/acpi.c	/^rsdp_t *acpi_get_rsdp()$/;"	f
 acpi_get_rsdt	./kernel/acpi.c	/^rsdt_t *acpi_get_rsdt()$/;"	f
 acpi_get_table	./kernel/acpi.c	/^void* acpi_get_table(uint8_t *signature)$/;"	f
@@ -526,8 +819,8 @@ apic_init	./cpu/apic.c	/^void apic_init(void)$/;"	f
 apic_processor_id	./kernel/acpi.h	/^	uint8_t apic_processor_id;$/;"	m	struct:madt_entry_lapic
 apid_id	./kernel/acpi.h	/^	uint8_t apid_id;$/;"	m	struct:madt_entry_lapic
 architecture	./lib/multiboot2.h	/^  multiboot_uint32_t architecture;$/;"	m	struct:multiboot_header
-base	./cpu/gdt.h	/^	uint64_t base;$/;"	m	struct:__anon5
-base	./cpu/idt.h	/^	uint64_t base;$/;"	m	struct:__anon4
+base	./cpu/gdt.h	/^	uint64_t base;$/;"	m	struct:__anon9
+base	./cpu/idt.h	/^	uint64_t base;$/;"	m	struct:__anon8
 base0	./cpu/gdt.h	/^	uint16_t base0;$/;"	m	struct:gdt_entry
 base0	./cpu/gdt.h	/^	uint16_t base0;$/;"	m	struct:gdt_system_entry
 base1	./cpu/gdt.h	/^	uint8_t base1;$/;"	m	struct:gdt_entry
@@ -551,10 +844,14 @@ checksum	./kernel/acpi.h	/^	uint8_t checksum;$/;"	m	struct:acpi_sdt
 checksum	./kernel/acpi.h	/^	uint8_t checksum;$/;"	m	struct:rsdp
 checksum	./lib/multiboot2.h	/^  multiboot_uint32_t checksum;$/;"	m	struct:multiboot_header
 checksum_zero	./lib/libc.c	/^uint8_t checksum_zero(uint8_t *b, uint64_t count)$/;"	f
+children	./include/tree.h	/^	list_t* children;	\/* List of children *\/$/;"	m	struct:tree
 clear_screen	./lib/kprintf.c	/^void clear_screen()$/;"	f
 cmdline	./lib/multiboot2.h	/^  char cmdline[0];$/;"	m	struct:multiboot_tag_module
 common	./lib/multiboot2.h	/^  struct multiboot_tag_framebuffer_common common;$/;"	m	struct:multiboot_tag_framebuffer	typeref:struct:multiboot_tag_framebuffer::multiboot_tag_framebuffer_common
 console_flags	./lib/multiboot2.h	/^  multiboot_uint32_t console_flags;$/;"	m	struct:multiboot_header_tag_console_flags
+count	./include/list.h	/^        int count;$/;"	m	struct:list
+count	./include/tree.h	/^	size_t count;		\/* Number of children *\/$/;"	m	struct:tree
+create_time	./fs/vfs.h	/^	uint64_t create_time;$/;"	m	struct:fs_node
 creator_id	./kernel/acpi.h	/^	uint32_t creator_id;$/;"	m	struct:acpi_sdt
 creator_revision	./kernel/acpi.h	/^	uint32_t creator_revision;$/;"	m	struct:acpi_sdt
 cs	./kernel/interrupt.h	/^	uint64_t cs;$/;"	m	struct:pt_regs
@@ -562,12 +859,19 @@ cseg	./lib/multiboot2.h	/^  multiboot_uint16_t cseg;$/;"	m	struct:multiboot_tag_
 cseg_16	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_16;$/;"	m	struct:multiboot_tag_apm
 cseg_16_len	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_16_len;$/;"	m	struct:multiboot_tag_apm
 cseg_len	./lib/multiboot2.h	/^  multiboot_uint16_t cseg_len;$/;"	m	struct:multiboot_tag_apm
+data	./include/tree.h	/^	void* data;		\/* Pointer to the data *\/$/;"	m	struct:tree
+dd	./cpu/_smp.asm	/^dd GDT                            ; 32-bit Base Address of GDT. (CPU will zero extend to 64-bit)$/;"	l
 depth	./lib/multiboot2.h	/^  multiboot_uint32_t depth;$/;"	m	struct:multiboot_header_tag_framebuffer
 descr_size	./lib/multiboot2.h	/^  multiboot_uint32_t descr_size;$/;"	m	struct:multiboot_tag_efi_mmap
 descr_vers	./lib/multiboot2.h	/^  multiboot_uint32_t descr_vers;$/;"	m	struct:multiboot_tag_efi_mmap
 dhcpack	./lib/multiboot2.h	/^  multiboot_uint8_t dhcpack[0];$/;"	m	struct:multiboot_tag_network
+dq	./cpu/_smp.asm	/^dq 0x0000000000000000             ; Null Descriptor - should be present.$/;"	l
+dq	./cpu/_smp.asm	/^dq 0x0000920000000000             ; 64-bit data descriptor (read\/write).$/;"	l
+dq	./cpu/_smp.asm	/^dq 0x00209A0000000000             ; 64-bit code descriptor (exec\/read).$/;"	l
 dseg	./lib/multiboot2.h	/^  multiboot_uint16_t dseg;$/;"	m	struct:multiboot_tag_apm
 dseg_len	./lib/multiboot2.h	/^  multiboot_uint16_t dseg_len;$/;"	m	struct:multiboot_tag_apm
+dw	./cpu/_smp.asm	/^dw $ - GDT - 1                    ; 16-bit Size (Limit) of GDT.$/;"	l
+dw	./cpu/_smp.asm	/^dw 0                              ; Padding to make the "address of the GDT" field aligned on a 4-byte boundary$/;"	l
 efi_mmap	./lib/multiboot2.h	/^  multiboot_uint8_t efi_mmap[0];$/;"	m	struct:multiboot_tag_efi_mmap
 eflags	./kernel/interrupt.h	/^	uint64_t eflags;$/;"	m	struct:pt_regs
 enable_paging	./init/boot.asm	/^enable_paging:$/;"	l
@@ -604,6 +908,9 @@ extern	./kernel/_interrupt.asm	/^extern interrupt_handler$/;"	l
 external_specification	./lib/multiboot2.h	/^  multiboot_uint8_t external_specification[256];$/;"	m	struct:multiboot_vbe_mode_info_block
 external_specification	./lib/multiboot2.h	/^  multiboot_uint8_t external_specification[512];$/;"	m	struct:multiboot_vbe_info_block
 extra_checksum	./kernel/acpi.h	/^	uint8_t extra_checksum;$/;"	m	struct:rsdp
+f_ops	./fs/vfs.h	/^	struct fs_operations f_ops;$/;"	m	struct:fs_node	typeref:struct:fs_node::fs_operations
+file	./fs/vfs.h	/^	fs_node_t *file;$/;"	m	struct:vfs_entry
+first	./include/list.h	/^        list_node_t *first;$/;"	m	struct:list
 flags	./cpu/gdt.h	/^	uint8_t flags:4;$/;"	m	struct:gdt_entry
 flags	./kernel/acpi.h	/^	uint16_t flags;$/;"	m	struct:madt_entry_iso
 flags	./kernel/acpi.h	/^	uint16_t flags;$/;"	m	struct:madt_entry_nmi
@@ -634,7 +941,11 @@ framebuffer_tag_end	./init/multiboot_header.asm	/^framebuffer_tag_end:$/;"	l
 framebuffer_tag_start	./init/multiboot_header.asm	/^framebuffer_tag_start:$/;"	l
 framebuffer_type	./lib/multiboot2.h	/^  multiboot_uint8_t framebuffer_type;$/;"	m	struct:multiboot_tag_framebuffer_common
 framebuffer_width	./lib/multiboot2.h	/^  multiboot_uint32_t framebuffer_width;$/;"	m	struct:multiboot_tag_framebuffer_common
-free	./mem/mem.c	/^void free(void *ptr)$/;"	f
+free	./mem/mem.c	/^void free(uintptr_t *ptr)$/;"	f
+fs_node	./fs/vfs.h	/^typedef struct fs_node {$/;"	s
+fs_node_t	./fs/vfs.h	/^} fs_node_t;$/;"	t	typeref:struct:fs_node
+fs_operations	./fs/vfs.h	/^typedef struct fs_operations {$/;"	s
+fs_operations_t	./fs/vfs.h	/^} fs_operations_t;$/;"	t	typeref:struct:fs_operations
 gdt	./cpu/gdt.c	/^static gdt_entry_t gdt[GDT_MAX_DESCRIPTORS] __attribute__ ((aligned (8)));;$/;"	v	file:
 gdt64	./init/boot.asm	/^gdt64:                               ; Global Descriptor Table (64-bit).$/;"	l
 gdt_entry	./cpu/gdt.h	/^typedef struct gdt_entry {$/;"	s
@@ -643,15 +954,15 @@ gdt_init	./cpu/gdt.c	/^void gdt_init()$/;"	f
 gdt_install_descriptor	./cpu/gdt.c	/^void gdt_install_descriptor(uint8_t num, uint32_t base, uint32_t limit,$/;"	f
 gdt_install_tss	./cpu/gdt.c	/^void gdt_install_tss(uint8_t num, uint64_t base, uint64_t limit)$/;"	f
 gdt_load	./cpu/gdt.c	/^void gdt_load(uint64_t new_gdt_ptr)$/;"	f
-gdt_pointer_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_pointer_t;$/;"	t	typeref:struct:__anon5
+gdt_pointer_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_pointer_t;$/;"	t	typeref:struct:__anon9
 gdt_ptr	./cpu/gdt.c	/^static gdt_pointer_t gdt_ptr __attribute__ ((aligned (8)));;$/;"	v	file:
 gdt_system_entry	./cpu/gdt.h	/^typedef struct gdt_system_entry {$/;"	s
 gdt_system_entry_t	./cpu/gdt.h	/^} __attribute__((packed)) gdt_system_entry_t;$/;"	t	typeref:struct:gdt_system_entry
+global	./cpu/_smp.asm	/^global smp_start$/;"	l
 global	./init/boot.asm	/^global stack_top$/;"	l
 global	./init/boot.asm	/^global start$/;"	l
 global	./kernel/_interrupt.asm	/^global interrupt_handler_%1$/;"	l
 global	./kernel/_interrupt.asm	/^global interrupt_handler_ec_%1$/;"	l
-global_system_interrupt	./kernel/acpi.h	/^	uint32_t global_system_interrupt;$/;"	m	struct:madt_entry_iso
 global_system_interrupt_base	./kernel/acpi.h	/^	uint32_t global_system_interrupt_base;$/;"	m	struct:madt_entry_ioapic
 green	./lib/multiboot2.h	/^  multiboot_uint8_t green;$/;"	m	struct:multiboot_color
 header	./kernel/acpi.h	/^	acpi_sdt_t header;$/;"	m	struct:madt
@@ -661,6 +972,8 @@ header_addr	./lib/multiboot2.h	/^  multiboot_uint32_t header_addr;$/;"	m	struct:
 header_end	./init/multiboot_header.asm	/^header_end:$/;"	l
 header_length	./lib/multiboot2.h	/^  multiboot_uint32_t header_length;$/;"	m	struct:multiboot_header
 header_start	./init/multiboot_header.asm	/^header_start:$/;"	l
+heap	./mem/mem.c	/^struct memory_control_block *heap = NULL;$/;"	v	typeref:struct:memory_control_block
+heap_init	./mem/mem.c	/^void heap_init(uint64_t *start, uint64_t size)$/;"	f
 height	./drivers/screen.c	/^static uint32_t height = 0;$/;"	v	file:
 height	./lib/multiboot2.h	/^  multiboot_uint32_t height;$/;"	m	struct:multiboot_header_tag_framebuffer
 idt	./cpu/idt.c	/^idt_entry_t idt[IDT_NUM_ENTRIES] __attribute__((aligned(8)));$/;"	v
@@ -669,10 +982,11 @@ idt_entry_t	./cpu/idt.h	/^} __attribute__((packed)) idt_entry_t;$/;"	t	typeref:s
 idt_init	./cpu/idt.c	/^void idt_init()$/;"	f
 idt_install_gate	./cpu/idt.c	/^void idt_install_gate(uint32_t num, uint64_t offset, uint16_t selector,$/;"	f
 idt_load	./cpu/idt.c	/^void idt_load(uint64_t idt_ptr)$/;"	f
-idt_pointer_t	./cpu/idt.h	/^} __attribute__((packed)) idt_pointer_t;$/;"	t	typeref:struct:__anon4
+idt_pointer_t	./cpu/idt.h	/^} __attribute__((packed)) idt_pointer_t;$/;"	t	typeref:struct:__anon8
 idt_ptr	./cpu/idt.c	/^idt_pointer_t idt_ptr __attribute__((aligned(8)));$/;"	v
 inb	./lib/libc.c	/^inline uint8_t inb(uint16_t port)$/;"	f
 ind	./lib/libc.c	/^inline uint32_t ind(uint16_t port)$/;"	f
+inode	./fs/vfs.h	/^	uint64_t inode;$/;"	m	struct:fs_node
 int16_t	./lib/stdint.h	/^typedef signed short int16_t;$/;"	t
 int32_t	./lib/stdint.h	/^typedef signed int int32_t;$/;"	t
 int64_t	./lib/stdint.h	/^typedef signed long long int64_t;$/;"	t
@@ -946,32 +1260,59 @@ intptr_t	./lib/stdint.h	/^typedef int64_t intptr_t;$/;"	t
 io_apic_addr	./kernel/acpi.h	/^	uint32_t io_apic_addr;$/;"	m	struct:madt_entry_ioapic
 io_apic_id	./kernel/acpi.h	/^	uint8_t io_apic_id;$/;"	m	struct:madt_entry_ioapic
 io_map	./cpu/tss.h	/^	uint16_t io_map;$/;"	m	struct:tss
-io_wait	./lib/libc.c	/^inline void io_wait(void)$/;"	f
+io_wait	./lib/libc.c	/^void io_wait(void)$/;"	f
+ioapic_addr	./cpu/apic.c	/^uint32_t* ioapic_addr = NULL;$/;"	v
+ioapic_init	./cpu/apic.c	/^void ioapic_init(void)$/;"	f
+ioapic_read	./cpu/apic.c	/^uint32_t ioapic_read(uint32_t offset)$/;"	f
+ioapic_reset_irq	./cpu/apic.c	/^void ioapic_reset_irq(uint8_t irq)$/;"	f
+ioapic_set_irq	./cpu/apic.c	/^void ioapic_set_irq(uint8_t irq, uint64_t lapic_id, uint8_t vector)$/;"	f
+ioapic_write	./cpu/apic.c	/^void ioapic_write(uint32_t offset, uint32_t data)$/;"	f
 irq_source	./kernel/acpi.h	/^	uint8_t irq_source;$/;"	m	struct:madt_entry_iso
 ist	./cpu/idt.h	/^	uint8_t ist; \/* bit 0 and 1 used. Rest is reserved *\/$/;"	m	struct:idt_entry
 ist	./cpu/tss.h	/^	uint64_t ist[7];$/;"	m	struct:tss
 itoa	./lib/libc.c	/^void itoa(char *buf, int base, int64_t n)$/;"	f
+key_down	./drivers/ps2keyboard.c	/^static volatile uint8_t key_down = 0x00;$/;"	v	file:
+key_map_lower	./drivers/ps2keyboard.c	/^static uint8_t key_map_lower[] = { 0x00, 0, '1', '2', '3', '4', '5', '6', '7',$/;"	v	file:
+key_map_upper	./drivers/ps2keyboard.c	/^static uint8_t key_map_upper[] = { 0x00, 0, '!', '@', '#', '$', '%', '^', '&',$/;"	v	file:
 kprint	./lib/kprintf.c	/^void kprint(char *str)$/;"	f
 kprintf	./lib/kprintf.c	/^void kprintf(const char *fmt, ...)$/;"	f
-lapic_addr	./cpu/apic.c	/^uint64_t* lapic_addr;$/;"	v
+lapic_addr	./cpu/apic.c	/^uint64_t* lapic_addr = NULL;$/;"	v
 lapic_addr	./kernel/acpi.h	/^	uint32_t lapic_addr;$/;"	m	struct:madt
-lapic_enable	./cpu/apic.c	/^void lapic_enable(void)$/;"	f
+lapic_eoi	./cpu/apic.c	/^void lapic_eoi(void)$/;"	f
+lapic_init	./cpu/apic.c	/^void lapic_init(void)$/;"	f
+lapic_num	./cpu/apic.c	/^uint8_t lapic_num = 0x00;	\/* Number of active LAPICS in the system.$/;"	v
+last	./include/list.h	/^        list_node_t *last;$/;"	m	struct:list
 len	./lib/multiboot2.h	/^  multiboot_uint64_t len;$/;"	m	struct:multiboot_mmap_entry
+length	./fs/vfs.h	/^	size_t length;$/;"	m	struct:fs_node
 length	./kernel/acpi.h	/^	uint32_t length;$/;"	m	struct:acpi_sdt
 length	./kernel/acpi.h	/^	uint32_t length;$/;"	m	struct:rsdp
 length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_ioapic
 length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_iso
 length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_lapic
 length	./kernel/acpi.h	/^	uint8_t length;$/;"	m	struct:madt_entry_nmi
-limit	./cpu/gdt.h	/^	uint16_t limit;$/;"	m	struct:__anon5
-limit	./cpu/idt.h	/^	uint16_t limit;$/;"	m	struct:__anon4
+limit	./cpu/gdt.h	/^	uint16_t limit;$/;"	m	struct:__anon9
+limit	./cpu/idt.h	/^	uint16_t limit;$/;"	m	struct:__anon8
 limit0	./cpu/gdt.h	/^	uint16_t limit0;$/;"	m	struct:gdt_entry
 limit0	./cpu/gdt.h	/^	uint16_t limit0;$/;"	m	struct:gdt_system_entry
 limit1	./cpu/gdt.h	/^	uint8_t limit1:4;$/;"	m	struct:gdt_entry
 limit1	./cpu/gdt.h	/^	uint8_t limit1;$/;"	m	struct:gdt_system_entry
 lint	./kernel/acpi.h	/^	uint8_t lint;$/;"	m	struct:madt_entry_nmi
+list	./include/list.h	/^typedef struct list$/;"	s
+list_clear	./include/list.c	/^void list_clear(list_t *list)$/;"	f
+list_count	./include/list.h	21;"	d
+list_create	./include/list.c	/^list_t* list_create(void)$/;"	f
+list_destroy	./include/list.c	/^void list_destroy(list_t *list)$/;"	f
+list_first	./include/list.h	22;"	d
+list_last	./include/list.h	23;"	d
+list_node	./include/list.h	/^typedef struct list_node$/;"	s
+list_node_t	./include/list.h	/^} list_node_t;$/;"	t	typeref:struct:list_node
+list_pop	./include/list.c	/^void *list_pop(list_t *list)$/;"	f
+list_push	./include/list.c	/^void list_push(list_t *list, void *value)$/;"	f
+list_remove	./include/list.c	/^void *list_remove(list_t *list, list_node_t *node)$/;"	f
+list_t	./include/list.h	/^} list_t;$/;"	t	typeref:struct:list
 load_addr	./lib/multiboot2.h	/^  multiboot_uint32_t load_addr;$/;"	m	struct:multiboot_header_tag_address
 load_end_addr	./lib/multiboot2.h	/^  multiboot_uint32_t load_end_addr;$/;"	m	struct:multiboot_header_tag_address
+lock	./fs/vfs.h	/^	spinlock_t lock;$/;"	m	struct:fs_node
 long_mode_start	./init/boot.asm	/^long_mode_start:$/;"	l
 madt	./cpu/apic.c	/^madt_t *madt = NULL;$/;"	v
 madt	./kernel/acpi.h	/^typedef struct madt {$/;"	s
@@ -987,18 +1328,23 @@ madt_t	./kernel/acpi.h	/^} __attribute__((packed)) madt_t;$/;"	t	typeref:struct:
 magic	./lib/multiboot2.h	/^  multiboot_uint32_t magic;$/;"	m	struct:multiboot_header
 main	./main.c	/^int main(uint64_t mb_info_struct_addr)$/;"	f
 major	./lib/multiboot2.h	/^  multiboot_uint8_t major;$/;"	m	struct:multiboot_tag_smbios
-malloc	./mem/mem.c	/^void *malloc(uint64_t size)$/;"	f
-malloc_init	./mem/mem.c	/^void malloc_init(void *start, uint64_t size)$/;"	f
+malloc	./mem/mem.c	/^uintptr_t* malloc(uint64_t size)$/;"	f
+mask	./fs/vfs.h	/^	uint64_t mask;$/;"	m	struct:fs_node
 mb_first_tag	./lib/multiboot_parser.c	/^static struct multiboot_tag *mb_first_tag = NULL;$/;"	v	typeref:struct:multiboot_tag	file:
 mb_info_size	./lib/multiboot_parser.c	/^static uint32_t mb_info_size = 0;$/;"	v	file:
 mb_tag_meminfo	./mem/mem.c	/^static struct multiboot_tag_basic_meminfo *mb_tag_meminfo = NULL;$/;"	v	typeref:struct:multiboot_tag_basic_meminfo	file:
 mb_tag_mmap	./mem/mem.c	/^static struct multiboot_tag_mmap *mb_tag_mmap = NULL;$/;"	v	typeref:struct:multiboot_tag_mmap	file:
-mem_heap_start	./mem/mem.c	/^static uint64_t mem_heap_start = 0x00;$/;"	v	file:
+mcb_t	./mem/mem.h	/^typedef memory_control_block_t mcb_t;$/;"	t
+mem_heap_collapse	./mem/mem.c	/^void mem_heap_collapse(void)$/;"	f
+mem_heap_start	./mem/mem.c	/^static uint8_t mem_heap_start = 0x00;$/;"	v	file:
 mem_init	./mem/mem.c	/^void mem_init(void)$/;"	f
 mem_lower	./lib/multiboot2.h	/^  multiboot_uint32_t mem_lower;$/;"	m	struct:multiboot_tag_basic_meminfo
+mem_under_mib	./mem/mem.c	/^uint8_t* mem_under_mib(uint64_t length)$/;"	f
 mem_upper	./lib/multiboot2.h	/^  multiboot_uint32_t mem_upper;$/;"	m	struct:multiboot_tag_basic_meminfo
 memcmp	./lib/libc.c	/^uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n)$/;"	f
 memcpy	./lib/libc.c	/^void *memcpy(void *dst, void *src, uint64_t count)$/;"	f
+memory_control_block	./mem/mem.h	/^typedef struct memory_control_block {$/;"	s
+memory_control_block_t	./mem/mem.h	/^} __attribute__((packed))  memory_control_block_t;$/;"	t	typeref:struct:memory_control_block
 memset	./lib/libc.c	/^void memset(uint8_t *s, uint8_t c, uint64_t n)$/;"	f
 minor	./lib/multiboot2.h	/^  multiboot_uint8_t minor;$/;"	m	struct:multiboot_tag_smbios
 mod_end	./lib/multiboot2.h	/^  multiboot_uint32_t mod_end;$/;"	m	struct:multiboot_tag_module
@@ -1044,6 +1390,10 @@ multiboot_uint64_t	./lib/multiboot2.h	/^typedef unsigned long long	multiboot_uin
 multiboot_uint8_t	./lib/multiboot2.h	/^typedef unsigned char		multiboot_uint8_t;$/;"	t
 multiboot_vbe_info_block	./lib/multiboot2.h	/^struct multiboot_vbe_info_block$/;"	s
 multiboot_vbe_mode_info_block	./lib/multiboot2.h	/^struct multiboot_vbe_mode_info_block$/;"	s
+name	./fs/vfs.h	/^	char name[FS_MAX_NAME];$/;"	m	struct:fs_node
+name	./fs/vfs.h	/^	char name[FS_MAX_NAME];$/;"	m	struct:vfs_entry
+next	./include/list.h	/^        struct list_node *next;$/;"	m	struct:list_node	typeref:struct:list_node::list_node
+next	./mem/mem.h	/^	struct memory_control_block *next;$/;"	m	struct:memory_control_block	typeref:struct:memory_control_block::memory_control_block
 num	./lib/multiboot2.h	/^  multiboot_uint32_t num;$/;"	m	struct:multiboot_tag_elf_sections
 oem	./kernel/acpi.h	/^	uint8_t oem[6];$/;"	m	struct:rsdp
 oem_id	./kernel/acpi.h	/^	uint8_t oem_id[6];$/;"	m	struct:acpi_sdt
@@ -1053,10 +1403,12 @@ offset	./lib/multiboot2.h	/^  multiboot_uint32_t offset;$/;"	m	struct:multiboot_
 offset0	./cpu/idt.h	/^	uint16_t offset0;$/;"	m	struct:idt_entry
 offset1	./cpu/idt.h	/^	uint16_t offset1;$/;"	m	struct:idt_entry
 offset2	./cpu/idt.h	/^	uint32_t offset2;$/;"	m	struct:idt_entry
+open	./fs/vfs.h	/^	uint64_t (*open)(struct fs_node*);$/;"	m	struct:fs_operations
 outb	./lib/libc.c	/^inline void outb(uint16_t port, uint8_t val)$/;"	f
 outd	./lib/libc.c	/^inline void outd(uint16_t port, uint32_t val)$/;"	f
 paging_init	./mem/paging.c	/^void paging_init()$/;"	f
 paging_reload_pml4t	./mem/paging.c	/^static void paging_reload_pml4t(uint64_t pml4t_start_phys)$/;"	f	file:
+parent	./include/tree.h	/^	struct tree* parent;	\/* Parent tree node *\/$/;"	m	struct:tree	typeref:struct:tree::tree
 part	./lib/multiboot2.h	/^  multiboot_uint32_t part;$/;"	m	struct:multiboot_tag_bootdev
 pdpt	./mem/paging.h	/^uint64_t pdpt[PDPT_SIZE] __attribute__((aligned(4096))); ;$/;"	v
 pic_disable	./cpu/pic.c	/^void pic_disable(void)$/;"	f
@@ -1064,9 +1416,20 @@ pic_init	./cpu/pic.c	/^void pic_init(void)$/;"	f
 pml4t	./mem/paging.h	/^uint64_t pml4t[PML4T_SIZE] __attribute__((aligned(4096))); ;$/;"	v
 pointer	./lib/multiboot2.h	/^  multiboot_uint32_t pointer;$/;"	m	struct:multiboot_tag_efi32
 pointer	./lib/multiboot2.h	/^  multiboot_uint64_t pointer;$/;"	m	struct:multiboot_tag_efi64
+pop	./cpu/_smp.asm	/^    pop di                            ; Restore DI.$/;"	d
+prev	./include/list.h	/^        struct list_node *prev;$/;"	m	struct:list_node	typeref:struct:list_node::list_node
 processor	./kernel/acpi.h	/^	uint8_t processor;$/;"	m	struct:madt_entry_nmi
+ps2_read	./drivers/ps2.c	/^uint8_t ps2_read(uint8_t port)$/;"	f
+ps2_write	./drivers/ps2.c	/^void ps2_write(uint8_t port, uint8_t data)$/;"	f
+ps2keyboard_init	./drivers/ps2keyboard.c	/^void ps2keyboard_init(void)$/;"	f
+ps2keyboard_interrupt_handler	./drivers/ps2keyboard.c	/^uint8_t ps2keyboard_interrupt_handler(pt_regs_t *regs)$/;"	f
+ps2keyboard_write	./drivers/ps2keyboard.c	/^uint8_t ps2keyboard_write(uint8_t data)$/;"	f
+ps2mouse_init	./drivers/ps2mouse.c	/^void ps2mouse_init(void)$/;"	f
+ps2mouse_interrupt_handler	./drivers/ps2mouse.c	/^uint8_t ps2mouse_interrupt_handler(pt_regs_t *regs)$/;"	f
+ps2mouse_write	./drivers/ps2mouse.c	/^uint8_t ps2mouse_write(uint8_t data)$/;"	f
 pt_regs	./kernel/interrupt.h	/^typedef struct pt_regs {$/;"	s
 pt_regs_t	./kernel/interrupt.h	/^} __attribute__((packed)) pt_regs_t;$/;"	t	typeref:struct:pt_regs
+push	./cpu/_smp.asm	/^    push di                           ; Save DI for the time being.$/;"	d
 r10	./kernel/interrupt.h	/^	unsigned long r10;$/;"	m	struct:pt_regs
 r11	./kernel/interrupt.h	/^	unsigned long r11;$/;"	m	struct:pt_regs
 r12	./kernel/interrupt.h	/^	unsigned long r12;$/;"	m	struct:pt_regs
@@ -1081,6 +1444,7 @@ rbx	./kernel/interrupt.h	/^	unsigned long rbx;$/;"	m	struct:pt_regs
 rcx	./kernel/interrupt.h	/^	unsigned long rcx;$/;"	m	struct:pt_regs
 rdi	./kernel/interrupt.h	/^	unsigned long rdi;$/;"	m	struct:pt_regs
 rdx	./kernel/interrupt.h	/^	unsigned long rdx;$/;"	m	struct:pt_regs
+read	./fs/vfs.h	/^	size_t (*read)(struct fs_node*, uint8_t *buf, size_t offset, size_t len);$/;"	m	struct:fs_operations
 red	./lib/multiboot2.h	/^  multiboot_uint8_t red;$/;"	m	struct:multiboot_color
 requests	./lib/multiboot2.h	/^  multiboot_uint32_t requests[0];$/;"	m	struct:multiboot_header_tag_information_request
 reserved	./cpu/gdt.h	/^	uint32_t reserved;$/;"	m	struct:gdt_system_entry
@@ -1116,6 +1480,7 @@ screen_get_width	./drivers/screen.c	/^uint32_t screen_get_width()$/;"	f
 screen_init	./drivers/screen.c	/^uint8_t screen_init()$/;"	f
 screen_put_char	./drivers/screen.c	/^void screen_put_char(unsigned char c, uint32_t x, uint32_t y,$/;"	f
 screen_put_pixel	./drivers/screen.c	/^void screen_put_pixel(uint32_t x, uint32_t y, uint32_t argb)$/;"	f
+section	./cpu/_smp.asm	/^section .text$/;"	l
 section	./init/boot.asm	/^section .bss$/;"	l
 section	./init/boot.asm	/^section .ro_data$/;"	l
 section	./init/boot.asm	/^section .text$/;"	l
@@ -1150,7 +1515,16 @@ size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_smbios
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_string
 size	./lib/multiboot2.h	/^  multiboot_uint32_t size;$/;"	m	struct:multiboot_tag_vbe
+size	./mem/mem.h	/^	uint64_t size;$/;"	m	struct:memory_control_block
+size_t	./lib/stdint.h	/^typedef unsigned long long int size_t;$/;"	t
 slice	./lib/multiboot2.h	/^  multiboot_uint32_t slice;$/;"	m	struct:multiboot_tag_bootdev
+smp_end	./cpu/_smp.asm	/^smp_end:$/;"	l
+smp_init	./cpu/smp.c	/^void smp_init(void)$/;"	f
+smp_start	./cpu/_smp.asm	/^smp_start:$/;"	l
+spinlock_acquire	./lib/spinlock.c	/^void spinlock_acquire(spinlock_t* spinlock)$/;"	f
+spinlock_release	./lib/spinlock.c	/^void spinlock_release(spinlock_t* spinlock)$/;"	f
+spinlock_t	./lib/spinlock.h	/^typedef uint8_t spinlock_t;$/;"	t
+spurious_interrupt_handler	./cpu/apic.c	/^uint8_t spurious_interrupt_handler(pt_regs_t *regs)$/;"	f
 ss	./kernel/interrupt.h	/^	uint64_t ss;$/;"	m	struct:pt_regs
 stack_bottom	./init/boot.asm	/^stack_bottom:$/;"	l
 stack_top	./init/boot.asm	/^stack_top:$/;"	l
@@ -1159,12 +1533,23 @@ string	./lib/multiboot2.h	/^  char string[0];$/;"	m	struct:multiboot_tag_string
 tables	./kernel/acpi.h	/^	uint32_t tables[ ];$/;"	m	struct:rsdt
 tables	./kernel/acpi.h	/^	uint64_t tables[ ];$/;"	m	struct:xsdt
 tables	./lib/multiboot2.h	/^  multiboot_uint8_t tables[0];$/;"	m	struct:multiboot_tag_smbios
+target_vector	./kernel/acpi.h	/^	uint32_t target_vector;$/;"	m	struct:madt_entry_iso
+test_all	./test/test.c	/^uint64_t test_all(void)$/;"	f
+tree	./include/tree.h	/^typedef struct tree {$/;"	s
+tree_create	./include/tree.c	/^tree_t* tree_create(void)$/;"	f
+tree_free	./include/tree.c	/^void tree_free(tree_t* tree)$/;"	f
+tree_insert_child	./include/tree.c	/^void tree_insert_child(tree_t* parent, void* data)$/;"	f
+tree_insert_tree	./include/tree.c	/^void tree_insert_tree(tree_t* parent, tree_t* child)$/;"	f
+tree_remove_tree	./include/tree.c	/^void tree_remove_tree(tree_t* parent, tree_t* child)$/;"	f
+tree_t	./include/tree.h	/^} tree_t;$/;"	t	typeref:struct:tree
+tree_test	./test/tree_test.c	/^uint64_t tree_test(void)$/;"	f
 tss	./cpu/tss.c	/^tss_t tss[TSS_MAX_SEGMENTS];$/;"	v
 tss	./cpu/tss.h	/^typedef struct tss {$/;"	s
 tss_init	./cpu/tss.c	/^void tss_init(void)$/;"	f
 tss_install	./cpu/tss.c	/^void tss_install(uint8_t num)$/;"	f
 tss_reload	./cpu/tss.c	/^void tss_reload(uint16_t selector)$/;"	f
 tss_t	./cpu/tss.h	/^} __attribute__((packed)) tss_t;$/;"	t	typeref:struct:tss
+type	./fs/vfs.h	/^	char* type;$/;"	m	struct:vfs_entry
 type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_ioapic
 type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_iso
 type	./kernel/acpi.h	/^	uint8_t type;$/;"	m	struct:madt_entry_lapic
@@ -1201,11 +1586,13 @@ uint32_t	./lib/stdint.h	/^typedef unsigned int uint32_t;$/;"	t
 uint64_t	./lib/stdint.h	/^typedef unsigned long long uint64_t;$/;"	t
 uint8_t	./lib/stdint.h	/^typedef unsigned char uint8_t;$/;"	t
 uintptr_t	./lib/stdint.h	/^typedef uint64_t uintptr_t;$/;"	t
+used	./mem/mem.h	/^	uint8_t used;$/;"	m	struct:memory_control_block
 va_arg	./lib/stdarg.h	6;"	d
 va_copy	./lib/stdarg.h	7;"	d
 va_end	./lib/stdarg.h	5;"	d
 va_list	./lib/stdarg.h	/^typedef __builtin_va_list va_list;$/;"	t
 va_start	./lib/stdarg.h	4;"	d
+value	./include/list.h	/^        void *value;$/;"	m	struct:list_node
 vbe_control_info	./lib/multiboot2.h	/^  struct multiboot_vbe_info_block vbe_control_info;$/;"	m	struct:multiboot_tag_vbe	typeref:struct:multiboot_tag_vbe::multiboot_vbe_info_block
 vbe_interface_len	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_interface_len;$/;"	m	struct:multiboot_tag_vbe
 vbe_interface_off	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_interface_off;$/;"	m	struct:multiboot_tag_vbe
@@ -1213,9 +1600,16 @@ vbe_interface_seg	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_interface_seg;$/
 vbe_mode	./lib/multiboot2.h	/^  multiboot_uint16_t vbe_mode;$/;"	m	struct:multiboot_tag_vbe
 vbe_mode_info	./lib/multiboot2.h	/^  struct multiboot_vbe_mode_info_block vbe_mode_info;$/;"	m	struct:multiboot_tag_vbe	typeref:struct:multiboot_tag_vbe::multiboot_vbe_mode_info_block
 version	./lib/multiboot2.h	/^  multiboot_uint16_t version;$/;"	m	struct:multiboot_tag_apm
+vfs_entry	./fs/vfs.h	/^typedef struct vfs_entry {$/;"	s
+vfs_entry_t	./fs/vfs.h	/^} vfs_entry_t;$/;"	t	typeref:struct:vfs_entry
+vfs_init	./fs/vfs.c	/^void vfs_init(void)$/;"	f
+vfs_mount	./fs/vfs.c	/^void vfs_mount(char *path, fs_node_t *root)$/;"	f
+vfs_spinlock	./fs/vfs.c	/^spinlock_t vfs_spinlock = 0x00;$/;"	v
 width	./drivers/screen.c	/^static uint32_t width = 0;$/;"	v	file:
 width	./lib/multiboot2.h	/^  multiboot_uint32_t width;$/;"	m	struct:multiboot_header_tag_framebuffer
+write	./fs/vfs.h	/^	size_t (*write)(struct fs_node*, uint8_t *buf, size_t offset, size_t len);$/;"	m	struct:fs_operations
 write_char	./lib/kprintf.c	/^void write_char(uint8_t c)$/;"	f
+write_time	./fs/vfs.h	/^	uint64_t write_time;$/;"	m	struct:fs_node
 x	./lib/kprintf.c	/^static uint32_t x = 0;$/;"	v	file:
 xsdt	./kernel/acpi.h	/^typedef struct xsdt {$/;"	s
 xsdt_ptr	./kernel/acpi.h	/^	uint64_t xsdt_ptr;$/;"	m	struct:rsdp

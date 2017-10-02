@@ -10,7 +10,11 @@
 #include <spinlock.h>
 #include <drivers/ps2mouse.h>
 #include <drivers/ps2keyboard.h>
-
+#include <drivers/pci.h>
+#include <drivers/ata.h>
+#include <drivers/rtc.h>
+#include <test/test.h>
+#include <cpu/hpet.h>
 
 int main(uint64_t mb_info_struct_addr)
 {
@@ -35,9 +39,22 @@ int main(uint64_t mb_info_struct_addr)
 	/* Keyboard :) */
 	ps2keyboard_init();
 
+	ata_init();
+	pci_list();
+
+
+	acpi_get_table(ACPI_SIGNATURE_HPET);
+	hpet_init();
+
 	/* Done initializing */
 	LOG("Done initializing.\n");
 
+	/*
+	rtc_init();
+	LOGF("Current time: %d:%d:%d, the %d of %d, %d\n",
+	     rtc_get_hours(), rtc_get_minutes(), rtc_get_seconds(),
+	     rtc_get_day(), rtc_get_month(), 2000 + rtc_get_year());
+	*/
 
 
 	/* Stop the machine */

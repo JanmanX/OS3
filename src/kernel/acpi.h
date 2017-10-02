@@ -15,6 +15,7 @@
 #define ACPI_SIGNATURE_FADT ((uint8_t*)"FACP")
 #define ACPI_SIGNATURE_FACS ((uint8_t*)"FACS")
 #define ACPI_SIGNATURE_HEST ((uint8_t*)"HEST")
+#define ACPI_SIGNATURE_HPET ((uint8_t*)"HPET")
 #define ACPI_SIGNATURE_MSCT ((uint8_t*)"MSCT")
 #define ACPI_SIGNATURE_MPST ((uint8_t*)"MPST")
 #define ACPI_SIGNATURE_OEMx ((uint8_t*)"OEMx")
@@ -78,7 +79,22 @@ typedef struct rsdt {
 	uint32_t tables[ ];
 } __attribute__((packed)) rsdt_t;
 
+
 /* Other system descriptor tables */
+
+/* HPET (High Precision Event Timer) Table */
+/* From spec 1.0a, section 3.2.4 */
+typedef struct hpett {
+	acpi_sdt_t header;
+
+	uint32_t event_timer_block_id;
+	uint32_t base_address0;
+	uint32_t base_address1;
+	uint32_t base_address2;
+	uint8_t hpet_number;
+	uint16_t minimum_tick;
+	uint8_t attr;
+} __attribute__((packed)) hpett_t;
 
 /* MADT (Multiple APIC Description Table */
 typedef struct madt {

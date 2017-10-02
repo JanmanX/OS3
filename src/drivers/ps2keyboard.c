@@ -59,8 +59,10 @@ void ps2keyboard_init(void)
 	uint8_t reply = 0x00;
 
 	/* Request IRQ */
-	ioapic_set_irq(PS2_KB_IRQ, 0x00, APIC_VECTOR_OFFSET +
-		       PS2_KB_IRQ);
+	LOGF("IRQ routing for Keyboard: 0x%x\n", ioapic_get_iso(PS2_KB_IRQ));
+	ioapic_set_irq(ioapic_get_iso(PS2_KB_IRQ),
+		       0x00,
+		       APIC_VECTOR_OFFSET + PS2_KB_IRQ);
 
 	/* Setup interrupt handler */
 	interrupt_install(APIC_VECTOR_OFFSET + PS2_KB_IRQ,

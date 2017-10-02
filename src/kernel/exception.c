@@ -54,6 +54,7 @@ uint8_t exception_handler_ss(pt_regs_t *regs) {return EOK;}
 uint8_t exception_handler_gp(pt_regs_t *regs)
 {
 	/* DEBUG */
+	clear_screen();
 	LOG("GP caught!");
 	interrupt_print_regs(regs);
 
@@ -64,7 +65,7 @@ uint8_t exception_handler_gp(pt_regs_t *regs)
 			(regs->error_code >> 3) & (0xFFF));
 	}
 
-
+	HALT;
 	return EOK;
 }
 

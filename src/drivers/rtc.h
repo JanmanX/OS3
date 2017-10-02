@@ -17,13 +17,6 @@
 #define RTC_REGISTER_D			(0x0D)
 
 
-
-
-
-
-
-
-
 void rtc_init(void);
 
 uint8_t rtc_read(const uint8_t reg);

@@ -40,7 +40,9 @@ void ps2mouse_init(void)
 			  ps2mouse_interrupt_handler);
 
 	/* Setup IRQ in APIC */
-	ioapic_set_irq(PS2_IRQ, 0x00, PS2_IRQ + APIC_VECTOR_OFFSET);
+	ioapic_set_irq(ioapic_get_iso(PS2_IRQ),
+		       0x00,
+		       PS2_IRQ + APIC_VECTOR_OFFSET);
 
 
 	/* Init mouse */

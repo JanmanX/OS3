@@ -24,7 +24,7 @@
 #define PCI_REGISTER_INTERRUPT_PIN      0x3D
 
 /* CLASS CODES */
-#define PCI_CLASS_STORAGE		(0x01)
+#define PCI_CLASS_ATA			(0x01)
 #define PCI_SUBCLASS_IDE		(0x01)
 #define PCI_SUBCLASS_RAID		(0x04)
 #define PCI_SUBCLASS_ATA		(0x05)
