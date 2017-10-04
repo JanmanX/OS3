@@ -33,18 +33,23 @@ int main(uint64_t mb_info_struct_addr)
 	/* Initialize GDT */
 	gdt_init();
 
+	clear_screen();
+
 	/* Initialize Interrupts */
 	interrupt_init();
 
 	/* Keyboard :) */
 	ps2keyboard_init();
 
+
 	ata_init();
 	pci_list();
 
-
-	acpi_get_table(ACPI_SIGNATURE_HPET);
 	hpet_init();
+
+	LOG("Sleep for 10 sec");
+	sleep(1);
+	LOG("Woke up!");
 
 	/* Done initializing */
 	LOG("Done initializing.\n");

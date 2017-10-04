@@ -49,7 +49,9 @@ void io_wait(void);
 
 #define ERROR(m) do {\
 		kprintf("[ERROR %s():%d]: %s\n", __func__, __LINE__, m);\
-		HALT;\
+		while(1) {\
+			HALT;\
+		}\
 		} while(0);
 
 #define LOGF(m, ...) do {\

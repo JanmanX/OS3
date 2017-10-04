@@ -8,13 +8,21 @@
 hpett_t* hpet = NULL;
 uint64_t* hpet_base = NULL;
 uint16_t hpet_min_tick = 0x00;
+uint32_t legacy_replacement_route_capable = 0x00;
+uint64_t ms_elapsed = 0x00;
 
 void hpet_enable(void)
 {
 	ASSERT(hpet_base != NULL, "HPET not initialized");
 
 	uint64_t config = GET_UINT64(hpet_base, HPET_REGISTER_CONFIG);
-	config |= 0x01; /* Set bit 0 to 1 */
+	config |= 0x01; /* Set bit 0 */
+
+	/* If not capable to re-route legacy timers, support legacy routing */
+	if(legacy_replacement_route_capable == 0x00) {
+		config |= (0x01 << 1);
+	}
+
 	GET_UINT64(hpet_base, HPET_REGISTER_CONFIG) = config;
 }
 
@@ -29,13 +37,13 @@ void hpet_disable(void)
 
 uint8_t hpet_timer_handler(pt_regs_t* regs)
 {
-	LOG("HPET Timer interrupt");
+	ms_elapsed++;
 	lapic_eoi();
 }
 
 uint8_t hpet_timer_handler2(pt_regs_t* regs)
 {
-	LOG("HPET Timer 2 interrupt");
+//	LOGF("2",NULL);
 	lapic_eoi();
 }
 
@@ -44,28 +52,64 @@ void hpet_timer_setup(uint8_t timer,
 		      interrupt_handler_t timer_handler,
 		      uint8_t periodic,
 		      uint64_t hz) {
+	/* Check if timer supports the operations */
+	uint64_t timer_config = GET_UINT64(hpet_base,
+					   HPET_TIMER_OFFSET(timer) + HPET_TIMER_CONFIG);
+
+	/* Check for periodic support */
+	if(periodic && (timer_config >> 4) & 1 == 0) {
+		ERROR("Timer does not support periodic interrupt!");
+	}
+
 	uint8_t i = 0x00;
 
-	/* Get the upper 4 bytes of CONFIG register (Interrupt Routing
-	 * capability) */
-	uint32_t available_irqs = GET_UINT32(hpet_base, (HPET_TIMER_OFFSET(timer)
-					     + HPET_TIMER_CONFIG + 4));
 	/* Get a free interrupt vector */
 	uint32_t vector = interrupt_get_free_vector();
 
+	/* Get the IRQ
+	 * If legacy, use ISA IRQs */
+	uint64_t irq;
+	if(timer < 2 && legacy_replacement_route_capable == 0) {
+		LOG("ISA Timer");
+		irq = timer == 0
+			? HPET_TIMER0_IRQ
+			: HPET_TIMER1_IRQ;
 
-	/* Iterate over available*/
-	uint64_t irq = 0x00;
-	for(i = 0; i < 32; i++) {
-		if((available_irqs >> i) & 1) {
-			if(ioapic_is_irq_free(i)) {
-				/* IRQ free, we can install it */
-				irq = i;
+		/* In case of rewiring */
+		irq = ioapic_get_iso(irq);
+
+		/* Check if actually free */
+		if(ioapic_is_irq_free(irq) == FALSE) {
+			ERROR("HPET ISA IRQ taken!");
+			return;
+		}
+	} else {
+		/* Get the upper 4 bytes of CONFIG register (Interrupt Routing
+		 * capability) */
+		uint32_t available_irqs = GET_UINT32(hpet_base, (HPET_TIMER_OFFSET(timer)
+								 + HPET_TIMER_CONFIG + 4));
+
+		LOGF("avail_irq: 0x%x\n", available_irqs);
+		/* Iterate over available*/
+		irq = 0xFF;
+		for(i = 0; i < 32; i++) {
+			if((available_irqs >> i) & 1) {
+				if(ioapic_is_irq_free(ioapic_get_iso(i))) {
+					/* IRQ free, we can install it */
+					irq = ioapic_get_iso(i);
+				}
 			}
 		}
-	}
 
-	ASSERT(i > 31, "HPET Timer invalid IRQ");
+
+		ASSERT(irq > 31, "HPET Timer invalid IRQ");
+
+		/* No free IRQ found. Bail out */
+		if(irq == 0xFF) {
+			LOG("No more IRQs");
+			return;
+		}
+	}
 
 	/* Setup timer */
 	uint64_t main_counter = GET_UINT64(hpet_base,
@@ -74,7 +118,7 @@ void hpet_timer_setup(uint8_t timer,
 
 	GET_UINT64(hpet_base, HPET_TIMER_OFFSET(timer) + HPET_TIMER_CONFIG)
 		= (1 << 8)		/* 64 bit timer */
-		| (irq << 9)		/* Interrupt */
+		| (irq << 9)		/* Interrupt (ignored on ISA)  */
 		| (1 << 6)		/* next write to accumulator only */
 		| ((uint64_t)periodic << 3)	/* periodic */
 		| (1 << 2);		/* generate interrupts */
@@ -92,6 +136,8 @@ void hpet_timer_setup(uint8_t timer,
 	isr |= (1 << irq); /* Set the n'th IRQ bit */
 	GET_UINT64(hpet_base, HPET_REGISTER_INTERRUPT_STATUS) = isr;
 
+	LOGF("Installing timer 0x%x on irq 0x%x to vector 0x%x\n", timer, irq,
+	     vector);
 
 	interrupt_install(vector, timer_handler);
 
@@ -136,12 +182,13 @@ void hpet_init(void)
 	config &= ~((uint64_t)0x02); /* Disable legacy routing */
 	GET_UINT32(hpet_base, HPET_REGISTER_CONFIG) = config;
 
+	/* Is legacy replacement route capable? */
+	legacy_replacement_route_capable =
+		GET_UINT32(hpet_base, HPET_REGISTER_ID) >> 15;
+
 	/* Disable all timers  interrupts */
-	uint32_t general_interrupt = GET_UINT64(hpet_base,
-						HPET_REGISTER_INTERRUPT_STATUS);
-	general_interrupt &= ~(uint64_t)0xFFFFFFFF; /* Reset buttom 32 bits */
-	GET_UINT64(hpet_base, HPET_REGISTER_INTERRUPT_STATUS) =
-		general_interrupt;
+	uint32_t general_interrupt = 0x00; /* Reset buttom 32 bits */
+	GET_UINT32(hpet_base, HPET_REGISTER_INTERRUPT_STATUS) = general_interrupt;
 
 
 	/* Minimum tick */
@@ -156,14 +203,20 @@ void hpet_init(void)
 
 
 	/* Setup timers */
-	hpet_timer_setup(0, hpet_timer_handler, 10, 10000);
-	hpet_timer_setup(1, hpet_timer_handler2, 0, 100);
-
+	hpet_timer_setup(0, hpet_timer_handler, 1, 1000);
+//	hpet_timer_setup(1, hpet_timer_handler2, 1, 100);
 
 	LOGF("FREQ: 0x%x\n", hpet_freq());
 
 	/* go go go */
 	hpet_enable();
+
 }
 
 
+void sleep(uint64_t ms)
+{
+	uint64_t start = ms_elapsed;
+	while(ms_elapsed < start + ms)
+		;
+}

@@ -4,6 +4,7 @@
 #include <cpu/pic.h>
 #include <stdint.h>
 #include <types.h>
+#include <libc.h>
 #include <kernel/interrupt.h>
 
 /* Multiple APIC Descriptor Table */
@@ -147,6 +148,7 @@ uint8_t ioapic_is_irq_free(uint8_t irq)
 	uint32_t entry = ioapic_read(0x10 + irq * 2);
 
 	if(entry & (1<<16)) {
+		LOGF("irq = 0x%x is free\n", irq);
 		return TRUE;
 	}
 
@@ -161,8 +163,8 @@ uint8_t ioapic_get_free_irq(void)
 
 	for(i = 0; i < num_entries; i++) {
 		if(ioapic_is_irq_free(i)) {
-			//return i;
 			LOGF("IOAPIC %d is free\n", i);
+			return i;
 		} else {
 			LOGF("IOAPIC %d is used\n", i);
 		}
@@ -289,6 +291,8 @@ uint8_t ioapic_get_iso(uint8_t irq)
 				(struct madt_entry*)madt_entry;
 
 			if(madt_iso->irq_source == irq) {
+				LOGF("irq: 0x%x -> vector 0x%x\n", irq,
+				     madt_iso->target_vector);
 				return madt_iso->target_vector;
 			}
 		}
