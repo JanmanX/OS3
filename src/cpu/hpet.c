@@ -8,8 +8,12 @@
 hpett_t* hpet = NULL;
 uint64_t* hpet_base = NULL;
 uint16_t hpet_min_tick = 0x00;
-uint32_t legacy_replacement_route_capable = 0x00;
 uint64_t ms_elapsed = 0x00;
+
+uint64_t hpet_get_ms_elapsed(void)
+{
+	return ms_elapsed;
+}
 
 void hpet_enable(void)
 {
@@ -19,7 +23,7 @@ void hpet_enable(void)
 	config |= 0x01; /* Set bit 0 */
 
 	/* If not capable to re-route legacy timers, support legacy routing */
-	if(legacy_replacement_route_capable == 0x00) {
+	if(hpet_legacy_replacement_route_capable() == 0x00) {
 		config |= (0x01 << 1);
 	}
 
@@ -43,7 +47,7 @@ uint8_t hpet_timer_handler(pt_regs_t* regs)
 
 uint8_t hpet_timer_handler2(pt_regs_t* regs)
 {
-//	LOGF("2",NULL);
+	//	LOGF("2",NULL);
 	lapic_eoi();
 }
 
@@ -52,9 +56,14 @@ void hpet_timer_setup(uint8_t timer,
 		      interrupt_handler_t timer_handler,
 		      uint8_t periodic,
 		      uint64_t hz) {
+	if(timer >= hpet_num_timers()) {
+		LOGF("Timer 0x%x does not exist!\n", timer);
+		return;
+	}
+
 	/* Check if timer supports the operations */
-	uint64_t timer_config = GET_UINT64(hpet_base,
-					   HPET_TIMER_OFFSET(timer) + HPET_TIMER_CONFIG);
+	uint64_t timer_config =
+		GET_UINT64(hpet_base, HPET_TIMER_OFFSET(timer) + HPET_TIMER_CONFIG);
 
 	/* Check for periodic support */
 	if(periodic && (timer_config >> 4) & 1 == 0) {
@@ -69,7 +78,7 @@ void hpet_timer_setup(uint8_t timer,
 	/* Get the IRQ
 	 * If legacy, use ISA IRQs */
 	uint64_t irq;
-	if(timer < 2 && legacy_replacement_route_capable == 0) {
+	if(timer < 2 && hpet_legacy_replacement_route_capable() == 0) {
 		LOG("ISA Timer");
 		irq = timer == 0
 			? HPET_TIMER0_IRQ
@@ -90,6 +99,7 @@ void hpet_timer_setup(uint8_t timer,
 								 + HPET_TIMER_CONFIG + 4));
 
 		LOGF("avail_irq: 0x%x\n", available_irqs);
+
 		/* Iterate over available*/
 		irq = 0xFF;
 		for(i = 0; i < 32; i++) {
@@ -158,6 +168,11 @@ uint32_t hpet_freq(void)
 }
 
 
+uint8_t hpet_legacy_replacement_route_capable(void)
+{
+	return GET_UINT32(hpet_base, HPET_REGISTER_ID) >> 15;
+}
+
 void hpet_init(void)
 {
 	hpet = acpi_get_table(ACPI_SIGNATURE_HPET);
@@ -177,20 +192,9 @@ void hpet_init(void)
 	hpet_disable(); /* Enable at end of this function */
 	GET_UINT64(hpet_base, HPET_REGISTER_MAIN_COUNTER_VALUE) = (uint64_t)0;
 
-	/* Disable legacy routing */
-	uint64_t config = GET_UINT32(hpet_base, HPET_REGISTER_CONFIG);
-	config &= ~((uint64_t)0x02); /* Disable legacy routing */
-	GET_UINT32(hpet_base, HPET_REGISTER_CONFIG) = config;
-
-	/* Is legacy replacement route capable? */
-	legacy_replacement_route_capable =
-		GET_UINT32(hpet_base, HPET_REGISTER_ID) >> 15;
-
 	/* Disable all timers  interrupts */
 	uint32_t general_interrupt = 0x00; /* Reset buttom 32 bits */
 	GET_UINT32(hpet_base, HPET_REGISTER_INTERRUPT_STATUS) = general_interrupt;
-
-
 	/* Minimum tick */
 	hpet_min_tick = hpet->minimum_tick;
 
@@ -201,12 +205,13 @@ void hpet_init(void)
 		ERROR("HPET counter 32bit only!");
 	}
 
-
 	/* Setup timers */
+	/* Timer 0: 1000hz timer */
 	hpet_timer_setup(0, hpet_timer_handler, 1, 1000);
-//	hpet_timer_setup(1, hpet_timer_handler2, 1, 100);
 
-	LOGF("FREQ: 0x%x\n", hpet_freq());
+	/* Timer 1: ... */
+	//	hpet_timer_setup(1, hpet_timer_handler2, 1, 100);
+
 
 	/* go go go */
 	hpet_enable();
@@ -214,9 +219,3 @@ void hpet_init(void)
 }
 
 
-void sleep(uint64_t ms)
-{
-	uint64_t start = ms_elapsed;
-	while(ms_elapsed < start + ms)
-		;
-}

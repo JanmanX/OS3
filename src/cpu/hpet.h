@@ -25,8 +25,5 @@ void hpet_enable(void);
 void hpet_disable(void);
 uint8_t hpet_num_timers(void);
 uint32_t hpet_freq(void);
-
-
-/* XXX
- * Remove this from here!  */
-void sleep(uint64_t ms);
+uint64_t hpet_get_ms_elapsed(void);
+uint8_t hpet_legacy_replacement_route_capable(void);

@@ -41,26 +41,14 @@ int main(uint64_t mb_info_struct_addr)
 	/* Keyboard :) */
 	ps2keyboard_init();
 
+	/* Time subsystem */
+	time_init();
 
 	ata_init();
 	pci_list();
 
-	hpet_init();
-
-	LOG("Sleep for 10 sec");
-	sleep(1);
-	LOG("Woke up!");
-
 	/* Done initializing */
 	LOG("Done initializing.\n");
-
-	/*
-	rtc_init();
-	LOGF("Current time: %d:%d:%d, the %d of %d, %d\n",
-	     rtc_get_hours(), rtc_get_minutes(), rtc_get_seconds(),
-	     rtc_get_day(), rtc_get_month(), 2000 + rtc_get_year());
-	*/
-
 
 	/* Stop the machine */
 	asm __volatile__("hlt");

@@ -21,13 +21,13 @@ uint8_t screen_init()
 		multiboot_parser_get_tag(MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
 
 	/* Return if no tag found */
-	if(mb_fb == NULL)
-	{
+	if(mb_fb == NULL) {
+		ERROR("Screen wrong!");
 		return ENOENT;
 	}
 
 	if(mb_fb->common.framebuffer_type != MULTIBOOT_FRAMEBUFFER_TYPE_RGB) {
-		/* TODO: Log and fail*/
+		ERROR("framebuffer wrong type!");
 		return EBADF;
 	}
 

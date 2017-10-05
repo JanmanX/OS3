@@ -71,7 +71,7 @@ void io_wait(void);
 		} while(0);
 #define ASSERT(a, m) if(!a) {\
 			kprintf("%s", m);\
-			HALT;\
+			while(1) {HALT;}\
 		}
 #define ASSERTF(a, m, ...) if(!a) {\
 			kprintf("[ASSERTION %s():%d]: ", __func__, __LINE__);\
