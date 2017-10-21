@@ -29,8 +29,8 @@ framebuffer_tag_start:
         dw 5
         dw 0
         dd 20
-        dd 800
-        dd 600
+        dd 720
+        dd 480
         dd 32
 framebuffer_tag_end:
 align 8
