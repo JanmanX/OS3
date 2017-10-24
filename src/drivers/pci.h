@@ -25,17 +25,25 @@
 
 /* CLASS CODES */
 #define PCI_CLASS_ATA			(0x01)
+
+/* SUBCLASS CODES */
 #define PCI_SUBCLASS_IDE		(0x01)
 #define PCI_SUBCLASS_RAID		(0x04)
 #define PCI_SUBCLASS_ATA		(0x05)
+#define PCI_SUBCLASS_SATA		(0x06)
 #define PCI_SUBCLASS_SOLID_STATE	(0x08)
+
+/* Protocols */
+#define PCI_PROTOCOL_AHCI		(0x01)
+
 
 typedef void (*pci_func_t)(uint8_t bus, uint8_t dev, uint8_t func);
 
 uint32_t pci_read(const uint8_t bus,
 		  const uint8_t dev,
 		  const uint8_t func,
-		  const uint8_t reg);
+		  const uint8_t reg,
+		  const uint8_t len);
 
 void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass);
 
