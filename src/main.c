@@ -11,7 +11,7 @@
 #include <drivers/ps2mouse.h>
 #include <drivers/ps2keyboard.h>
 #include <drivers/pci.h>
-#include <drivers/ata.h>
+#include <drivers/sata.h>
 #include <drivers/rtc.h>
 #include <test/test.h>
 #include <cpu/hpet.h>
@@ -39,13 +39,19 @@ int main(uint64_t mb_info_struct_addr)
 	interrupt_init();
 
 	/* Keyboard :) */
-	ps2keyboard_init();
+//	ps2keyboard_init();
 
 	/* Time subsystem */
 	time_init();
 
-	ata_init();
 	pci_list();
+
+	clear_screen();
+
+	sata_init();
+
+	//pci_list();
+
 
 	/* Done initializing */
 	LOG("Done initializing.\n");

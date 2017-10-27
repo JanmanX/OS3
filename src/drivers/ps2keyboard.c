@@ -96,7 +96,7 @@ void ps2keyboard_init(void)
 	/* Enable interrupts */
 	ps2_write(PS2_COMMAND, 0x20);
 	uint8_t config = ps2_read(PS2_DATA);
-	config |= 0x01; /* Enable IRQ (IRQ 1) */
+	config |= 0x01; /* Enable IRQ */
 	ps2_write(PS2_COMMAND, 0x60);
 	ps2_write(PS2_DATA, config);
 
