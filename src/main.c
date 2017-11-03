@@ -11,10 +11,10 @@
 #include <drivers/ps2mouse.h>
 #include <drivers/ps2keyboard.h>
 #include <drivers/pci.h>
-#include <drivers/ata.h>
 #include <drivers/rtc.h>
 #include <test/test.h>
 #include <cpu/hpet.h>
+#include <lib/semaphore.h>
 
 int main(uint64_t mb_info_struct_addr)
 {
@@ -44,8 +44,8 @@ int main(uint64_t mb_info_struct_addr)
 	/* Time subsystem */
 	time_init();
 
-	ata_init();
 	pci_list();
+
 
 	/* Done initializing */
 	LOG("Done initializing.\n");
