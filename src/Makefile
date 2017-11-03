@@ -1,6 +1,8 @@
 # Compiler
 CC              = x86_64-elf-gcc
-CFLAGS          = -std=gnu11 -ffreestanding -O0 -Wall -Wextra -m64 -g -mno-red-zone -nostdinc -H
+DEFINES		=
+CFLAGS          = -std=gnu11 -ffreestanding -O0 -Wall -Wextra -m64 -g \
+			-mno-red-zone -nostdinc -H\
 
 # Assembler
 AS              = nasm
@@ -13,7 +15,7 @@ LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000
 
 
 MODULES         := init include lib drivers mem cpu kernel fs test acpica
-INC             = -I./include -I. -I./lib
+INC             = -I./include -I. -I./lib -I./acpica/include
 SRC             := main.c
 
 include $(patsubst %, %/subsys.mk, $(MODULES))
@@ -42,6 +44,7 @@ all: $(OBJS)
 	objdump -DMintel kernel.bin > kernel.objdump
 
 print_objs: $(OBJS)
+	echo $(FILES)
 	echo $(OBJS)
 
 tags:

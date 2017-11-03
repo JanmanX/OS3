@@ -11,6 +11,7 @@
 #include <drivers/ps2mouse.h>
 #include <drivers/ps2keyboard.h>
 #include <drivers/pci.h>
+#include <drivers/sata.h>
 #include <drivers/rtc.h>
 #include <test/test.h>
 #include <cpu/hpet.h>
@@ -42,7 +43,6 @@ int main(uint64_t mb_info_struct_addr)
 
 	/* Time subsystem */
 	time_init();
-
 
 	pci_list();
 

@@ -41,9 +41,10 @@ bochs: iso
 	$(BOCHS) -f $(DEBUG_DIR)/bochs/bochs.conf -q
 
 tags:
-	find os/ | xargs ctags
+	find src/ | xargs ctags
 
 clean:
+	rm -fv tags
 	rm -fv bx_enh_dbg.ini
 	rm -fv $(TARGET)
 	make -C $(SRC) clean

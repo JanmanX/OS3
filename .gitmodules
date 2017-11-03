@@ -1,3 +1,0 @@
-[submodule "src/kernel/acpica"]
-	path = src/kernel/acpica
-	url = https://github.com/acpica/acpica.git
