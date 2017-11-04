@@ -27,8 +27,10 @@ int main(uint64_t mb_info_struct_addr)
 	/* Initialize memory systems */
 	mem_init();
 
+	LOG("HALTING BEFORE ACPI");
+	HALT;
 	/* ACPI Init */
-	acpi_init();
+//	acpi_init();
 
 	/* Initialize GDT */
 	gdt_init();

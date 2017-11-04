@@ -1,8 +1,9 @@
 # Compiler
 CC              = x86_64-elf-gcc
-DEFINES		=
+DEFINES		= -D ACOS
 CFLAGS          = -std=gnu11 -ffreestanding -O0 -Wall -Wextra -m64 -g \
 			-mno-red-zone -nostdinc -H\
+			$(DEFINES)
 
 # Assembler
 AS              = nasm
@@ -14,8 +15,8 @@ LDSCRIPT        = ./linker.ld
 LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000
 
 
-MODULES         := init include lib drivers mem cpu kernel fs test acpica
-INC             = -I./include -I. -I./lib -I./acpica/include
+MODULES         := init include lib drivers mem cpu kernel fs test acpi
+INC             = -I./include -I. -I./lib -I./acpi/acpica/source/include
 SRC             := main.c
 
 include $(patsubst %, %/subsys.mk, $(MODULES))

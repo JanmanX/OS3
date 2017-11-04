@@ -1,11 +1,11 @@
 #include "hpet.h"
-#include <kernel/acpi.h>
+#include <acpi/acpica.h>
 #include <libc.h>
 #include <kernel/interrupt.h>
 #include <cpu/apic.h>
 
 
-hpett_t* hpet = NULL;
+ACPI_TABLE_HPET* hpet = NULL;
 uint64_t* hpet_base = NULL;
 uint16_t hpet_min_tick = 0x00;
 uint64_t ms_elapsed = 0x00;
@@ -175,16 +175,17 @@ uint8_t hpet_legacy_replacement_route_capable(void)
 
 void hpet_init(void)
 {
-	hpet = acpi_get_table(ACPI_SIGNATURE_HPET);
+	hpet = acpica_get_table(ACPI_SIG_HPET);
 	ASSERT(hpet != NULL, "Could not find HPET");
 
 	/* If lower byte is non-zero, HPET is not memory mapped */
-	if(hpet->base_address0 & 0xFF != 0x00) {
+	if(hpet->Address.AccessWidth & 0xFF != 0x00) {
 		ERROR("HPET is not memory mapped!");
 		return;
 	}
 
 	/* Read HPET INFO */
+//	hpet_base = ACPICA_ADDRESS_UINT32(hpet->Address);
 	hpet_base = (uint64_t*)((uint64_t)hpet->base_address2 << 32
 				| (uint64_t)hpet->base_address1);
 

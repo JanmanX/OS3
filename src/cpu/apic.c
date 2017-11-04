@@ -1,5 +1,5 @@
 #include "apic.h"
-#include <kernel/acpi.h>
+#include <acpi/acpica.h>
 #include <libc.h>
 #include <cpu/pic.h>
 #include <stdint.h>
@@ -8,7 +8,7 @@
 #include <kernel/interrupt.h>
 
 /* Multiple APIC Descriptor Table */
-madt_t *madt = NULL;
+struct acpi_table_madt* madt = NULL;
 
 /* LAPIC */
 /* LAPIC address (Can be same for multiple processors ) */
@@ -204,13 +204,13 @@ void ioapic_init(void)
 void apic_init(void)
 {
 	/* Get the MADT */
-	if((madt = acpi_get_table(ACPI_SIGNATURE_MADT)) == NULL) {
+	if((madt = acpica_get_table(ACPI_SIG_MADT)) == NULL) {
 		ERROR("Could not retrieve the MADT.");
 		return;
 	}
 
 	/* Retrieve the LAPIC Address */
-	lapic_addr = (uint64_t*)(uint64_t)madt->lapic_addr;
+	lapic_addr = (uint64_t*)(uint64_t)madt->Address;
 	LOGF("LAPIC_ADDR: 0x%x\n", lapic_addr);
 
 	/* Loop over each entry */
@@ -218,18 +218,19 @@ void apic_init(void)
 	 * IOAPIC has been setup */
 	/* Cast to lapic_entry, because start is always the same, and we can
 	 * retrieve the entry length */
-	struct madt_entry_lapic* madt_entry = NULL;
-	for(madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt + sizeof(madt_t));
-	    madt_entry < (madt_entry_lapic_t*)((uintptr_t)madt + madt->header.length);
-	    madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt_entry + madt_entry->length)) {
-		switch(madt_entry->type) {
-		case MADT_ENTRY_TYPE_LAPIC:
-			LOGF("lapic apid_id: 0x%x\n", madt_entry->apid_id);
+	ACPI_SUBTABLE_HEADER* madt_entry = NULL;
+	for(madt_entry = (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt + sizeof(ACPI_TABLE_MADT));
+	    madt_entry < (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt + madt->Header.Length);
+	    madt_entry = (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt_entry + madt_entry->Length)) {
+		switch(madt_entry->Type) {
+		case ACPI_MADT_TYPE_LOCAL_APIC:
+			LOGF("lapic apid_id: 0x%x\n", ((ACPI_MADT_LOCAL_APIC*)
+			     madt_entry)->Id);
 			break;
 
-		case MADT_ENTRY_TYPE_IOAPIC:
-			ioapic_addr = (uint32_t*)(uint64_t)(
-							    (madt_entry_ioapic_t*)madt_entry)->io_apic_addr;
+		case ACPI_MADT_TYPE_IO_APIC:
+			ioapic_addr = (uint32_t*)(uint64_t)((ACPI_MADT_IO_APIC*)
+						madt_entry)->Address;
 
 			LOGF("ioapic_addr = 0x%x\n", ioapic_addr);
 			break;
@@ -256,21 +257,21 @@ void apic_init(void)
 	 * IOAPIC has been setup */
 	/* Cast to lapic_entry, because start is always the same, and we can
 	 * retrieve the entry length */
-	for(madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt + sizeof(madt_t));
-	    madt_entry < (madt_entry_lapic_t*)((uintptr_t)madt + madt->header.length);
-	    madt_entry = (madt_entry_lapic_t* )((uintptr_t)madt_entry + madt_entry->length)) {
-		switch(madt_entry->type) {
-		case MADT_ENTRY_TYPE_ISO: {
-			struct madt_entry_iso* madt_iso =
+	for(madt_entry = (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt + sizeof(ACPI_TABLE_MADT));
+	    madt_entry < (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt + madt->Header.Length);
+	    madt_entry = (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt_entry + madt_entry->Length)) {
+		switch(madt_entry->Type) {
+		case ACPI_MADT_TYPE_INTERRUPT_OVERRIDE: {
+			ACPI_MADT_INTERRUPT_OVERRIDE* madt_iso =
 				(struct madt_entry*)madt_entry;
 			kprintf("iso found: irq source : 0x%x\ttarget vector: 0x%x\n",
-				madt_iso->irq_source,
-				madt_iso->target_vector);
+				madt_iso->SourceIrq,
+				madt_iso->GlobalIrq);
 
 			/* TODO: What to do here? */
 			break;
 		}
-		case MADT_ENTRY_TYPE_NMI:
+		case ACPI_MADT_TYPE_NMI_SOURCE:
 			LOG("madt nmi found");
 			break;
 		}
@@ -281,19 +282,19 @@ uint8_t ioapic_get_iso(uint8_t irq)
 {
 	ASSERT(madt != NULL, "MADT not setup!");
 
-	struct madt_entry_lapic* madt_entry = NULL;
-	for(madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt + sizeof(madt_t));
-	    madt_entry < (madt_entry_lapic_t*)((uintptr_t)madt + madt->header.length);
-	    madt_entry = (madt_entry_lapic_t*)((uintptr_t)madt_entry + madt_entry->length)) {
-		switch(madt_entry->type) {
-		case MADT_ENTRY_TYPE_ISO: {
-			struct madt_entry_iso* madt_iso =
-				(struct madt_entry*)madt_entry;
+	ACPI_SUBTABLE_HEADER* madt_entry = NULL;
+	for(madt_entry = (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt + sizeof(ACPI_TABLE_MADT));
+	    madt_entry < (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt + madt->Header.Length);
+	    madt_entry = (ACPI_SUBTABLE_HEADER*)((uintptr_t)madt_entry + madt_entry->Length)) {
+		switch(madt_entry->Type) {
+		case ACPI_MADT_TYPE_INTERRUPT_OVERRIDE: {
+			ACPI_MADT_INTERRUPT_OVERRIDE* madt_iso =
+				(ACPI_MADT_INTERRUPT_OVERRIDE*)madt_entry;
 
-			if(madt_iso->irq_source == irq) {
+			if(madt_iso->SourceIrq == irq) {
 				LOGF("irq: 0x%x -> vector 0x%x\n", irq,
-				     madt_iso->target_vector);
-				return madt_iso->target_vector;
+				     madt_iso->GlobalIrq);
+				return madt_iso->GlobalIrq;
 			}
 		}
 		}
