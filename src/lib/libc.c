@@ -43,7 +43,7 @@ void itoa(char *buf, int base, int64_t n)
 	}
 }
 
-void *memcpy(void *dst, void *src, uint64_t count)
+void *memcpy(void *dst, const void *src, size_t count)
 {
 	char* _dst = (char*)dst;
 	char* _src = (char*)src;
@@ -54,8 +54,12 @@ void *memcpy(void *dst, void *src, uint64_t count)
 	return dst;
 }
 
-uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n)
+int memcmp(void *_s1, void *_s2, size_t n)
 {
+	uint8_t* s1 = (uint8_t*)_s1;
+	uint8_t* s2 = (uint8_t*)_s2;
+
+
 	/* While bytes to compare */
 	while(n--) {
 		/* Compare and store result in diff */
@@ -70,12 +74,150 @@ uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n)
 	return 0;
 }
 
-void memset(uint8_t *s, uint8_t c, uint64_t n)
+void*  memset(void *_s, int c, size_t n)
 {
+	uint8_t* s = _s;
 	while(n--) {
 		*s++ = c;
 	}
+
+	return _s;
 }
+
+/* String functions */
+uint64_t strlen(const char *s)
+{
+	size_t len = 0x00;
+	while(*s != (char)0x00) {
+		s++;
+		len++;
+	}
+
+	return len;
+}
+
+char* strcat(char* dst, const char *src)
+{
+	char *str = dst;
+
+	/* Get to end of string */
+	while(*str)
+	{
+		str++;
+	}
+
+	/* Concat */
+	while(*str++ = *src++)
+	{ ; }
+
+
+	/* Return */
+	return dst;
+}
+
+int strcmp(const char *s1, const char *s2)
+{
+	while(*s1 == *s2) {
+		if(*s1 == (char)0) {
+			return 0;
+		}
+
+		s1++;
+		s2++;
+	}
+	return (unsigned char)*s1 - (unsigned char)*s2;
+
+}
+
+int strncmp(const char *s1, const char *s2, size_t n)
+{
+	while(*s1 == *s2 && n--) {
+		if(*s1 == (char)0) {
+			return 0;
+		}
+
+		s1++;
+		s2++;
+	}
+
+	return (unsigned char)*s1 - (unsigned char)*s2;
+}
+
+char *strcpy(char *dst, const char *src)
+{
+	char *str = dst;
+
+	while(*src) {
+		*str++ = *src++;
+	}
+
+	*str = (char)0x00;
+
+	return dst;
+}
+
+char *strncpy(char *dst, const char *src, size_t n)
+{
+	char *str = dst;
+
+	while(*src && n--) {
+		*str++ = *src++;
+	}
+
+	if(n) {
+		*str = (char)0x00;
+	}
+	return dst;
+}
+
+int isupper(int c)
+{
+	return (c >= (int)'A' && c <= (int)'Z');
+}
+
+int toupper(int c)
+{
+	return islower(c) ? c-0x20 : c;
+}
+
+int islower(int c)
+{
+	return (c >= (int)'a' && c <= (int)'z');
+}
+
+int tolower(int c)
+{
+	return isupper(c)? c+0x20 : c;
+}
+
+int isprint(int c) {
+	return c >= 0x20 && c <= 0x7E;
+}
+
+int isxdigit(int c)
+{
+	return (isdigit(c) || (c >= 0x61 && c <= 0x66));
+}
+
+int isdigit(int c)
+{
+	return c >= 0x30 && c <= 0x39;
+}
+
+int isspace(int c)
+{
+	return (c == (int)' '
+		|| c == (int)'\f'
+		|| c == (int)'\n'
+		|| c == (int)'\r'
+		|| c == (int)'\t'
+		|| c == (int)'\v' );
+}
+
+
+
+
+
 
 uint8_t checksum_zero(uint8_t *b, uint64_t count)
 {
@@ -140,9 +282,9 @@ inline void outd(uint16_t port, uint32_t val)
  * From osdev.org */
 void io_wait(void)
 {
-    /* Port 0x80 is used for 'checkpoints' during POST. */
-    /* The Linux kernel seems to think it is free for use :-/ */
-    asm volatile ( "outb %%al, $0x80" : : "a"(0) );
+	/* Port 0x80 is used for 'checkpoints' during POST. */
+	/* The Linux kernel seems to think it is free for use :-/ */
+	asm volatile ( "outb %%al, $0x80" : : "a"(0) );
 }
 
 void _pause(void)

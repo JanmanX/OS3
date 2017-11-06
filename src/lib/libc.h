@@ -1,5 +1,4 @@
-#ifndef KLIB_H
-#define KLIB_H
+#pragma once
 
 #include <types.h>
 #include <stdint.h>
@@ -10,13 +9,25 @@ void itoa(char *buf, int base, int64_t n);
 extern void kpanic();
 
 
-void *memcpy(void *dst, void *src, uint64_t count);
-uint8_t memcmp(const uint8_t *s1, const uint8_t *s2, uint64_t n);
-void memset(uint8_t *s, uint8_t c, uint64_t n);
+void *memcpy(void *dst, const void *src, size_t count);
+int memcmp(void *s1, void *s2, size_t n);
+void* memset(void *s, int c, size_t n);
 
 /* String functions */
+size_t strlen(const char *s);
+char* strcat(char* dst, const char *src);
+int strcmp(const char *s1, const char *s2);
+int strncmp(const char *s1, const char *s2, size_t n);
+char *strcpy(char *dest, const char *src);
+char *strncpy(char *dest, const char *src, size_t n);
 
-
+int toupper(int c);
+int tolower(int c);
+int isupper(int c);
+int islower(int c);
+int isprint(int c);
+int isxdigit(int c);
+int isdigit(int c);
 
 /* Misc */
 uint8_t checksum_zero(uint8_t *, uint64_t count);
@@ -91,5 +102,3 @@ void io_wait(void);
 	       } while(0);
 
 
-
-#endif /* KLIB_H */
