@@ -1,47 +1,35 @@
-#include <defines.h>
+#include <acpi.h>
 
-/* Order of inclusion is very important */
-#include <platform/acenv.h>     /* Environment-specific items */
-#include <acnames.h>          /* Common ACPI names and strings */
-#include <actypes.h>            /* ACPICA data types and structures */
-#include <acexcep.h>            /* ACPICA exceptions */
-#include <actbl.h>              /* ACPI table definitions */
-#include <acoutput.h>           /* Error output and Debug macros */
-#include <acrestyp.h>           /* Resource Descriptor structs */
-#include <acpiosxf.h>           /* OSL interfaces (ACPICA-to-OS) */
-#include <acpixf.h>             /* ACPI core subsystem external interfaces */
-#include <platform/acenvex.h>   /* Extra environment-specific items */
-#include <accommon.h>
+#include "acpica.h"
 
+#include <kprintf.h>
 #include <libc.h>
 #include <lib/semaphore.h>
 #include <lib/spinlock.h>
 #include <kernel/time.h>
 #include <drivers/pci.h>
 #include <kernel/interrupt.h>
+#include <kernel/time.h>
 
 /* 9.1 Environmental and ACPI Tables */
 /* 9.1.1 */
 ACPI_STATUS AcpiOsInitialize(void)
 {
-	LOG("");
+	LOG("Initializing");
 	return AE_OK;
 }
 
 /* 9.1.2 */
 ACPI_STATUS AcpiOsTerminate(void)
 {
-	LOG("");
+	LOG("Terminating");
 	return AE_OK;
 }
 
 /* 9.1.3 */
 ACPI_PHYSICAL_ADDRESS AcpiOsGetRootPointer(void)
 {
-	ACPI_PHYSICAL_ADDRESS  Ret;
-	Ret = 0;
-	AcpiFindRootPointer(&Ret);
-	return Ret;
+	return acpica_get_rsdp();
 }
 
 /* 9.1.4 */
@@ -206,7 +194,7 @@ ACPI_STATUS AcpiOsCreateSemaphore(UINT32 MaxUnits,
 	/* TODO: Should I implement MaxUnits? */
 	OutHandle = semaphore_create();
 
-	OutHandle->n = InitialUnits;
+	(*OutHandle)->n = InitialUnits;
 
 	return AE_OK;
 }
@@ -225,6 +213,10 @@ ACPI_STATUS AcpiOsWaitSemaphore(ACPI_SEMAPHORE Handle,
 				UINT32 Units,
 				UINT16 Timeout)
 {
+	if(!Handle) {
+		return AE_BAD_PARAMETER;
+	}
+
 	/* XXX: Linux does not use Units, so neither will we ...*/
 	semaphore_wait(&Handle);
 	return AE_OK;
@@ -440,7 +432,24 @@ ACPI_STATUS AcpiOsWritePciConfiguration(ACPI_PCI_ID* PciId,
 }
 
 /* 9.9 Formatted Output */
-// Not implemented
+void AcpiOsPrintf(const char *format, ...) {
+	va_list args;
+	va_start(args, format);
+
+	LOG(format);
+	/* TODO */
+	kprintf(format, args);
+
+	va_end(args);
+}
+
+void AcpiOsVprintf(const char *format, va_list args ) {
+
+}
+
+void AcpiOsRedirectOutput(void *destination) {
+
+}
 
 
 /* 9.10 System ACPI Table Access */
@@ -464,3 +473,26 @@ ACPI_STATUS AcpiOsGetTableByName(char *signature ,
 }
 
 
+/* 9.11 Miscellaneous */
+UINT64 AcpiOsGetTimer (void)
+{
+	/* XXX:HACK
+	 * TODO: Implement time */
+	static uint64_t time = 0x00;
+	return time++;
+}
+
+ACPI_STATUS  AcpiOsSignal (UINT32 Function,
+			   void *Info)
+{
+	DEBUGF("AcpiOsSignal: 0x%x\n", Function);
+	return AE_OK;
+}
+
+
+
+/* ??? Undocumented ??? */
+ACPI_STATUS AcpiOsEnterSleep(uint8_t state , uint32_t a , uint32_t b )
+{
+	return AE_OK;
+}

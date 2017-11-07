@@ -27,15 +27,11 @@ int main(uint64_t mb_info_struct_addr)
 	/* Initialize memory systems */
 	mem_init();
 
-	LOG("HALTING BEFORE ACPI");
-	HALT;
-	/* ACPI Init */
-//	acpi_init();
+	/* ACPI Early init for tables */
+	acpica_early_init();
 
 	/* Initialize GDT */
 	gdt_init();
-
-	clear_screen();
 
 	/* Initialize Interrupts */
 	interrupt_init();
@@ -47,6 +43,9 @@ int main(uint64_t mb_info_struct_addr)
 	time_init();
 
 	pci_list();
+
+	/* ACPI Init */
+	acpica_init();
 
 
 

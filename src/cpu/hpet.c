@@ -9,6 +9,12 @@ ACPI_TABLE_HPET* hpet = NULL;
 uint64_t* hpet_base = NULL;
 uint16_t hpet_min_tick = 0x00;
 uint64_t ms_elapsed = 0x00;
+uint8_t hpet_initialized = 0x00;
+
+uint8_t hpet_is_initialized(void)
+{
+	return hpet_initialized;
+}
 
 uint64_t hpet_get_ms_elapsed(void)
 {
@@ -28,6 +34,8 @@ void hpet_enable(void)
 	}
 
 	GET_UINT64(hpet_base, HPET_REGISTER_CONFIG) = config;
+
+	hpet_initialized = 1;
 }
 
 void hpet_disable(void)
@@ -42,6 +50,7 @@ void hpet_disable(void)
 uint8_t hpet_timer_handler(pt_regs_t* regs)
 {
 	ms_elapsed++;
+	LOG("Tick");
 	lapic_eoi();
 }
 
@@ -185,9 +194,7 @@ void hpet_init(void)
 	}
 
 	/* Read HPET INFO */
-//	hpet_base = ACPICA_ADDRESS_UINT32(hpet->Address);
-	hpet_base = (uint64_t*)((uint64_t)hpet->base_address2 << 32
-				| (uint64_t)hpet->base_address1);
+	hpet_base = (uint64_t*)hpet->Address.Address;
 
 	/* Reset Main counter */
 	hpet_disable(); /* Enable at end of this function */
@@ -197,7 +204,7 @@ void hpet_init(void)
 	uint32_t general_interrupt = 0x00; /* Reset buttom 32 bits */
 	GET_UINT32(hpet_base, HPET_REGISTER_INTERRUPT_STATUS) = general_interrupt;
 	/* Minimum tick */
-	hpet_min_tick = hpet->minimum_tick;
+	hpet_min_tick = hpet->MinimumTick;
 
 	/* Counter size */
 	uint8_t counter_size = ((GET_UINT32(hpet_base, HPET_REGISTER_ID) >> 0x0D)

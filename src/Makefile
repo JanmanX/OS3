@@ -1,7 +1,9 @@
 # Compiler
 CC              = x86_64-elf-gcc
 DEFINES		= -D ACOS
-CFLAGS          = -std=gnu11 -ffreestanding -O0 -Wall -Wextra -m64 -g \
+CFLAGS          = -std=gnu11 -O0 -Wall -Wextra -m64 -g \
+			-ffreestanding\
+			-fno-exceptions\
 			-mno-red-zone -nostdinc -H\
 			$(DEFINES)
 
@@ -12,7 +14,9 @@ ASFLAGS         = -f elf64
 # Linker
 LD              = ld
 LDSCRIPT        = ./linker.ld
-LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000
+LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000\
+			-nostdlib
+
 
 
 MODULES         := init include lib drivers mem cpu kernel fs test acpi
