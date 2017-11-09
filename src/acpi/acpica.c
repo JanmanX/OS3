@@ -72,14 +72,14 @@ void acpica_init(void)
 
 	if (ACPI_FAILURE (status))
 	{
-		ERROR("Could not initialize ACPICA");
+		ERRORF("Could not initialize ACPICA. Status: 0x%x\n", status);
 	}
 	/* Initialize the ACPICA Table Manager and get all ACPI tables */
 	status = AcpiInitializeTables (NULL, 16, FALSE);
 
 	if (ACPI_FAILURE (status))
 	{
-		ERROR("Could not initialize ACPICA");
+		ERRORF("Could not initialize ACPICA. Status: 0x%x\n", status);
 	}
 
 	/* Create the ACPI namespace from ACPI tables */
@@ -87,7 +87,7 @@ void acpica_init(void)
 
 	if (ACPI_FAILURE (status))
 	{
-		ERROR("Could not initialize ACPICA");
+		ERRORF("Could not initialize ACPICA. Status: 0x%x\n", status);
 	}
 	/* Note: Local handlers should be installed here */
 	/* Initialize the ACPI hardware */
@@ -95,13 +95,13 @@ void acpica_init(void)
 
 	if (ACPI_FAILURE (status))
 	{
-		ERROR("Could not initialize ACPICA");
+		ERRORF("Could not initialize ACPICA. Status: 0x%x\n", status);
 	}
 	/* Complete the ACPI namespace object initialization */
 	status = AcpiInitializeObjects (ACPI_FULL_INITIALIZATION);
 	if (ACPI_FAILURE (status))
 	{
-		ERROR("Could not initialize ACPICA");
+		ERRORF("Could not initialize ACPICA. Status: 0x%x\n", status);
 	}
 }
 

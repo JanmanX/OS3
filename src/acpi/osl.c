@@ -191,15 +191,17 @@ ACPI_STATUS AcpiOsCreateSemaphore(UINT32 MaxUnits,
 				  UINT32 InitialUnits,
 				  ACPI_SEMAPHORE *OutHandle)
 {
-	/* TODO: Should I implement MaxUnits? */
-	OutHandle = semaphore_create();
+	return AE_OK;
+	semaphore_t* s = semaphore_create();
+	ASSERT(s != NULL, "Could not create semaphore!");
+	s->n = InitialUnits;
 
-	(*OutHandle)->n = InitialUnits;
+	*OutHandle = s;
 
 	return AE_OK;
 }
 
-/* 9.4.6*/
+/* 9.4.6 */
 ACPI_STATUS AcpiOsDeleteSemaphore(ACPI_SEMAPHORE Handle)
 {
 	/* TODO: Should I implement MaxUnits? */
@@ -213,7 +215,9 @@ ACPI_STATUS AcpiOsWaitSemaphore(ACPI_SEMAPHORE Handle,
 				UINT32 Units,
 				UINT16 Timeout)
 {
+	return AE_OK;
 	if(!Handle) {
+		/* XXX */
 		return AE_BAD_PARAMETER;
 	}
 
@@ -226,6 +230,7 @@ ACPI_STATUS AcpiOsWaitSemaphore(ACPI_SEMAPHORE Handle,
 ACPI_STATUS AcpiOsSignalSemaphore(ACPI_SEMAPHORE Handle,
 				  UINT32 Units)
 {
+	return AE_OK;
 	semaphore_signal(&Handle);
 	return AE_OK;
 }
@@ -234,7 +239,10 @@ ACPI_STATUS AcpiOsSignalSemaphore(ACPI_SEMAPHORE Handle,
 /* 9.4.9 */
 ACPI_STATUS AcpiOsCreateLock(ACPI_SPINLOCK *OutHandle)
 {
+
 	spinlock_t *sl = malloc(sizeof(spinlock_t));
+
+	LOGF("Creating spinlock@0x%x\n", sl);
 	ASSERT(sl != NULL, "Could not allocate spinlock");
 	*sl = 0;
 	*OutHandle = sl;
@@ -252,7 +260,8 @@ void AcpiOsDeleteLock(ACPI_SPINLOCK Handle)
 /* 9.4.11 */
 ACPI_CPU_FLAGS AcpiOsAcquireLock(ACPI_SPINLOCK Handle)
 {
-	spinlock_acquire(Handle);
+	LOGF("Acquiring lock@0x%x\n", &Handle);
+	spinlock_acquire(&Handle);
 
 	return AE_OK;
 }
@@ -262,6 +271,7 @@ ACPI_CPU_FLAGS AcpiOsAcquireLock(ACPI_SPINLOCK Handle)
 void AcpiOsReleaseLock(ACPI_SPINLOCK Handle,
 			ACPI_CPU_FLAGS Flags)
 {
+	kprintf("Releasing spinlock ");
 	spinlock_release(Handle);
 }
 
@@ -281,13 +291,16 @@ ACPI_STATUS AcpiOsInstallInterruptHandler(UINT32 InterruptLevel,
 					  void *Context)
 {
 	if(interrupt_is_vector_free(InterruptLevel) == 0) {
-		ERROR("Could not register interrupt for ACPICA");
-		HALT;
+		ERRORF("Could not register interrupt for ACPICA:\
+		       InterruptLevel: 0x%x\n", InterruptLevel);
+		while(1)
+			HALT;
 	}
 
 	acpica_interrupt_context = Context;
 	acpi_osd_handler = Handler;
 
+	LOGF("Trying to install interrupt handler: 0x%x\n", InterruptLevel);
 	interrupt_install(InterruptLevel, acpica_interrupt_handler );
 
 	return AE_OK;
@@ -341,7 +354,7 @@ ACPI_STATUS AcpiOsWriteMemory(ACPI_PHYSICAL_ADDRESS Address,
 			      UINT64 Value,
 			      UINT32 Width)
 {
-		/* We have identity mapping, so reading should be trivial */
+	/* We have identity mapping, so reading should be trivial */
 	switch(Width) {
 	case 8:
 		GET_UINT8(Address, 0) = Value;
@@ -392,8 +405,8 @@ ACPI_STATUS AcpiOsReadPort(ACPI_IO_ADDRESS Address,
 
 /* 9.7.2 */
 ACPI_STATUS AcpiOsWritePort(ACPI_IO_ADDRESS Address,
-			   UINT32 Value,
-			   UINT32 Width)
+			    UINT32 Value,
+			    UINT32 Width)
 {
 	switch(Width) {
 	case 8:
@@ -424,9 +437,9 @@ ACPI_STATUS AcpiOsReadPciConfiguration(ACPI_PCI_ID* PciId,
 	ERROR("Not implemented");
 }
 ACPI_STATUS AcpiOsWritePciConfiguration(ACPI_PCI_ID* PciId,
-				       UINT32 Register,
-				       UINT64 Value,
-				       UINT32 Width)
+					UINT32 Register,
+					UINT64 Value,
+					UINT32 Width)
 {
 	ERROR("Not implemented");
 }
@@ -436,15 +449,14 @@ void AcpiOsPrintf(const char *format, ...) {
 	va_list args;
 	va_start(args, format);
 
-	LOG(format);
-	/* TODO */
 	kprintf(format, args);
 
 	va_end(args);
 }
 
-void AcpiOsVprintf(const char *format, va_list args ) {
-
+void AcpiOsVprintf(const char *format, va_list args )
+{
+	kprintf(format, args);
 }
 
 void AcpiOsRedirectOutput(void *destination) {
