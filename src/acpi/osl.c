@@ -239,7 +239,7 @@ ACPI_STATUS AcpiOsSignalSemaphore(ACPI_SEMAPHORE Handle,
 /* 9.4.9 */
 ACPI_STATUS AcpiOsCreateLock(ACPI_SPINLOCK *OutHandle)
 {
-
+	return AE_OK;
 	spinlock_t *sl = malloc(sizeof(spinlock_t));
 
 	LOGF("Creating spinlock@0x%x\n", sl);
@@ -253,6 +253,7 @@ ACPI_STATUS AcpiOsCreateLock(ACPI_SPINLOCK *OutHandle)
 /* 9.4.10 */
 void AcpiOsDeleteLock(ACPI_SPINLOCK Handle)
 {
+	return AE_OK;
 	free(Handle);
 }
 
@@ -260,6 +261,7 @@ void AcpiOsDeleteLock(ACPI_SPINLOCK Handle)
 /* 9.4.11 */
 ACPI_CPU_FLAGS AcpiOsAcquireLock(ACPI_SPINLOCK Handle)
 {
+	return AE_OK;
 	LOGF("Acquiring lock@0x%x\n", &Handle);
 	spinlock_acquire(&Handle);
 
@@ -271,6 +273,7 @@ ACPI_CPU_FLAGS AcpiOsAcquireLock(ACPI_SPINLOCK Handle)
 void AcpiOsReleaseLock(ACPI_SPINLOCK Handle,
 			ACPI_CPU_FLAGS Flags)
 {
+	return AE_OK;
 	kprintf("Releasing spinlock ");
 	spinlock_release(Handle);
 }

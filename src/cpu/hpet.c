@@ -50,7 +50,6 @@ void hpet_disable(void)
 uint8_t hpet_timer_handler(pt_regs_t* regs)
 {
 	ms_elapsed++;
-	LOG("Tick");
 	lapic_eoi();
 }
 

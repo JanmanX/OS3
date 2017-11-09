@@ -66,11 +66,21 @@ void kprintf(const char *fmt, ...)
 		c = *fmt++;
 		char *s;
 
+		int pad0 = 0, pad = 0;
+		if (c == '0') {
+			pad0 = 1;
+			c = *fmt++;
+		}
+		if (c >= '0' && c <= '9')  {
+			pad = c - '0';
+			c = *fmt++;
+		}
 
 		switch(c) {
 		case 'd':
 		case 'u':
 		case 'x':
+		case 'X':
 			itoa(buf, c, va_arg(args, uint64_t));
 
 			s = buf;
@@ -90,7 +100,7 @@ void kprintf(const char *fmt, ...)
 			}
 			/* Fall through */
 			/* goto string; */
-		string:
+string:
 			kprint(s);
 			break;
 		default:

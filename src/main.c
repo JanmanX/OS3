@@ -44,6 +44,7 @@ int main(uint64_t mb_info_struct_addr)
 
 	pci_list();
 
+
 	/* ACPI Init */
 	acpica_init();
 
