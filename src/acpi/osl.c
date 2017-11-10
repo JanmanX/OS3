@@ -285,6 +285,7 @@ void* acpica_interrupt_context = NULL;
 ACPI_OSD_HANDLER acpi_osd_handler;
 void acpica_interrupt_handler(pt_regs_t* regs)
 {
+	LOG("ACPICA Interrupt handler");
 	acpi_osd_handler(acpica_interrupt_context);
 }
 

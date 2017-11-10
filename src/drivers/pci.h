@@ -47,6 +47,7 @@ uint32_t pci_read(const uint8_t bus,
 
 void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass);
 
+void pci_init(void);
 void pci_bar_write(uint32_t bar, uint32_t val);
 uint32_t pci_bar_read(uint32_t bar);
 

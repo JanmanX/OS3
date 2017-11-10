@@ -1,6 +1,8 @@
 #include "pci.h"
 #include <libc.h>
 #include <stdint.h>
+#include <acpi.h>
+
 
 uint32_t pci_read(uint8_t bus,
 			 uint8_t dev,
@@ -65,6 +67,13 @@ void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass)
 
 	LOG("PCI Device not found");
 }
+
+void pci_init(void)
+{
+	ACPI_PCI_ROUTING_TABLE pci_routing_table;
+
+}
+
 
 void pci_bar_write(uint32_t bar, uint32_t val)
 {

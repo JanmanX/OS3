@@ -116,7 +116,6 @@ ACPI_TABLE_HEADER* acpica_get_table(uint8_t* signature)
 	}
 
 	return h;
-
 }
 
 

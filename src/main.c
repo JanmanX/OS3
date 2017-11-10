@@ -42,13 +42,10 @@ int main(uint64_t mb_info_struct_addr)
 	/* Time subsystem */
 	time_init();
 
-	pci_list();
-
-
 	/* ACPI Init */
 	acpica_init();
 
-
+	pci_list();
 
 	/* Done initializing */
 	LOG("Done initializing.\n");
