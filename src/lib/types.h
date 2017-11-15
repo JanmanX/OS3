@@ -2,8 +2,8 @@
 
 /* Types */
 #define NULL	((void *)0UL)
-#define TRUE	(0x01)
-#define FALSE	(0x00)
+#define TRUE	(1==1)
+#define FALSE	(1==0)
 
 
 

@@ -14,3 +14,6 @@ typedef uint64_t uintptr_t;
 typedef int64_t intptr_t;
 
 typedef unsigned long long int size_t;
+
+typedef uint8_t bool;
+
