@@ -7,6 +7,11 @@ CFLAGS          = -std=gnu11 -O0 -Wall -Wextra -m64 -g \
 			-mno-red-zone -nostdinc -H\
 			$(DEFINES)
 
+# Rust compiler
+RUSTC		= rustc
+RUSTFLAGS	=
+
+
 # Assembler
 AS              = nasm
 ASFLAGS         = -f elf64
@@ -42,6 +47,10 @@ OBJS    := $(patsubst %.asm,%.o,$(filter %.asm,$(SRC))) \
 
 %.o: %.c
 	$(CC) $(INC) $(CFLAGS) -c $< -o $@
+
+%.o: %.rs
+	$(RUSTC) $(RUSTFLAGS) -o $@ $<
+
 
 all: $(OBJS)
 	echo $(OBJS)
