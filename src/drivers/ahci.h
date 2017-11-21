@@ -8,10 +8,10 @@ typedef struct ahci_generic_registers {
 	uint32_t is;
 	uint32_t pi;
 	uint32_t vs;
-	uint32_t ccc_ctl;
-	uint32_t ccc_ports;
 
 	/* Version 1.1 */
+	uint32_t ccc_ctl;
+	uint32_t ccc_ports;
 	uint32_t em_loc;
 	uint32_t em_ctrl;
 

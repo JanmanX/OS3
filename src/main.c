@@ -11,10 +11,10 @@
 #include <drivers/ps2mouse.h>
 #include <drivers/ps2keyboard.h>
 #include <drivers/pci.h>
-#include <drivers/sata.h>
 #include <drivers/rtc.h>
 #include <test/test.h>
 #include <cpu/hpet.h>
+#include <drivers/ahci.h>
 
 int main(uint64_t mb_info_struct_addr)
 {
@@ -45,7 +45,9 @@ int main(uint64_t mb_info_struct_addr)
 	/* ACPI Init */
 	acpica_init();
 
-	pci_list();
+	/* Sata init */
+	ahci_init();
+
 
 	/* Done initializing */
 	LOG("Done initializing.\n");
