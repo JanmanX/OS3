@@ -167,8 +167,10 @@ uint8_t pci_find_capability(const uint8_t bus,
 			return offset;
 		}
 
-		/* Get the pointer to next field */
-		offset = (uint8_t)pci_read(bus, dev, func, offset + 0x1, 0x1);
+		/* Get the pointer to next field
+		 * Bottom 2 bits are reserved, and to be masked */
+		offset = (uint8_t)pci_read(bus, dev, func, offset + 0x1, 0x1)
+			& ~(0x03);
 	}
 
 	/* Not found */
