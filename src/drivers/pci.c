@@ -147,3 +147,33 @@ void pci_list(void)
 		}
 	}
 }
+
+uint8_t pci_find_capability(const uint8_t bus,
+			    const uint8_t dev,
+			    const uint8_t func,
+			    const uint8_t id)
+{
+	/* Check that capabilities exist */
+	if(pci_read(bus, dev, func, PCI_REGISTER_STATUS) & (1 << 4) == 0x00) {
+		LOG("Capabilities not supported!");
+		return 0x00;
+	}
+
+	/* Iterate */
+	uint8_t offset = PCI_REGISTER_CAPABILITIES;
+	while(offset != 0x00) {
+		/* Check the ID field */
+		if(pci_read(bus, dev, func, offset, 0x1) == id) {
+			return offset;
+		}
+
+		/* Get the pointer to next field */
+		offset = (uint8_t)pci_read(bus, dev, func, offset + 0x1, 0x1);
+	}
+
+	/* Not found */
+	return 0x00;
+}
+
+
+

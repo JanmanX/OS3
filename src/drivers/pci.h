@@ -12,7 +12,7 @@
 #define PCI_REGISTER_STATUS             0x06
 #define PCI_REGISTER_SUBCLASS           0x0A
 #define PCI_REGISTER_CLASS              0x0B
-#define PIC_REGISTER_HEADER_TYPE	0x0E
+#define PCI_REGISTER_HEADER_TYPE	0x0E
 #define PCI_REGISTER_BAR0               0x10
 #define PCI_REGISTER_BAR1               0x14
 #define PCI_REGISTER_BAR2               0x18
@@ -20,6 +20,7 @@
 #define PCI_REGISTER_BAR4               0x20
 #define PCI_REGISTER_BAR5               0x24
 /* ... more here ... */
+#define PCI_REGISTER_CAPABILITIES	0x34
 #define PCI_REGISTER_INTERRUPT_LINE     0x3C
 #define PCI_REGISTER_INTERRUPT_PIN      0x3D
 
@@ -37,6 +38,10 @@
 #define PCI_PROTOCOL_AHCI		(0x01)
 
 
+/* Structures */
+
+
+
 typedef void (*pci_func_t)(uint8_t bus, uint8_t dev, uint8_t func);
 
 uint32_t pci_read(const uint8_t bus,
@@ -52,3 +57,10 @@ void pci_bar_write(uint32_t bar, uint32_t val);
 uint32_t pci_bar_read(uint32_t bar);
 
 void pci_init_devices(void);
+
+/* Iterates over the PCI capabilities list, and returns the offset to the
+ * desired capability.
+ * 0 if not found. */
+uint8_t pci_find_capability(uint8_t bus, uint8_t dev, uint8_t func, uint8_t id);
+
+
