@@ -37,18 +37,35 @@
 /* Protocols */
 #define PCI_PROTOCOL_AHCI		(0x01)
 
+/* Capability IDs */
+#define PCI_CAP_ID_MSI_X		(0x11)
+#define PCI_CAP_ID_MSI			(0x05)
 
 /* Structures */
+typedef struct msi_x_table_entry {
+	uint32_t addr_low;
+	uint32_t addr_high;
+	uint32_t data;
+	uint32_t vector_control;
+} __attribute__((packed)) msi_x_table_entry_t;
 
-
-
+/* Callback type */
 typedef void (*pci_func_t)(uint8_t bus, uint8_t dev, uint8_t func);
 
+/* Read from PCI */
 uint32_t pci_read(const uint8_t bus,
 		  const uint8_t dev,
 		  const uint8_t func,
 		  const uint8_t reg,
 		  const uint8_t len);
+
+/* Write to PCI */
+void pci_write(const uint8_t bus,
+	       const uint8_t dev,
+	       const uint8_t func,
+	       const uint8_t reg,
+	       const uint32_t data,
+	       const uint8_t len);
 
 void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass);
 
@@ -62,5 +79,12 @@ void pci_init_devices(void);
  * desired capability.
  * 0 if not found. */
 uint8_t pci_find_capability(uint8_t bus, uint8_t dev, uint8_t func, uint8_t id);
+
+/* Installs an interrupt for a device */
+uint8_t pci_install_interrupt(uint8_t bus,
+			      uint8_t dev,
+			      uint8_t func,
+			    interrupt_handler_t handler);
+
 
 

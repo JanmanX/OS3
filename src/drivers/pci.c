@@ -2,7 +2,7 @@
 #include <libc.h>
 #include <stdint.h>
 #include <acpi.h>
-
+#include <lib/errno.h>
 
 uint32_t pci_read(uint8_t bus,
 			 uint8_t dev,
@@ -29,6 +29,27 @@ uint32_t pci_read(uint8_t bus,
 
 	return ret;
 }
+
+void pci_write(const uint8_t bus,
+	       const uint8_t dev,
+	       const uint8_t func,
+	       const uint8_t reg,
+	       const uint32_t data,
+	       const uint8_t len)
+{
+	uint32_t payload = (bus << 16)
+		| (dev << 11)
+		| (func << 8)
+		| (reg & 0xFC)
+		| ((uint32_t)0x80000000);
+
+	/* Write to the address */
+	outd(PCI_ADDRESS_PORT, payload);
+
+	/* Write the data */
+	outd(PCI_DATA_PORT, data);
+}
+
 
 
 void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass)
@@ -70,7 +91,6 @@ void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass)
 
 void pci_init(void)
 {
-	ACPI_PCI_ROUTING_TABLE pci_routing_table;
 
 }
 
@@ -177,5 +197,25 @@ uint8_t pci_find_capability(const uint8_t bus,
 	return 0x00;
 }
 
+uint8_t pci_install_interrupt(uint8_t bus,
+			      uint8_t dev,
+			      uint8_t func,
+			    interrupt_handler_t handler)
+{
+	uint8_t offset;
+	if((offset = pci_find_capability(bus, dev, func, PCI_CAP_ID_MSI_X)
+	    == 0x00) {
+		return ENOENT;
+	}
+
+	/* Read the message control */
+	uint16_t message_control = pci_read(bus, dev, func, reg + 0x02, 0x02);
+
+	/* Disable MSI Enable bit in the MSI Message Control register
+	 * (section 6.8.1.3) */
+
+	/* */
+
+}
 
 
