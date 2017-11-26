@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Requires: make gcc gcc-c++ bison
+
 # Print all output
 set -x
 mkdir $HOME/src
@@ -9,7 +11,7 @@ export PREFIX="$HOME/opt/cross"
 export TARGET=x86_64-elf
 export PATH="$PREFIX/bin:$PATH"
 
-export GCC=gcc-6.3.0
+export GCC=gcc-7.2.0
 export BINUTILS=binutils-2.29
 
 #### BINUTILS
@@ -61,8 +63,8 @@ rm build-gcc -rf
 mkdir build-gcc
 cd build-gcc
 ../${GCC}/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers
-make all-gcc -j$(NJOBS)
-make all-target-libgcc -j$(NJOBS)
+make all-gcc -j $NJOBS
+make all-target-libgcc -j $NJOBS
 make install-gcc
 make install-target-libgcc
 
