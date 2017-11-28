@@ -438,14 +438,62 @@ ACPI_STATUS AcpiOsReadPciConfiguration(ACPI_PCI_ID* PciId,
 				       UINT64 *Value,
 				       UINT32 Width)
 {
-	ERROR("Not implemented");
+	if(Width < 64) {
+	*Value = pci_read(PciId->Bus,
+			  PciId->Device,
+			  PciId->Function,
+			  Register,
+			  Width);
+	} else {
+		/* Split into 2 reads */
+		uint32_t* dest = Value;
+		dest[0] = pci_read(PciId->Bus,
+				  PciId->Device,
+				  PciId->Function,
+				  Register,
+				32);
+
+		dest[1] = pci_read(PciId->Bus,
+				  PciId->Device,
+				  PciId->Function,
+				  Register + 4,
+				32);
+	}
+
+	return AE_OK;
+
 }
 ACPI_STATUS AcpiOsWritePciConfiguration(ACPI_PCI_ID* PciId,
 					UINT32 Register,
 					UINT64 Value,
 					UINT32 Width)
 {
-	ERROR("Not implemented");
+	if(Width < 64) {
+	pci_write(PciId->Bus,
+			  PciId->Device,
+			  PciId->Function,
+			  Register,
+			  (uint32_t)Value,
+			  Width);
+	} else {
+		/* Split into 2 reads */
+		pci_write(PciId->Bus,
+				  PciId->Device,
+				  PciId->Function,
+				  Register,
+				  (uint32_t)Value,
+				32);
+
+		pci_write(PciId->Bus,
+				  PciId->Device,
+				  PciId->Function,
+				  Register + 4,
+				  (uint32_t)(Value >> 32),
+				32);
+	}
+
+	return AE_OK;
+
 }
 
 /* 9.9 Formatted Output */
