@@ -3,6 +3,7 @@
 #include <libc.h>
 #include <drivers/pci.h>
 #include <kernel/time.h>
+#include <errno.h>
 
 ahci_register_set_t* ahci = NULL;
 
@@ -52,10 +53,17 @@ uint32_t ahci_get_command_slots_count(ahci_register_set_t * controller)
 }
 
 
+uint8_t ahci_interrupt_handler(pt_regs_t* regs)
+{
+	LOG("AHCI Interrupt!");
+	lapic_eoi();
+}
+
 void ahci_found(uint8_t bus, uint8_t dev, uint8_t func)
 {
 	LOG("SATA found!");
 
+	// Get the AHCI MMIO
 	ahci = pci_read(bus, dev, func, PCI_REGISTER_BAR5, 4);
 	ASSERT(ahci != NULL, "AHCI == NULL");
 
@@ -68,11 +76,20 @@ void ahci_found(uint8_t bus, uint8_t dev, uint8_t func)
 	/* Enable the controller */
 	ahci_enable_controller(ahci);
 
+	/* test */
+		
+
+	if(pci_install_interrupt(bus, dev, func, ahci_interrupt_handler) != EOK) {
+		ERROR("Interrupt not installed for AHCI");
+	} else {
+		LOG("Interrupt installed for AHCI");
+	}
 }
 
 
 
 void ahci_init(void)
 {
+	LOG("AHCI Init");
 	pci_find(ahci_found, PCI_CLASS_ATA, PCI_SUBCLASS_SATA);
 }

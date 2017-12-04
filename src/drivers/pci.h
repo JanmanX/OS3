@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <kernel/interrupt.h>
 
 
 #define PCI_ADDRESS_PORT		(0xCF8)
@@ -38,7 +39,7 @@
 #define PCI_PROTOCOL_AHCI		(0x01)
 
 /* Capability IDs */
-#define PCI_CAP_ID_MSI_X		(0x11)
+#define PCI_CAP_ID_MSIX			(0x11)
 #define PCI_CAP_ID_MSI			(0x05)
 
 /* Structures */

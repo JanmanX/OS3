@@ -57,4 +57,9 @@ typedef struct ahci_register_set {
 } __attribute__((packed)) ahci_register_set_t;
 
 
+/* Implementation specific */
+typedef struct sata_controller {
+	ahci_register_set_t* ahci;
+};
+
 void sata_init(void);
