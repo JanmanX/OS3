@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <list.h>
 
 
 typedef struct ahci_generic_registers {
@@ -44,6 +45,19 @@ typedef struct ahci_port_register_set {
 	uint8_t vendor_specific[16];
 } __attribute__((packed)) ahci_port_register_set_t;
 
+typedef struct ahci_command_header {
+	uint32_t flags;
+	uint32_t prdbc;
+	uint64_t ctbau; // both ctba and ctbau
+	uint8_t reserved[16];
+} __attribute__((packed)) ahci_cmd_hdr_t;
+
+typedef struct ahci_prd_entry {
+	uint64_t dbau; // both dba and dbau
+	uint32_t reserved;
+	uint4_t flags;
+} __attribute__((packed)) ahci_prd_entry_t;
+
 typedef struct ahci_register_set {
 	ahci_generic_registers_t generic;
 
@@ -60,6 +74,6 @@ typedef struct ahci_register_set {
 /* Implementation specific */
 typedef struct sata_controller {
 	ahci_register_set_t* ahci;
-};
+}__attribute__((packed)) sata_controller_t;
 
 void sata_init(void);
