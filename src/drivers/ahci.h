@@ -2,6 +2,14 @@
 #include <stdint.h>
 #include <list.h>
 
+/* Defines */
+#define AHCI_PORT_SIG_NONE 			(0x00)
+#define AHCI_PORT_SIG_SATA 			(0x0101)
+#define AHCI_PORT_SIG_SATAPI		(0xEB140101)
+#define AHCI_PORT_SIG_ENCLOSURE		(0xC33C0101)
+#define AHCI_PORT_SIG_MULTIPLIER	(0x96690101)
+#define AHCI_PORT_SIG_DEFAULT 		(0xFFFFFFFF)
+
 
 typedef struct ahci_generic_registers {
 	uint32_t cap;
@@ -55,7 +63,7 @@ typedef struct ahci_command_header {
 typedef struct ahci_prd_entry {
 	uint64_t dbau; // both dba and dbau
 	uint32_t reserved;
-	uint4_t flags;
+	uint32_t flags;
 } __attribute__((packed)) ahci_prd_entry_t;
 
 typedef struct ahci_register_set {
