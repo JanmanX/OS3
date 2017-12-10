@@ -3,8 +3,8 @@
 #include <list.h>
 
 /* Defines */
-#define AHCI_PORT_SIG_NONE 			(0x00)
-#define AHCI_PORT_SIG_SATA 			(0x0101)
+#define AHCI_PORT_SIG_NONE 			(0x00000000)
+#define AHCI_PORT_SIG_SATA 			(0x00000101)
 #define AHCI_PORT_SIG_SATAPI		(0xEB140101)
 #define AHCI_PORT_SIG_ENCLOSURE		(0xC33C0101)
 #define AHCI_PORT_SIG_MULTIPLIER	(0x96690101)
@@ -29,7 +29,7 @@ typedef struct ahci_generic_registers {
 	uint32_t bohc;
 } __attribute__((packed)) ahci_generic_registers_t;
 
-typedef struct ahci_port_register_set {
+typedef volatile struct ahci_port_register_set {
 	uint64_t clbu;
 	uint64_t fbu;
 
@@ -53,7 +53,7 @@ typedef struct ahci_port_register_set {
 	uint8_t vendor_specific[16];
 } __attribute__((packed)) ahci_port_register_set_t;
 
-typedef struct ahci_command_header {
+typedef volatile struct ahci_command_header {
 	uint32_t flags;
 	uint32_t prdbc;
 	uint64_t ctbau; // both ctba and ctbau
@@ -66,7 +66,7 @@ typedef struct ahci_prd_entry {
 	uint32_t flags;
 } __attribute__((packed)) ahci_prd_entry_t;
 
-typedef struct ahci_register_set {
+typedef volatile struct ahci_register_set {
 	ahci_generic_registers_t generic;
 
 	uint8_t reserved[52];
@@ -78,6 +78,53 @@ typedef struct ahci_register_set {
 	ahci_port_register_set_t port_register[];
 } __attribute__((packed)) ahci_register_set_t;
 
+typedef volatile struct ahci_h2d_register_fis {
+	uint8_t type;
+	uint8_t flags;
+	uint8_t command;
+	uint8_t features;
+
+	uint8_t lba_0;
+	uint8_t lba_1;
+	uint8_t lba_2;
+	uint8_t lba_6;
+	uint8_t lba_3;
+	uint8_t lba_4;
+	uint8_t lba_5;
+
+	uint8_t features_exp;
+	uint8_t sector_low;
+	uint8_t secotr_high;
+
+	uint8_t reserved;
+	uint8_t control;
+
+	uint32_t reserved;
+}__attribute__((packed)) ahci_h2d_register_fis_t;
+
+typedef volatile struct ahci_receive_fis
+{
+	// 0x00
+	FIS_DMA_SETUP	dsfis;		// DMA Setup FIS
+	uint8_t         pad0[4];
+ 
+	// 0x20
+	FIS_PIO_SETUP	psfis;		// PIO Setup FIS
+	uint8_t         pad1[12];
+ 
+	// 0x40
+	FIS_REG_D2H	rfis;		// Register – Device to Host FIS
+	uint8_t         pad2[4];
+ 
+	// 0x58
+	FIS_DEV_BITS	sdbfis;		// Set Device Bit FIS
+ 
+	// 0x60
+	uint8_t         ufis[64];
+ 
+	// 0xA0
+	uint8_t   	rsv[0x100-0xA0];
+} __attribute__((packed)) ahci_receive_fis_t;
 
 /* Implementation specific */
 typedef struct sata_controller {
