@@ -11,7 +11,7 @@
 ahci_register_set_t* ahci = NULL;
 ahci_cmd_hdr_t cmd_hdrs[32] __attribute__((aligned(4096)));
 ahci_cmd_tbl_t cmd_tbl_t[32] __attribute__((alligned(4096)));
-ahci_h2d_register_fis_t* fis __attribute__((alligned(4096)));
+ahci_fis_register_h2d_t* fis __attribute__((alligned(4096)));
 
 
 void ahci_enable_controller(ahci_register_set_t* controller)
@@ -114,7 +114,6 @@ void ahci_enable_command_engine(ahci_register_set_t* controller, uint32_t port)
 
 
 
-
 void ahci_read(ahci_register_set_t* controller,
 				uint32_t port,
 				uint64_t lba,
@@ -125,7 +124,7 @@ void ahci_read(ahci_register_set_t* controller,
 	ahci_cmd_tbl_t tbl = {0};
 
 	hdr->cfl = sizeof(ahci_h2d_register_fis_t) / sizeof(uint32_t); // command FIS size in DWORDs
-	hdr->w = 0; // read 
+	hdr->w = 0; // read
 	hdr->prdtl = 1; // 1 PRDT
 	hdr->ctbau = (uint64_t)&tbl;
 
@@ -134,7 +133,7 @@ void ahci_read(ahci_register_set_t* controller,
 	HBA_CMD_TBL *cmdtbl = (HBA_CMD_TBL*)(cmdheader->ctba);
 	memset(cmdtbl, 0, sizeof(HBA_CMD_TBL) +
  		(cmdheader->prdtl-1)*sizeof(HBA_PRDT_ENTRY));
- 
+
 	// 8K bytes (16 sectors) per PRDT
 	for (int i=0; i<cmdheader->prdtl-1; i++)
 	{
@@ -148,26 +147,26 @@ void ahci_read(ahci_register_set_t* controller,
 	cmdtbl->prdt_entry[i].dba = (uint32_t) buf;
 	cmdtbl->prdt_entry[i].dbc = (count<<9)-1;	// 512 bytes per sector
 	cmdtbl->prdt_entry[i].i = 1;
- 
+
 	// Setup command
 	FIS_REG_H2D *cmdfis = (FIS_REG_H2D*)(&cmdtbl->cfis);
- 
+
 	cmdfis->fis_type = FIS_TYPE_REG_H2D;
 	cmdfis->c = 1;	// Command
 	cmdfis->command = ATA_CMD_READ_DMA_EX;
- 
+
 	cmdfis->lba0 = (uint8_t)startl;
 	cmdfis->lba1 = (uint8_t)(startl>>8);
 	cmdfis->lba2 = (uint8_t)(startl>>16);
 	cmdfis->device = 1<<6;	// LBA mode
- 
+
 	cmdfis->lba3 = (uint8_t)(startl>>24);
 	cmdfis->lba4 = (uint8_t)starth;
 	cmdfis->lba5 = (uint8_t)(starth>>8);
- 
+
 	cmdfis->countl = count & 0xFF;
 	cmdfis->counth = (count >> 8) & 0xFF;
- 
+
 	// The below loop waits until the port is no longer busy before issuing a new command
 	while ((port->tfd & (ATA_DEV_BUSY | ATA_DEV_DRQ)) && spin < 1000000)
 	{
@@ -178,15 +177,15 @@ void ahci_read(ahci_register_set_t* controller,
 		trace_ahci("Port is hung\n");
 		return FALSE;
 	}
- 
+
 	port->ci = 1<<slot;	// Issue command
- 
+
 	// Wait for completion
 	while (1)
 	{
-		// In some longer duration reads, it may be helpful to spin on the DPS bit 
+		// In some longer duration reads, it may be helpful to spin on the DPS bit
 		// in the PxIS port field as well (1 << 5)
-		if ((port->ci & (1<<slot)) == 0) 
+		if ((port->ci & (1<<slot)) == 0)
 			break;
 		if (port->is & HBA_PxIS_TFES)	// Task file error
 		{
@@ -194,62 +193,17 @@ void ahci_read(ahci_register_set_t* controller,
 			return FALSE;
 		}
 	}
- 
+
 	// Check again
 	if (port->is & HBA_PxIS_TFES)
 	{
 		trace_ahci("Read disk error\n");
 		return FALSE;
 	}
- 
-	return true;	
+
+	return 1;
 }
 
-
-/*
-void ahci_read(ahci_register_set_t* controller,
-	       uint32_t drive,
-	       uint64_t lba,
-	       uint8_t* buffer)
-{
-	ahci_cmd_hdr_t* hdr = malloc(sizeof(ahci_cmd_hdr_t));
-	ahci_cmd_tbl_t* tbl = malloc(sizeof(ahci_cmd_tbl_t));
-
-	// Setup header
-	hdr->flags = (5 << 0)
-				| (1 << 16);
-	hdr->prdbc = 1;
-	hdr->ctbau =(uint64_t)tbl;
-
-	// Setup table
-	ahci_h2d_register_fis_t* fis = (ahci_h2d_register_fis_t*)tbl->fis;
-	memset(fis, 0, sizeof(ahci_register_set_t));
-	fis->type = AHCI_FIS_TYPE_H2D_REGISTER;
-	fis->flags = 0xC;
-	fis->command = 0x25;
-	fis->sector_low = 1;
-	fis->control = 0x08;
-
-	// Setup PRD
-	tbl->prds[0].dbau = (uint64_t)buffer;
-	tbl->prds[0].flags = 0x1;
-
-	// Go go go
-	while(controller->port_register[drive].tfd & (1 << 7) // busy
-	      || controller->port_register[drive].tfd & (1 << 3)) { // DRQ
-
-		sleep(1);
-	}
-
-	// issue the command
-	controller->port_register[drive].ci = 1;
-
-	// Wait for drive to complete request
-	while(controller->port_register[drive].ci & 1) {
-		sleep(1);
-	}
-}
-*/
 
 void ahci_port_init(ahci_register_set_t* controller, uint32_t drive)
 {
@@ -264,7 +218,7 @@ void ahci_port_init(ahci_register_set_t* controller, uint32_t drive)
 		return;
 	}
 
-	// Disable the command engine 
+	// Disable the command engine
 	ahci_disable_command_engine(controller, drive);
 
 	// Now, set the addresses of Command Header list and Receive FIS
@@ -279,7 +233,7 @@ void ahci_port_init(ahci_register_set_t* controller, uint32_t drive)
 	controller->port_register[drive].ie = 0xFFFFFFFF;
 
 	uint8_t buffer[513] = {0};
-	ahci_read(controller, drive, 0, 1, buffer);
+	//ahci_read(controller, drive, 0, 1, buffer);
 
 	kprintf("read data: %s\n", buffer);
 }
@@ -294,7 +248,6 @@ void ahci_ports_init(ahci_register_set_t* controller)
 	for(i = 0x00; i < 32; i++) {
 		if(ports_implemented & (1 << i)) {
 			LOGF("Port 0x%x implemented!\n", i);
-
 			ahci_port_init(controller, i);
 			return;
 		}
@@ -336,7 +289,6 @@ void ahci_found(uint8_t bus, uint8_t dev, uint8_t func)
 		LOG("Interrupt installed for AHCI");
 	}
 }
-
 
 
 void ahci_init(void)

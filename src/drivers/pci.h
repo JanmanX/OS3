@@ -68,6 +68,8 @@ void pci_write(const uint8_t bus,
 	       const uint32_t data,
 	       const uint8_t len);
 
+/* Iterates the PCI bus and calls callback function when type found.
+ * Returns on first hit */
 void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass);
 
 void pci_init(void);

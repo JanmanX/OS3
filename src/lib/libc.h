@@ -81,7 +81,7 @@ void io_wait(void);
 		HALT;\
 		} while(0);
 #define ASSERT(a, m) if(!a) {\
-			kprintf("%s", m);\
+			kprintf("[ASSERT]: %s", m);\
 			while(1) {HALT;}\
 		}
 #define ASSERTF(a, m, ...) if(!a) {\

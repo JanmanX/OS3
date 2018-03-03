@@ -37,6 +37,7 @@ void lapic_init(void)
 	/* Set the ID */
 	uint32_t lapic_id = GET_UINT32(lapic_addr, LAPIC_REGISTER_ID);
 	lapic_id &= 0xFFFFFF;		/* Preserve reserved bits 0:23 */
+
 	lapic_id |= (lapic_num << 24);	/* Set top 24-31 bits to ID */
 	GET_UINT32(lapic_addr, LAPIC_REGISTER_ID) = lapic_id; /* Write the ID */
 	lapic_num++; /* Increment number of LAPICs */

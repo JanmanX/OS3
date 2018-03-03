@@ -15,6 +15,8 @@
 #include <test/test.h>
 #include <cpu/hpet.h>
 #include <drivers/ahci.h>
+#include <acpi.h>
+
 
 int main(uint64_t mb_info_struct_addr)
 {
@@ -37,7 +39,7 @@ int main(uint64_t mb_info_struct_addr)
 	interrupt_init();
 
 	/* Keyboard :) */
-	ps2keyboard_init();
+	// ps2keyboard_init();
 
 	/* Time subsystem */
 	time_init();
@@ -45,9 +47,19 @@ int main(uint64_t mb_info_struct_addr)
 	/* ACPI Init */
 	acpica_init();
 
+	clear_screen();
+
+	/* PCI */
+	pci_init();
+
+	/* PCIe */
+//	pcie_init();
+
 	/* Sata init */
 	ahci_init();
 
+	/* playground */
+//	ps2keyboard_init();
 
 	/* Done initializing */
 	LOG("Done initializing.\n");

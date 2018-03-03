@@ -9,8 +9,6 @@
 #define AHCI_PORT_SIG_ENCLOSURE		(0xC33C0101)
 #define AHCI_PORT_SIG_MULTIPLIER	(0x96690101)
 #define AHCI_PORT_SIG_DEFAULT 		(0xFFFFFFFF)
-
-
 typedef struct ahci_generic_registers {
 	uint32_t cap;
 	uint32_t ghc;
@@ -53,33 +51,44 @@ typedef volatile struct ahci_port_register_set {
 	uint8_t vendor_specific[16];
 } __attribute__((packed)) ahci_port_register_set_t;
 
-typedef volatile struct ahci_command_header {
+typedef volatile struct ahci_register_set {
+	ahci_generic_registers_t generic;
+
+	uint8_t reserved[52];
+	uint8_t reserved_nvmhci[64];
+
+	uint8_t vendor_specific[96];
+
+	/* AHCI Port registers*/
+	ahci_port_register_set_t port_register[];
+}__attribute__((packed)) ahci_register_set_t;
+
+
+typedef volatile struct ahci_command_header
 {
 	// DW0
 	uint8_t  cfl:5;		// Command FIS length in DWORDS, 2 ~ 16
 	uint8_t  a:1;		// ATAPI
 	uint8_t  w:1;		// Write, 1: H2D, 0: D2H
 	uint8_t  p:1;		// Prefetchable
- 
+
 	uint8_t  r:1;		// Reset
 	uint8_t  b:1;		// BIST
 	uint8_t  c:1;		// Clear busy upon R_OK
 	uint8_t  rsv0:1;		// Reserved
 	uint8_t  pmp:4;		// Port multiplier port
- 
+
 	uint16_t prdtl;		// Physical region descriptor table length in entries
- 
+
 	// DW1
 	volatile uint32_t prdbc;		// Physical region descriptor byte count transferred
- 
+
 	// DW2, 3
 	uint64_t ctbau;
- 
+
 	// DW4 - 7
 	uint32_t rsv1[4];	// Reserved
-
 } __attribute__((packed)) ahci_cmd_hdr_t;
-
 
 typedef volatile struct ahci_prd_entry {
 	uint64_t dbau; // both dba and dbau
@@ -95,24 +104,23 @@ typedef volatile struct ahci_command_table {
 	uint8_t reserved[0x30]; // reserved, 48 bytes
 
 #define AHCI_CMD_TBL_NUM_PRDS	(0x20)
-	ahci_prd_entry_t prdt_entry[AHCI_CMD_TBL_NUM_PRDS];	
-
+	ahci_prd_entry_t prdt_entry[AHCI_CMD_TBL_NUM_PRDS];
 } __attribute__((packed)) ahci_cmd_tbl_t;
 
-typedef volatile struct ahci_register_set {
-	ahci_generic_registers_t generic;
 
-	uint8_t reserved[52];
-	uint8_t reserved_nvmhci[64];
+/* FIS Types */
+typedef enum {
+	FIS_TYPE_REG_H2D	= 0x27,	// Register FIS - host to device
+	FIS_TYPE_REG_D2H	= 0x34,	// Register FIS - device to host
+	FIS_TYPE_DMA_ACT	= 0x39,	// DMA activate FIS - device to host
+	FIS_TYPE_DMA_SETUP	= 0x41,	// DMA setup FIS - bidirectional
+	FIS_TYPE_DATA		= 0x46,	// Data FIS - bidirectional
+	FIS_TYPE_BIST		= 0x58,	// BIST activate FIS - bidirectional
+	FIS_TYPE_PIO_SETUP	= 0x5F,	// PIO setup FIS - device to host
+	FIS_TYPE_DEV_BITS	= 0xA1,	// Set device bits FIS - device to host
+} FIS_TYPE;
 
-	uint8_t vendor_specific[96];
-
-	/* AHCI Port registers*/
-	ahci_port_register_set_t port_register[];
-} __attribute__((packed)) ahci_register_set_t;
-
-typedef volatile struct ahci_h2d_register_fis {
-#define AHCI_FIS_TYPE_H2D_REGISTER		(0x27)
+typedef volatile struct ahci_fis_register_h2d {
 	uint8_t type;
 	uint8_t flags;
 	uint8_t command;
@@ -134,8 +142,7 @@ typedef volatile struct ahci_h2d_register_fis {
 	uint8_t control;
 
 	uint32_t reserved1;
-}__attribute__((packed)) ahci_h2d_register_fis_t;
-
+}__attribute__((packed)) ahci_fis_register_h2d_t;
 
 /* Implementation specific */
 typedef struct sata_controller {
