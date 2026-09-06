@@ -1,4 +1,5 @@
 #include "ps2keyboard.h"
+#include <errno.h>
 #include <stdint.h>
 #include <libc.h>
 #include <cpu/apic.h>
@@ -31,7 +32,7 @@ uint8_t ps2keyboard_interrupt_handler(pt_regs_t *regs)
 	if(code == 0xE0 || code == 0xE1) {
 		DEBUG("Extended scan code set!");
 		lapic_eoi();
-		return;
+		return EOK;
 	}
 
 	if(code & SCAN_RELEASE) {

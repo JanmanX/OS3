@@ -1,10 +1,10 @@
 # Compiler
-CC              = x86_64-elf-gcc
+CC              = gcc
 DEFINES		= -D ACOS
 CFLAGS          = -std=gnu11 -O0 -Wall -Wextra -m64 -g \
 			-ffreestanding\
-			-fno-exceptions\
-			-mno-red-zone -nostdinc -H\
+			-fno-pie -fno-stack-protector\
+			-mno-red-zone -nostdinc\
 			$(DEFINES)
 
 # Rust compiler
@@ -19,12 +19,12 @@ ASFLAGS         = -f elf64
 # Linker
 LD              = ld
 LDSCRIPT        = ./linker.ld
-LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000\
+LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000 -z noexecstack\
 			-nostdlib
 
 
 
-MODULES         := init include lib drivers mem cpu kernel fs test acpi
+MODULES         := init include lib drivers mem cpu kernel test acpi
 INC             = -I./include -I. -I./lib -I./acpi/acpica/source/include
 SRC             := main.c
 

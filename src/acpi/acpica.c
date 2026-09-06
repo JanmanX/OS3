@@ -1,4 +1,6 @@
 #include "acpica.h"
+
+#include <multiboot_parser.h>
 #include <lib/libc.h>
 #include <acpi.h>
 
@@ -60,7 +62,9 @@ void acpica_early_init(void)
 	ACPI_STATUS Status;
 	/* Initialize the ACPICA Table Manager and get all ACPI tables */
 	Status = AcpiInitializeTables (TableArray, ACPI_MAX_INIT_TABLES, TRUE);
-	return (Status);
+	if(ACPI_FAILURE(Status)) {
+		ERRORF("AcpiInitializeTables failed: 0x%x\n", Status);
+	}
 }
 
 void acpica_init(void)

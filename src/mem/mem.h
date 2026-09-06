@@ -20,9 +20,10 @@ typedef struct memory_control_block {
 typedef memory_control_block_t mcb_t;
 
 void mem_init(void);
+void heap_init(uint64_t *start, uint64_t size);
 
-uintptr_t *malloc(uint64_t size);
-void free(uintptr_t* ptr);
+void *malloc(uint64_t size);
+void free(void *ptr);
 
 /* Miscellaneous functions */
 uint8_t* mem_under_mib(uint64_t length);

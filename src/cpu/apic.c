@@ -205,7 +205,7 @@ void ioapic_init(void)
 void apic_init(void)
 {
 	/* Get the MADT */
-	if((madt = acpica_get_table(ACPI_SIG_MADT)) == NULL) {
+	if((madt = (ACPI_TABLE_MADT*)acpica_get_table(ACPI_SIG_MADT)) == NULL) {
 		ERROR("Could not retrieve the MADT.");
 		return;
 	}
@@ -264,7 +264,7 @@ void apic_init(void)
 		switch(madt_entry->Type) {
 		case ACPI_MADT_TYPE_INTERRUPT_OVERRIDE: {
 			ACPI_MADT_INTERRUPT_OVERRIDE* madt_iso =
-				(struct madt_entry*)madt_entry;
+				(ACPI_MADT_INTERRUPT_OVERRIDE*)madt_entry;
 			kprintf("iso found: irq source : 0x%x\ttarget vector: 0x%x\n",
 				madt_iso->SourceIrq,
 				madt_iso->GlobalIrq);

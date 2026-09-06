@@ -27,7 +27,7 @@ void mem_init(void)
 	mb_tag_meminfo = (struct multiboot_tag_basic_meminfo*)
 		multiboot_parser_get_tag(MULTIBOOT_TAG_TYPE_BASIC_MEMINFO);
 
-	mb_tag_mmap = (struct multiboot_mmap_entry*)
+	mb_tag_mmap = (struct multiboot_tag_mmap*)
 		multiboot_parser_get_tag(MULTIBOOT_TAG_TYPE_MMAP);
 
 
@@ -98,7 +98,7 @@ void mem_heap_collapse(void)
 }
 
 
-uintptr_t* malloc(uint64_t size)
+void* malloc(uint64_t size)
 {
 	mcb_t* node = NULL;
 	uint8_t retry = 0x01;
@@ -127,7 +127,7 @@ RETRY:
 
 			node->used = 0x01;
 			node->size = size;
-			return (uintptr_t*)(((uint64_t)node) + sizeof(mcb_t));
+			return (void*)(((uint64_t)node) + sizeof(mcb_t));
 		}
 	}
 
@@ -145,7 +145,7 @@ RETRY:
 
 
 
-void free(uintptr_t *ptr)
+void free(void *ptr)
 {
 	/* Sanity check */
 	if((uint64_t)ptr < (uint64_t)&kernel_end_addr ||

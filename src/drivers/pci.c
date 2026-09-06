@@ -166,7 +166,7 @@ void pci_bar_write(uint32_t bar, uint32_t val)
 	}
 
 	/* BAR is in 4GiB. Mask away 4 lower bits */
-	uint32_t *addr = (uint32_t)bar & ~(0xF);
+	uint32_t *addr = (uint32_t*)((uintptr_t)bar & ~(uintptr_t)0xF);
 	*addr = val;
 }
 

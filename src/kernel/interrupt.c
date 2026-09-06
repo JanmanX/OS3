@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <cpu/apic.h>
 #include <cpu/tss.h>
+#include <kernel/exception.h>
 #include <types.h>
 
 static interrupt_handler_t interrupt_handlers[INTERRUPTS_MAX] = {NULL};
@@ -345,7 +346,7 @@ uint8_t interrupt_get_free_vector(void)
 	return 0xFF;
 }
 
-void interrupt_uninstall(uint8_t irq)
+uint8_t interrupt_uninstall(uint8_t irq)
 {
 	if(irq >= INTERRUPTS_MAX) {
 		ERRORF("Could not uninstall interrupt. IRQ number too high: 0x%x >= 0x%x"

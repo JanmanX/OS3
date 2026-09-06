@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <libc.h>
 #include <drivers/pci.h>
+#include <cpu/apic.h>
 #include <mem/mem.h>
 #include <kernel/time.h>
 #include <errno.h>
@@ -114,6 +115,28 @@ void ahci_enable_command_engine(ahci_register_set_t* controller, uint32_t port)
 
 
 
+/* NOTE: unfinished. Work stopped mid-port of the OSDev wiki example: the
+ * body below still refers to identifiers that never existed in this tree
+ * (cmdheader, buf, startl, starth, spin, slot), treats `port` as a pointer
+ * when it is a port index here, and returns a value from a void function.
+ * It is preserved verbatim under #if 0 so it can be finished later; the one
+ * call site in ahci_port_init() is already commented out. */
+void ahci_read(ahci_register_set_t* controller,
+				uint32_t port,
+				uint64_t lba,
+				uint64_t count,
+				uint8_t buffer)
+{
+	(void)controller;
+	(void)port;
+	(void)lba;
+	(void)count;
+	(void)buffer;
+
+	LOG("ahci_read() is not implemented yet.");
+}
+
+#if 0 /* Unfinished work-in-progress -- see note above. */
 void ahci_read(ahci_register_set_t* controller,
 				uint32_t port,
 				uint64_t lba,
@@ -203,6 +226,7 @@ void ahci_read(ahci_register_set_t* controller,
 
 	return 1;
 }
+#endif
 
 
 void ahci_port_init(ahci_register_set_t* controller, uint32_t drive)
@@ -259,6 +283,8 @@ uint8_t ahci_interrupt_handler(pt_regs_t* regs)
 {
 	LOG("AHCI Interrupt!");
 	lapic_eoi();
+
+	return EOK;
 }
 
 void ahci_found(uint8_t bus, uint8_t dev, uint8_t func)
@@ -266,7 +292,8 @@ void ahci_found(uint8_t bus, uint8_t dev, uint8_t func)
 	LOG("SATA found!");
 
 	// Get the AHCI MMIO
-	ahci = pci_read(bus, dev, func, PCI_REGISTER_BAR5, 4);
+	ahci = (ahci_register_set_t*)(uint64_t)
+		pci_read(bus, dev, func, PCI_REGISTER_BAR5, 4);
 	ASSERT(ahci != NULL, "AHCI == NULL");
 
 	/* Gain ownership */

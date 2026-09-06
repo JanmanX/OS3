@@ -183,7 +183,7 @@ uint8_t hpet_legacy_replacement_route_capable(void)
 
 void hpet_init(void)
 {
-	hpet = acpica_get_table(ACPI_SIG_HPET);
+	hpet = (ACPI_TABLE_HPET*)acpica_get_table(ACPI_SIG_HPET);
 	ASSERT(hpet != NULL, "Could not find HPET");
 
 	/* If lower byte is non-zero, HPET is not memory mapped */

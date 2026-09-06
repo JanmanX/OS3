@@ -30,8 +30,8 @@
 #define GiB                (1024UL*1024UL*1024UL)
 
 
-uint64_t pml4t[PML4T_SIZE] __attribute__((aligned(4096))); ;
-uint64_t pdpt[PDPT_SIZE] __attribute__((aligned(4096))); ;
+extern uint64_t pml4t[PML4T_SIZE];
+extern uint64_t pdpt[PDPT_SIZE];
 
 void paging_init();
 

@@ -1,5 +1,6 @@
 #include <tree.h>
 #include <libc.h>
+#include <mem/mem.h>
 #include <stdint.h>
 #include <types.h>
 #include <list.h>

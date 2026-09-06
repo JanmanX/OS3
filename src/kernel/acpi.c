@@ -141,7 +141,7 @@ void* acpi_get_table(uint8_t *signature)
 		   == 0) {
 
 			/* Checksum */
-			if(checksum_zero(table_ptr, table_ptr->length) == 0) {
+			if(checksum_zero((uint8_t*)table_ptr, table_ptr->length) == 0) {
 				return table_ptr;
 			} else {
 				LOG("Checksum did not match!");

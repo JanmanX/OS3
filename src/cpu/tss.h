@@ -24,3 +24,4 @@ typedef struct tss {
 } __attribute__((packed)) tss_t;
 
 void tss_init(void);
+void tss_install(uint8_t num);

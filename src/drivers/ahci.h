@@ -150,6 +150,8 @@ typedef struct sata_controller {
 }__attribute__((packed)) sata_controller_t;
 
 void sata_init(void);
+void ahci_init(void);
+
 void ahci_read(ahci_register_set_t* controller,
 				uint32_t port,
 				uint64_t lba,

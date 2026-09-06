@@ -6,7 +6,8 @@
 #include <cpu/gdt.h>
 #include <cpu/idt.h>
 #include <kernel/interrupt.h>
-#include <kernel/acpi.h>
+#include <kernel/time.h>
+#include <acpi/acpica.h>
 #include <spinlock.h>
 #include <drivers/ps2mouse.h>
 #include <drivers/ps2keyboard.h>

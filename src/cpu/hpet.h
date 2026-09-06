@@ -20,6 +20,7 @@
 
 
 void hpet_init(void);
+uint8_t hpet_is_initialized(void);
 
 void hpet_enable(void);
 void hpet_disable(void);

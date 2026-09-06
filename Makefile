@@ -5,7 +5,7 @@ QEMU_FLAGS=-m 6G -s -vga std\
 		-cpu host -enable-kvm\
 		-drive id=disk,file=hdd.bin,if=none,format=raw\
 		-device ahci,id=ahci\
-		-device ide-drive,drive=disk,bus=ahci.0\
+		-device ide-hd,drive=disk,bus=ahci.0\
 		-machine q35
 
 

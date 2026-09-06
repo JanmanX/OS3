@@ -146,7 +146,7 @@ uint8_t pcie_init(void)
     LOG("PCIe INIT");
 
     // Retrieve the ACPI MCFG table
-    if((mcfg = acpica_get_table(ACPI_SIG_MCFG)) == NULL) {
+    if((mcfg = (ACPI_TABLE_MCFG*)acpica_get_table(ACPI_SIG_MCFG)) == NULL) {
         ERROR("Could not find ACPI MCFG Table for PCIe!");
         return ENOENT;
     }

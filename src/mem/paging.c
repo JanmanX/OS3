@@ -3,6 +3,10 @@
 #include <libc.h>
 
 
+uint64_t pml4t[PML4T_SIZE] __attribute__((aligned(4096)));
+uint64_t pdpt[PDPT_SIZE] __attribute__((aligned(4096)));
+
+
 static void paging_reload_pml4t(uint64_t pml4t_start_phys)
 {
 	asm volatile("mov %0, %%rax;\

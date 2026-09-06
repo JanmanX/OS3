@@ -4,11 +4,14 @@
 
 #include <kprintf.h>
 #include <libc.h>
+#include <mem/mem.h>
+#include <errno.h>
 #include <lib/semaphore.h>
 #include <lib/spinlock.h>
 #include <kernel/time.h>
 #include <drivers/pci.h>
 #include <kernel/interrupt.h>
+#include <cpu/apic.h>
 #include <kernel/time.h>
 
 /* 9.1 Environmental and ACPI Tables */
@@ -29,7 +32,7 @@ ACPI_STATUS AcpiOsTerminate(void)
 /* 9.1.3 */
 ACPI_PHYSICAL_ADDRESS AcpiOsGetRootPointer(void)
 {
-	return acpica_get_rsdp();
+	return (ACPI_PHYSICAL_ADDRESS)acpica_get_rsdp();
 }
 
 /* 9.1.4 */
@@ -56,7 +59,7 @@ ACPI_STATUS AcpiOsPhysicalTableOverride(
 			ACPI_PHYSICAL_ADDRESS *NewAddress,
 			UINT32 *NewTableLength)
 {
-	*NewAddress = NULL;
+	*NewAddress = 0;
 	return AE_OK;
 }
 
@@ -81,7 +84,7 @@ void *AcpiOsMapMemory(ACPI_PHYSICAL_ADDRESS Phys,
 		      ACPI_SIZE	Len)
 {
 	/* We are identity mapped */
-	return Phys;
+	return (void*)Phys;
 }
 
 /* 9.2.7 */
@@ -97,7 +100,7 @@ ACPI_STATUS AcpiOsGetPhysicalAddress(
 				void *LogicalAddress,
 				ACPI_PHYSICAL_ADDRESS *PhysicalAddress)
 {
-	*PhysicalAddress = LogicalAddress;
+	*PhysicalAddress = (ACPI_PHYSICAL_ADDRESS)LogicalAddress;
 	return AE_OK;
 }
 
@@ -222,7 +225,7 @@ ACPI_STATUS AcpiOsWaitSemaphore(ACPI_SEMAPHORE Handle,
 	}
 
 	/* XXX: Linux does not use Units, so neither will we ...*/
-	semaphore_wait(&Handle);
+	semaphore_wait(Handle);
 	return AE_OK;
 }
 
@@ -231,7 +234,7 @@ ACPI_STATUS AcpiOsSignalSemaphore(ACPI_SEMAPHORE Handle,
 				  UINT32 Units)
 {
 	return AE_OK;
-	semaphore_signal(&Handle);
+	semaphore_signal(Handle);
 	return AE_OK;
 }
 
@@ -253,7 +256,7 @@ ACPI_STATUS AcpiOsCreateLock(ACPI_SPINLOCK *OutHandle)
 /* 9.4.10 */
 void AcpiOsDeleteLock(ACPI_SPINLOCK Handle)
 {
-	return AE_OK;
+	return;
 	free(Handle);
 }
 
@@ -263,7 +266,7 @@ ACPI_CPU_FLAGS AcpiOsAcquireLock(ACPI_SPINLOCK Handle)
 {
 	return AE_OK;
 	LOGF("Acquiring lock@0x%x\n", &Handle);
-	spinlock_acquire(&Handle);
+	spinlock_acquire(Handle);
 
 	return AE_OK;
 }
@@ -273,7 +276,7 @@ ACPI_CPU_FLAGS AcpiOsAcquireLock(ACPI_SPINLOCK Handle)
 void AcpiOsReleaseLock(ACPI_SPINLOCK Handle,
 			ACPI_CPU_FLAGS Flags)
 {
-	return AE_OK;
+	return;
 	kprintf("Releasing spinlock ");
 	spinlock_release(Handle);
 }
@@ -283,10 +286,12 @@ void AcpiOsReleaseLock(ACPI_SPINLOCK Handle,
 /* 9.5.1 */
 void* acpica_interrupt_context = NULL;
 ACPI_OSD_HANDLER acpi_osd_handler;
-void acpica_interrupt_handler(pt_regs_t* regs)
+uint8_t acpica_interrupt_handler(pt_regs_t* regs)
 {
 	LOG("ACPICA Interrupt handler");
 	acpi_osd_handler(acpica_interrupt_context);
+
+	return EOK;
 }
 
 
@@ -294,18 +299,27 @@ ACPI_STATUS AcpiOsInstallInterruptHandler(UINT32 InterruptLevel,
 					  ACPI_OSD_HANDLER Handler,
 					  void *Context)
 {
-	if(interrupt_is_vector_free(InterruptLevel) == 0) {
-		ERRORF("Could not register interrupt for ACPICA:\
-		       InterruptLevel: 0x%x\n", InterruptLevel);
-		while(1)
-			HALT;
+	/* InterruptLevel is an ACPI GSI (the SCI IRQ), NOT a CPU vector -- GSI 9
+	 * would collide with exception vector 9. Apply the interrupt source
+	 * override and route it through the IOAPIC to a free vector, the same
+	 * way hpet_timer_setup() does. */
+	uint8_t irq = ioapic_get_iso((uint8_t)InterruptLevel);
+	uint8_t vector = interrupt_get_free_vector();
+
+	if(vector == 0xFF) {
+		ERRORF("No free vector for ACPICA SCI (GSI 0x%x)\n",
+		       InterruptLevel);
+		return AE_NO_MEMORY;
 	}
 
 	acpica_interrupt_context = Context;
 	acpi_osd_handler = Handler;
 
-	LOGF("Trying to install interrupt handler: 0x%x\n", InterruptLevel);
-	interrupt_install(InterruptLevel, acpica_interrupt_handler );
+	LOGF("Installing ACPICA SCI: GSI 0x%x -> irq 0x%x -> vector 0x%x\n",
+	     InterruptLevel, irq, vector);
+
+	interrupt_install(vector, acpica_interrupt_handler);
+	ioapic_set_irq(irq, LAPIC_BSP, vector);
 
 	return AE_OK;
 }
@@ -316,6 +330,8 @@ ACPI_STATUS AcpiOsRemoveInterruptHandler(UINT32 InterruptNumber,
 					 ACPI_OSD_HANDLER Handler)
 {
 	interrupt_uninstall(InterruptNumber);
+
+	return AE_OK;
 }
 
 
@@ -446,7 +462,7 @@ ACPI_STATUS AcpiOsReadPciConfiguration(ACPI_PCI_ID* PciId,
 			  Width);
 	} else {
 		/* Split into 2 reads */
-		uint32_t* dest = Value;
+		uint32_t* dest = (uint32_t*)Value;
 		dest[0] = pci_read(PciId->Bus,
 				  PciId->Device,
 				  PciId->Function,
