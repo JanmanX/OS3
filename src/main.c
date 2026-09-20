@@ -16,11 +16,16 @@
 #include <test/test.h>
 #include <cpu/hpet.h>
 #include <drivers/ahci.h>
+#include <drivers/serial.h>
 #include <acpi.h>
 
 
 int main(uint64_t mb_info_struct_addr)
 {
+	/* Serial console first, so that everything logged from here on is
+	 * captured even before the framebuffer is up */
+	serial_init();
+
 	/* Initialize Multiboot info struct parser */
 	multiboot_parser_init((uint8_t*)mb_info_struct_addr);
 

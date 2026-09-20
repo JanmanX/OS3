@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <drivers/screen.h>
 #include <drivers/font.h>
+#include <drivers/serial.h>
 #include <libc.h>
 
 
@@ -12,6 +13,10 @@ static uint32_t y = 0;
 
 void write_char(uint8_t c)
 {
+	/* Mirror everything to the serial console, which keeps the whole
+	 * history even after the screen has been wrapped */
+	serial_write_char(c);
+
 	/* Clear screen, if bottom of screen reached*/
 	if(y >= screen_get_height()) {
 		clear_screen();
