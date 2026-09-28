@@ -26,6 +26,23 @@ static uint8_t key_map_upper[] = { 0x00, 0, '!', '@', '#', '$', '%', '^', '&',
 
 uint8_t ps2keyboard_interrupt_handler(pt_regs_t *regs)
 {
+	uint8_t status = inb(PS2_STATUS);
+
+	/* Nothing waiting. Falling through to ps2_read here would spin out its
+	 * whole timeout - tens of thousands of port accesses with interrupts
+	 * off - for an interrupt that has no data behind it. */
+	if((status & PS2_STATUS_OUTPUT_FULL) == 0) {
+		lapic_eoi();
+		return EOK;
+	}
+
+	/* A byte from the aux port belongs to the mouse, not to us. Reading
+	 * it here would swallow a third of one of its packets. */
+	if(status & PS2_STATUS_FROM_AUX) {
+		lapic_eoi();
+		return EOK;
+	}
+
 	uint8_t code = ps2_read(PS2_KB_COMMAND);
 
 	/* Ignore extended */

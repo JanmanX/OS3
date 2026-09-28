@@ -16,11 +16,11 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 OUT="${OS3_TEST_OUT:-/tmp/os3-test}"
 ISO="$ROOT/os.iso"
-DISK="$ROOT/hdd.bin"
+DISK="$ROOT/hdd.bin"		# attached with snapshot=on, see below
 QEMU="${QEMU:-qemu-system-x86_64}"
 MARKER="${OS3_BOOT_MARKER:-Done initializing.}"
-WAIT="${OS3_BOOT_WAIT:-25}"
-SETTLE="${OS3_BOOT_SETTLE:-2}"
+WAIT="${OS3_BOOT_WAIT:-}"
+SETTLE="${OS3_BOOT_SETTLE:-}"
 BUILD=0
 
 usage() {
@@ -67,11 +67,33 @@ SOCK="$OUT/qmp.sock"
 SERIAL="$OUT/serial.log"
 rm -f "$SOCK" "$SERIAL" "$OUT/shot.png" "$OUT/shot.ppm" "$OUT/qemu.log"
 
-# KVM where available, plain TCG otherwise
-ACCEL=(-machine q35)
-if [ -w /dev/kvm ]; then
+# KVM where available, plain TCG otherwise. Set OS3_NO_KVM=1 to force TCG,
+# which is what a CI runner without /dev/kvm will be doing.
+#
+# The TCG CPU has to be "max": QEMU's default qemu64 model has no PDPE1GB, and
+# the kernel checks for 1GiB pages before it has any way to tell you about it -
+# boot.asm's error path writes to the VGA text buffer, which is invisible once
+# GRUB has set a linear framebuffer. The symptom is a black screen and an
+# empty serial log.
+ACCEL=(-machine q35 -cpu max)
+SLOW=1
+
+if [ -w /dev/kvm ] && [ "${OS3_NO_KVM:-0}" != "1" ]; then
 	ACCEL=(-machine q35,accel=kvm -cpu host)
+	SLOW=0
 fi
+
+# Emulation is roughly an order of magnitude slower, so anything not asked
+# for explicitly gets more room
+if [ "$SLOW" -eq 1 ]; then
+	: "${WAIT:=180}"
+	: "${SETTLE:=6}"
+else
+	: "${WAIT:=25}"
+	: "${SETTLE:=2}"
+fi
+
+export OS3_SLOW="$SLOW"
 
 # -no-reboot + -no-shutdown: a triple fault stops the VM instead of
 # rebooting into a loop, so the faulted screen is still capturable.
@@ -79,7 +101,7 @@ fi
 	-m 2G "${ACCEL[@]}" \
 	-vga std -display none \
 	-no-reboot -no-shutdown \
-	-drive id=disk,file="$DISK",if=none,format=raw \
+	-drive id=disk,file="$DISK",if=none,format=raw,snapshot=on \
 	-device ahci,id=ahci \
 	-device ide-hd,drive=disk,bus=ahci.0 \
 	-serial "file:$SERIAL" \
@@ -122,7 +144,7 @@ done
 
 sleep "$SETTLE"
 
-OUT="$OUT" python3 - <<'PY'
+OUT="$OUT" python3 -u - <<'PY'
 import json, os, socket, sys
 
 out = os.environ["OUT"]
