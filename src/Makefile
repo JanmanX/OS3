@@ -28,7 +28,7 @@ LDFLAGS         = --script=$(LDSCRIPT) -Map kernel.map -z max-page-size=0x1000 -
 
 
 
-MODULES         := init include lib drivers mem cpu kernel test acpi gui
+MODULES         := init include lib drivers mem cpu kernel test acpi gui fs
 INC             = -I./include -I. -I./lib -I./acpi/acpica/source/include
 SRC             := main.c
 

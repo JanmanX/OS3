@@ -18,6 +18,8 @@
 #include <drivers/ahci.h>
 #include <drivers/serial.h>
 #include <gui/compositor.h>
+#include <gui/explorer.h>
+#include <fs/fat.h>
 #include <errno.h>
 #include <acpi.h>
 
@@ -66,6 +68,9 @@ int main(uint64_t mb_info_struct_addr)
 	/* Sata init */
 	ahci_init();
 
+	/* File system, on the first disk that has one */
+	fat_init();
+
 	/* Input */
 	ps2keyboard_init();
 	ps2mouse_init();
@@ -76,6 +81,7 @@ int main(uint64_t mb_info_struct_addr)
 	/* Hand the screen over to the compositor. If it cannot start we fall
 	 * back to the plain console rather than leaving a dead machine. */
 	if(compositor_init() == EOK) {
+		explorer_init();
 		compositor_run();
 	}
 

@@ -20,7 +20,7 @@
 #define WINDOW_BODY		GFX_RGB(0x21, 0x27, 0x33)
 #define WINDOW_EDGE		GFX_RGB(0x3C, 0x45, 0x58)
 #define WINDOW_TITLE_TEXT	GFX_RGB(0xF0, 0xF3, 0xF8)
-#define WINDOW_TITLE_HEIGHT	(18)
+#define WINDOW_TITLE_HEIGHT	COMPOSITOR_TITLE_HEIGHT
 
 /* The pointer readout lives at the right-hand end of the panel */
 #define READOUT_WIDTH		(280)
@@ -138,6 +138,10 @@ static void paint_window(const gui_window_t *w)
 		   title.x + 6,
 		   title.y + (WINDOW_TITLE_HEIGHT - gfx_char_height()) / 2,
 		   WINDOW_TITLE_TEXT);
+
+	if(w->paint) {
+		w->paint(w);
+	}
 }
 
 /* Redraw the whole scene, clipped to one rectangle */
@@ -253,10 +257,44 @@ int32_t compositor_add_window(gfx_rect_t frame, const char *title,
 	windows[id].title = title;
 	windows[id].accent = accent;
 	windows[id].visible = 0x01;
+	windows[id].paint = NULL;
+	windows[id].click = NULL;
 
 	compositor_damage(frame);
 
 	return id;
+}
+
+void compositor_set_handlers(int32_t id,
+			     void (*paint)(const gui_window_t *w),
+			     void (*click)(gui_window_t *w, int32_t x, int32_t y))
+{
+	if(id < 0 || id >= window_count) {
+		return;
+	}
+
+	windows[id].paint = paint;
+	windows[id].click = click;
+}
+
+/* Hand a press to the topmost window under it */
+static void dispatch_click(int32_t x, int32_t y)
+{
+	int32_t i;
+
+	LOGF("gui: click %d,%d\n", (int64_t)x, (int64_t)y);
+
+	for(i = window_count - 1; i >= 0; i--) {
+		gfx_rect_t hit = gfx_rect(x, y, 1, 1);
+
+		if(windows[i].visible && gfx_rect_intersects(windows[i].frame, hit)) {
+			if(windows[i].click) {
+				windows[i].click(&windows[i], x, y);
+			}
+
+			return;
+		}
+	}
 }
 
 uint8_t compositor_init(void)
@@ -314,12 +352,6 @@ uint8_t compositor_init(void)
 
 	readout_build(cursor_x, cursor_y, cursor_buttons, mouse.packets);
 
-	/* Something to composite over */
-	compositor_add_window(gfx_rect(60, 70, 300, 170), "welcome",
-			      GFX_RGB(0x2F, 0x6F, 0xB8));
-	compositor_add_window(gfx_rect(300, 200, 330, 190), "pointer",
-			      GFX_RGB(0x8A, 0x46, 0x9B));
-
 	compositor_damage_all();
 	compositor_frame();
 
@@ -367,6 +399,9 @@ void compositor_run(void)
 
 			if(mouse.x != cursor_x || mouse.y != cursor_y
 			   || mouse.buttons != cursor_buttons) {
+				uint8_t pressed = (mouse.buttons
+						   & ~cursor_buttons)
+						  & PS2_MOUSE_BUTTON_LEFT;
 
 				/* Where the pointer was has to be repainted,
 				 * and where it is going has to be presented */
@@ -388,6 +423,10 @@ void compositor_run(void)
 				     (int64_t)cursor_x,
 				     (int64_t)cursor_y,
 				     (uint64_t)cursor_buttons);
+
+				if(pressed) {
+					dispatch_click(cursor_x, cursor_y);
+				}
 			}
 		}
 
