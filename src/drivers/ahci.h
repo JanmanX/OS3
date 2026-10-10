@@ -28,8 +28,12 @@ typedef struct ahci_generic_registers {
 } __attribute__((packed)) ahci_generic_registers_t;
 
 typedef volatile struct ahci_port_register_set {
-	uint64_t clbu;
-	uint64_t fbu;
+	/* 64-bit addresses, split so that every access is the 32 bits wide
+	 * the specification asks for */
+	uint32_t clb;
+	uint32_t clbu;
+	uint32_t fb;
+	uint32_t fbu;
 
 	uint32_t is;
 	uint32_t ie;
@@ -144,16 +148,43 @@ typedef volatile struct ahci_fis_register_h2d {
 	uint32_t reserved1;
 }__attribute__((packed)) ahci_fis_register_h2d_t;
 
-/* Implementation specific */
-typedef struct sata_controller {
-	ahci_register_set_t* ahci;
-}__attribute__((packed)) sata_controller_t;
+/* Register bits */
+#define AHCI_GHC_IE			(1U << 1)
+#define AHCI_GHC_AE			(1U << 31)
 
-void sata_init(void);
+#define AHCI_PxCMD_ST			(1U << 0)
+#define AHCI_PxCMD_SUD			(1U << 1)
+#define AHCI_PxCMD_FRE			(1U << 4)
+#define AHCI_PxCMD_FR			(1U << 14)
+#define AHCI_PxCMD_CR			(1U << 15)
+
+#define AHCI_PxIS_TFES			(1U << 30)
+
+#define AHCI_PxTFD_ERR			(0x01)
+#define AHCI_PxTFD_DRQ			(0x08)
+#define AHCI_PxTFD_BSY			(0x80)
+
+#define AHCI_PxSSTS_DET_MASK		(0x0F)
+#define AHCI_PxSSTS_DET_PRESENT		(0x03)	/* Device there, link up */
+
+/* ATA commands */
+#define ATA_CMD_READ_DMA_EXT		(0x25)
+#define ATA_CMD_IDENTIFY		(0xEC)
+
+#define AHCI_SECTOR_SIZE		(512)
+
+/* Most SATA disks we keep track of, across every controller */
+#define AHCI_MAX_DISKS			(8)
+
+/* Finds every AHCI controller and every SATA disk attached to one. Disks
+ * are numbered from 0 in the order they were found. */
 void ahci_init(void);
 
-void ahci_read(ahci_register_set_t* controller,
-				uint32_t port,
-				uint64_t lba,
-				uint64_t count,
-				uint8_t buffer);
+uint32_t ahci_disk_count(void);
+uint64_t ahci_disk_sectors(uint32_t disk);
+
+/* Read "count" 512-byte sectors starting at "lba" into "buffer", which can be
+ * anywhere and needs no particular alignment. Returns EOK, ENODEV for a disk
+ * that does not exist, EINVAL for a range past the end of it, EBUSY when the
+ * drive never answered and EIO when it reported an error. */
+uint8_t ahci_read(uint32_t disk, uint64_t lba, uint32_t count, void *buffer);

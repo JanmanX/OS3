@@ -1,24 +1,91 @@
 #include "ahci.h"
 #include <stdint.h>
+#include <types.h>
 #include <libc.h>
 #include <drivers/pci.h>
-#include <cpu/apic.h>
-#include <mem/mem.h>
 #include <kernel/time.h>
+#include <cpu/hpet.h>
 #include <errno.h>
-#include <kernel/time.h>
+
+/* How long a port gets to stop, start or finish a command */
+#define AHCI_TIMEOUT_MS		(5000)
+
+/* Without an HPET there is no clock to time out by, so a poll gives up after
+ * this many reads of the register instead */
+#define AHCI_TIMEOUT_SPINS	(50000000ULL)
+
+/* Every transfer goes through one bounce buffer, so this is the most a single
+ * command moves: 64KiB, well inside what one PRD entry can describe */
+#define AHCI_MAX_SECTORS	(128)
+
+/*
+ * What the HBA reads and writes by DMA for one port. The command list has to
+ * be 1KiB aligned, the received-FIS area 256 bytes and a command table 128
+ * bytes; laid out in this order from a 1KiB boundary, all three are. Memory
+ * is identity mapped, so these addresses are the physical ones the HBA needs.
+ */
+typedef struct ahci_port_dma {
+	ahci_cmd_hdr_t headers[32];
+	uint8_t received_fis[256];
+	ahci_cmd_tbl_t table;
+} __attribute__((packed, aligned(1024))) ahci_port_dma_t;
+
+typedef struct ahci_disk {
+	ahci_register_set_t *hba;
+	uint32_t port;
+	uint64_t sectors;
+	ahci_port_dma_t *dma;
+} ahci_disk_t;
+
+typedef struct ahci_timer {
+	uint64_t start;
+	uint64_t spins;
+} ahci_timer_t;
+
+static ahci_port_dma_t port_dma[AHCI_MAX_DISKS];
+
+/* Callers hand us buffers from anywhere, including the heap, which does not
+ * even guarantee the word alignment a PRD entry needs */
+static uint8_t bounce[AHCI_MAX_SECTORS * AHCI_SECTOR_SIZE]
+	__attribute__((aligned(4096)));
+
+static ahci_disk_t disks[AHCI_MAX_DISKS];
+static uint32_t disk_count = 0;
 
 
-ahci_register_set_t* ahci = NULL;
-ahci_cmd_hdr_t cmd_hdrs[32] __attribute__((aligned(4096)));
-ahci_cmd_tbl_t cmd_tbl_t[32] __attribute__((alligned(4096)));
-ahci_fis_register_h2d_t* fis __attribute__((alligned(4096)));
-
-
-void ahci_enable_controller(ahci_register_set_t* controller)
+static void ahci_timer_start(ahci_timer_t *timer)
 {
-	controller->generic.ghc |= (1 << 31); // AHCI Enable
+	timer->start = hpet_get_ms_elapsed();
+	timer->spins = 0;
 }
+
+static uint8_t ahci_timer_expired(ahci_timer_t *timer)
+{
+	if(hpet_is_initialized()) {
+		return (hpet_get_ms_elapsed() - timer->start) > AHCI_TIMEOUT_MS;
+	}
+
+	return ++timer->spins > AHCI_TIMEOUT_SPINS;
+}
+
+/* Wait for all of "bits" to clear in the port's PxCMD, or in its PxTFD when
+ * "tfd" is set */
+static uint8_t ahci_wait_clear(ahci_port_register_set_t *port, uint8_t tfd,
+			       uint32_t bits)
+{
+	ahci_timer_t timer;
+
+	ahci_timer_start(&timer);
+
+	while((tfd ? port->tfd : port->cmd) & bits) {
+		if(ahci_timer_expired(&timer)) {
+			return EBUSY;
+		}
+	}
+
+	return EOK;
+}
+
 
 bool ahci_gain_ownership(ahci_register_set_t* controller)
 {
@@ -46,280 +113,323 @@ bool ahci_gain_ownership(ahci_register_set_t* controller)
 	return TRUE;
 }
 
-uint32_t ahci_get_port_register_sets_allocated(ahci_register_set_t* controller)
+
+static uint8_t ahci_port_stop(ahci_port_register_set_t *port)
 {
-	return (controller->generic.cap & 0x1F) + 1;
-}
+	port->cmd &= ~AHCI_PxCMD_ST;
 
-uint32_t ahci_get_command_slots_count(ahci_register_set_t * controller)
-{
-	uint32_t caps = controller->generic.cap;
-
-	return ((caps >> 8) & 0x1F) + 1;
-}
-
-uint8_t ahci_port_reset(ahci_register_set_t *controller, uint32_t drive)
-{
-	ASSERT(drive >= ahci_get_port_register_sets_allocated(controller), "Invalid AHCI port to reset!");
-
-	// COMRESET
-	controller->port_register[drive].sctl |= (1 << 0);
-
-	// Sleep some time, to ensure multiple COMRESETS are sent over the interface
-	sleep(10);
-
-	// Reset the COMRESET bit
-	controller->port_register[drive].sctl &= ~(1 << 0);
-
-	// Wait some more for initialization to complete
-	// XXX
-	DEBUG("Waiting for port reset to complete.");
-
-	// Loop until the controller is up
-	uint32_t timeout = 1000;
-	while((controller->port_register[drive].ssts & 0x7) != 0x3) {
-		if(timeout-- == 0) {
-			return FALSE;
-		}
-		sleep(1);
+	if(ahci_wait_clear(port, 0, AHCI_PxCMD_CR) != EOK) {
+		return EBUSY;
 	}
 
-	return TRUE;
+	port->cmd &= ~AHCI_PxCMD_FRE;
+
+	return ahci_wait_clear(port, 0, AHCI_PxCMD_FR);
 }
 
-void ahci_disable_command_engine(ahci_register_set_t* controller, uint32_t port)
+static uint8_t ahci_port_start(ahci_port_register_set_t *port)
 {
-	// Clear PxCMD.ST
-	controller->port_register[port].cmd &= ~(1 << 0);
-
-	// Wait until both PxCMD.FR and PxCMD.CR are clear
-	while(controller->port_register[port].cmd & (1 << 15))
-		;
-
-	controller->port_register[port].cmd &= ~(1 << 4);
-	while(controller->port_register[port].cmd & (1 << 14))
-		;
-}
-
-
-void ahci_enable_command_engine(ahci_register_set_t* controller, uint32_t port)
-{
-	// wait until CR (bit 15) is cleared
-	while(controller->port_register[port].cmd & (1 << 15))
-		;
-
-	// Enable the command engine
-	controller->port_register[port].cmd |= (1 << 4); // PxCMD.FRE
-	controller->port_register[port].cmd |= (1 << 0); // PxCMD.ST
-}
-
-
-
-/* NOTE: unfinished. Work stopped mid-port of the OSDev wiki example: the
- * body below still refers to identifiers that never existed in this tree
- * (cmdheader, buf, startl, starth, spin, slot), treats `port` as a pointer
- * when it is a port index here, and returns a value from a void function.
- * It is preserved verbatim under #if 0 so it can be finished later; the one
- * call site in ahci_port_init() is already commented out. */
-void ahci_read(ahci_register_set_t* controller,
-				uint32_t port,
-				uint64_t lba,
-				uint64_t count,
-				uint8_t buffer)
-{
-	(void)controller;
-	(void)port;
-	(void)lba;
-	(void)count;
-	(void)buffer;
-
-	LOG("ahci_read() is not implemented yet.");
-}
-
-#if 0 /* Unfinished work-in-progress -- see note above. */
-void ahci_read(ahci_register_set_t* controller,
-				uint32_t port,
-				uint64_t lba,
-				uint64_t count,
-				uint8_t buffer)
-{
-	ahci_cmd_hdr_t* hdr = (ahci_cmd_hdr_t*)controller->port_register[port].clbu;
-	ahci_cmd_tbl_t tbl = {0};
-
-	hdr->cfl = sizeof(ahci_h2d_register_fis_t) / sizeof(uint32_t); // command FIS size in DWORDs
-	hdr->w = 0; // read
-	hdr->prdtl = 1; // 1 PRDT
-	hdr->ctbau = (uint64_t)&tbl;
-
-
-
-	HBA_CMD_TBL *cmdtbl = (HBA_CMD_TBL*)(cmdheader->ctba);
-	memset(cmdtbl, 0, sizeof(HBA_CMD_TBL) +
- 		(cmdheader->prdtl-1)*sizeof(HBA_PRDT_ENTRY));
-
-	// 8K bytes (16 sectors) per PRDT
-	for (int i=0; i<cmdheader->prdtl-1; i++)
-	{
-		cmdtbl->prdt_entry[i].dba = (uint32_t) buf;
-		cmdtbl->prdt_entry[i].dbc = 8*1024-1;	// 8K bytes (this value should always be set to 1 less than the actual value)
-		cmdtbl->prdt_entry[i].i = 1;
-		buf += 4*1024;	// 4K words
-		count -= 16;	// 16 sectors
-	}
-	// Last entry
-	cmdtbl->prdt_entry[i].dba = (uint32_t) buf;
-	cmdtbl->prdt_entry[i].dbc = (count<<9)-1;	// 512 bytes per sector
-	cmdtbl->prdt_entry[i].i = 1;
-
-	// Setup command
-	FIS_REG_H2D *cmdfis = (FIS_REG_H2D*)(&cmdtbl->cfis);
-
-	cmdfis->fis_type = FIS_TYPE_REG_H2D;
-	cmdfis->c = 1;	// Command
-	cmdfis->command = ATA_CMD_READ_DMA_EX;
-
-	cmdfis->lba0 = (uint8_t)startl;
-	cmdfis->lba1 = (uint8_t)(startl>>8);
-	cmdfis->lba2 = (uint8_t)(startl>>16);
-	cmdfis->device = 1<<6;	// LBA mode
-
-	cmdfis->lba3 = (uint8_t)(startl>>24);
-	cmdfis->lba4 = (uint8_t)starth;
-	cmdfis->lba5 = (uint8_t)(starth>>8);
-
-	cmdfis->countl = count & 0xFF;
-	cmdfis->counth = (count >> 8) & 0xFF;
-
-	// The below loop waits until the port is no longer busy before issuing a new command
-	while ((port->tfd & (ATA_DEV_BUSY | ATA_DEV_DRQ)) && spin < 1000000)
-	{
-		spin++;
-	}
-	if (spin == 1000000)
-	{
-		trace_ahci("Port is hung\n");
-		return FALSE;
+	if(ahci_wait_clear(port, 0, AHCI_PxCMD_CR) != EOK) {
+		return EBUSY;
 	}
 
-	port->ci = 1<<slot;	// Issue command
-
-	// Wait for completion
-	while (1)
-	{
-		// In some longer duration reads, it may be helpful to spin on the DPS bit
-		// in the PxIS port field as well (1 << 5)
-		if ((port->ci & (1<<slot)) == 0)
-			break;
-		if (port->is & HBA_PxIS_TFES)	// Task file error
-		{
-			trace_ahci("Read disk error\n");
-			return FALSE;
-		}
-	}
-
-	// Check again
-	if (port->is & HBA_PxIS_TFES)
-	{
-		trace_ahci("Read disk error\n");
-		return FALSE;
-	}
-
-	return 1;
-}
-#endif
-
-
-void ahci_port_init(ahci_register_set_t* controller, uint32_t drive)
-{
-	// Reset the drive, and check if attached
-	if(ahci_port_reset(controller, drive) == FALSE) {
-		LOGF("Could not reset AHCI port: 0x%x. Not attached", drive);
-		return;
-	}
-
-	if(controller->port_register[drive].sig != AHCI_PORT_SIG_SATA) {
-		LOG("Drive is not a SATA device.");
-		return;
-	}
-
-	// Disable the command engine
-	ahci_disable_command_engine(controller, drive);
-
-	// Now, set the addresses of Command Header list and Receive FIS
-	controller->port_register[drive].clbu = (uint64_t)cmd_hdrs;
-	controller->port_register[drive].fbu = (uint64_t)fis;
-
-	// Enable the command engine
-	ahci_enable_command_engine(controller, drive);
-
-	// Clear the PxIS register
-	controller->port_register[drive].is = 0xFFFFFFFF;
-	controller->port_register[drive].ie = 0xFFFFFFFF;
-
-	uint8_t buffer[513] = {0};
-	//ahci_read(controller, drive, 0, 1, buffer);
-
-	kprintf("read data: %s\n", buffer);
-}
-
-void ahci_ports_init(ahci_register_set_t* controller)
-{
-	uint32_t drive = 0x00;
-
-	uint32_t ports_implemented = controller->generic.pi;
-
-	uint32_t i;
-	for(i = 0x00; i < 32; i++) {
-		if(ports_implemented & (1 << i)) {
-			LOGF("Port 0x%x implemented!\n", i);
-			ahci_port_init(controller, i);
-			return;
-		}
-	}
-
-}
-
-uint8_t ahci_interrupt_handler(pt_regs_t* regs)
-{
-	LOG("AHCI Interrupt!");
-	lapic_eoi();
+	port->cmd |= AHCI_PxCMD_FRE;
+	port->cmd |= AHCI_PxCMD_ST;
 
 	return EOK;
 }
 
-void ahci_found(uint8_t bus, uint8_t dev, uint8_t func)
+/* Stopping the port drops whatever command was stuck on it, so the next one
+ * starts from a clean slate */
+static void ahci_port_recover(ahci_port_register_set_t *port)
 {
-	LOG("SATA found!");
+	ahci_port_stop(port);
 
-	// Get the AHCI MMIO
-	ahci = (ahci_register_set_t*)(uint64_t)
-		pci_read(bus, dev, func, PCI_REGISTER_BAR5, 4);
-	ASSERT(ahci != NULL, "AHCI == NULL");
+	port->serr = 0xFFFFFFFF;
+	port->is = 0xFFFFFFFF;
 
-	/* Gain ownership */
-	if(ahci_gain_ownership(ahci) == FALSE) {
-		ERROR("Failed to gain ownership of SATA");
-		HALT;
+	ahci_port_start(port);
+}
+
+
+/* Run one command in slot 0 and wait for it to finish. Whatever the drive
+ * sends back lands in the bounce buffer. */
+static uint8_t ahci_command(ahci_disk_t *disk, uint8_t command,
+			    uint64_t lba, uint16_t count, uint32_t bytes)
+{
+	ahci_port_register_set_t *port = &disk->hba->port_register[disk->port];
+	ahci_cmd_hdr_t *header = &disk->dma->headers[0];
+	ahci_cmd_tbl_t *table = &disk->dma->table;
+	ahci_fis_register_h2d_t *fis = (ahci_fis_register_h2d_t*)table->fis;
+	ahci_timer_t timer;
+
+	/* The drive has to have settled from whatever it did last */
+	if(ahci_wait_clear(port, 1, AHCI_PxTFD_BSY | AHCI_PxTFD_DRQ) != EOK) {
+		LOGF("AHCI: port %d is stuck busy (tfd 0x%x)\n",
+		     (uint64_t)disk->port, (uint64_t)port->tfd);
+		ahci_port_recover(port);
+		return EBUSY;
 	}
 
-	/* Enable the controller */
-	ahci_enable_controller(ahci);
+	memset((void*)table, 0x00, sizeof(ahci_cmd_tbl_t));
 
-	/* Initialize ports */
-	ahci_ports_init(ahci);
+	fis->type = FIS_TYPE_REG_H2D;
+	fis->flags = 0x80;		/* A command, not a control update */
+	fis->command = command;
+	fis->device = (1 << 6);		/* LBA addressing */
 
-	/* Install Interrupts */
-	if(pci_install_interrupt(bus, dev, func, ahci_interrupt_handler) != EOK) {
-		ERROR("Interrupt not installed for AHCI");
-		return;
+	fis->lba_0 = (uint8_t)(lba);
+	fis->lba_1 = (uint8_t)(lba >> 8);
+	fis->lba_2 = (uint8_t)(lba >> 16);
+	fis->lba_3 = (uint8_t)(lba >> 24);
+	fis->lba_4 = (uint8_t)(lba >> 32);
+	fis->lba_5 = (uint8_t)(lba >> 40);
+
+	fis->sector_low = (uint8_t)(count);
+	fis->secotr_high = (uint8_t)(count >> 8);
+
+	table->prdt_entry[0].dbau = (uint64_t)bounce;
+	table->prdt_entry[0].flags = bytes - 1;	/* Byte count, less one */
+
+	memset((void*)header, 0x00, sizeof(ahci_cmd_hdr_t));
+	header->cfl = sizeof(ahci_fis_register_h2d_t) / sizeof(uint32_t);
+	header->prdtl = 1;
+	header->ctbau = (uint64_t)table;
+
+	/* All of the above has to be in memory before the HBA goes to fetch
+	 * it, and nothing may be read out of the bounce buffer before the
+	 * command is seen to finish */
+	asm volatile("" ::: "memory");
+
+	port->is = 0xFFFFFFFF;		/* Write one to clear */
+	port->ci = 1;
+
+	ahci_timer_start(&timer);
+
+	while(port->ci & 1) {
+		if(port->is & AHCI_PxIS_TFES) {
+			break;
+		}
+
+		if(ahci_timer_expired(&timer)) {
+			LOGF("AHCI: command 0x%x timed out on port %d\n",
+			     (uint64_t)command, (uint64_t)disk->port);
+			ahci_port_recover(port);
+			return EBUSY;
+		}
+	}
+
+	asm volatile("" ::: "memory");
+
+	if((port->is & AHCI_PxIS_TFES) || (port->tfd & AHCI_PxTFD_ERR)) {
+		LOGF("AHCI: command 0x%x failed on port %d (tfd 0x%x)\n",
+		     (uint64_t)command, (uint64_t)disk->port,
+		     (uint64_t)port->tfd);
+		ahci_port_recover(port);
+		return EIO;
+	}
+
+	return EOK;
+}
+
+static uint8_t ahci_identify(ahci_disk_t *disk)
+{
+	uint16_t *id = (uint16_t*)bounce;
+	char model[41];
+	uint32_t i;
+
+	if(ahci_command(disk, ATA_CMD_IDENTIFY, 0, 0, AHCI_SECTOR_SIZE)
+	   != EOK) {
+		return EIO;
+	}
+
+	/* 48-bit capacity when the drive has it, the 28-bit one otherwise */
+	if(id[83] & (1 << 10)) {
+		disk->sectors = (uint64_t)id[100]
+			| ((uint64_t)id[101] << 16)
+			| ((uint64_t)id[102] << 32)
+			| ((uint64_t)id[103] << 48);
 	} else {
-		LOG("Interrupt installed for AHCI");
+		disk->sectors = (uint64_t)id[60] | ((uint64_t)id[61] << 16);
 	}
+
+	/* The model is ASCII packed two to a word, high byte first, and
+	 * padded with spaces */
+	for(i = 0; i < 20; i++) {
+		model[i * 2] = (char)(id[27 + i] >> 8);
+		model[i * 2 + 1] = (char)(id[27 + i] & 0xFF);
+	}
+	model[40] = '\0';
+
+	for(i = 40; i > 0 && model[i - 1] == ' '; i--) {
+		model[i - 1] = '\0';
+	}
+
+	LOGF("AHCI: disk %d is port %d: \"%s\", %d sectors (%d MiB)\n",
+	     (uint64_t)disk_count, (uint64_t)disk->port, model,
+	     disk->sectors, disk->sectors / (MiB / AHCI_SECTOR_SIZE));
+
+	return EOK;
+}
+
+
+static void ahci_port_init(ahci_register_set_t *hba, uint32_t index)
+{
+	ahci_port_register_set_t *port = &hba->port_register[index];
+	ahci_disk_t *disk;
+
+	/* Nothing plugged in, or the link never came up */
+	if((port->ssts & AHCI_PxSSTS_DET_MASK) != AHCI_PxSSTS_DET_PRESENT) {
+		return;
+	}
+
+	/* Optical drives and port multipliers are not disks we can read */
+	if(port->sig != AHCI_PORT_SIG_SATA) {
+		LOGF("AHCI: port %d has signature 0x%x, not a disk\n",
+		     (uint64_t)index, (uint64_t)port->sig);
+		return;
+	}
+
+	if(disk_count >= AHCI_MAX_DISKS) {
+		LOGF("AHCI: ignoring the disk on port %d, too many disks\n",
+		     (uint64_t)index);
+		return;
+	}
+
+	disk = &disks[disk_count];
+	disk->hba = hba;
+	disk->port = index;
+	disk->sectors = 0;
+	disk->dma = &port_dma[disk_count];
+
+	memset((void*)disk->dma, 0x00, sizeof(ahci_port_dma_t));
+
+	/* The firmware may have left the port running on its own buffers */
+	if(ahci_port_stop(port) != EOK) {
+		LOGF("AHCI: port %d will not stop\n", (uint64_t)index);
+		return;
+	}
+
+	port->clb = (uint32_t)(uint64_t)disk->dma->headers;
+	port->clbu = (uint32_t)((uint64_t)disk->dma->headers >> 32);
+	port->fb = (uint32_t)(uint64_t)disk->dma->received_fis;
+	port->fbu = (uint32_t)((uint64_t)disk->dma->received_fis >> 32);
+
+	/* Polled, so no interrupts, and nothing stale left to trip over */
+	port->ie = 0;
+	port->serr = 0xFFFFFFFF;
+	port->is = 0xFFFFFFFF;
+
+	if(ahci_port_start(port) != EOK) {
+		LOGF("AHCI: port %d will not start\n", (uint64_t)index);
+		return;
+	}
+
+	if(ahci_identify(disk) != EOK) {
+		LOGF("AHCI: the disk on port %d did not identify itself\n",
+		     (uint64_t)index);
+		return;
+	}
+
+	disk_count++;
+}
+
+static void ahci_found(uint8_t bus, uint8_t dev, uint8_t func)
+{
+	ahci_register_set_t *hba;
+	uint32_t command;
+	uint32_t implemented;
+	uint32_t i;
+
+	/* The registers are memory mapped, and every transfer is the HBA
+	 * mastering the bus */
+	command = pci_read(bus, dev, func, PCI_REGISTER_COMMAND, 2);
+	pci_write(bus, dev, func, PCI_REGISTER_COMMAND,
+		  command | PCI_COMMAND_MEMORY | PCI_COMMAND_BUS_MASTER, 2);
+
+	/* ABAR. The low bits describe the BAR rather than address it. */
+	hba = (ahci_register_set_t*)(uint64_t)
+		(pci_read(bus, dev, func, PCI_REGISTER_BAR5, 4) & 0xFFFFFFF0);
+
+	LOGF("AHCI: controller %d:%d.%d, registers at 0x%x, version 0x%x\n",
+	     (uint64_t)bus, (uint64_t)dev, (uint64_t)func,
+	     (uint64_t)hba, (uint64_t)hba->generic.vs);
+
+	if(ahci_gain_ownership(hba) == FALSE) {
+		LOG("AHCI: the firmware would not hand the controller over");
+		return;
+	}
+
+	hba->generic.ghc |= AHCI_GHC_AE;
+	hba->generic.ghc &= ~AHCI_GHC_IE;
+
+	implemented = hba->generic.pi;
+
+	for(i = 0; i < 32; i++) {
+		if(implemented & (1U << i)) {
+			ahci_port_init(hba, i);
+		}
+	}
+}
+
+
+uint32_t ahci_disk_count(void)
+{
+	return disk_count;
+}
+
+uint64_t ahci_disk_sectors(uint32_t disk)
+{
+	if(disk >= disk_count) {
+		return 0;
+	}
+
+	return disks[disk].sectors;
+}
+
+uint8_t ahci_read(uint32_t disk, uint64_t lba, uint32_t count, void *buffer)
+{
+	uint8_t *out = (uint8_t*)buffer;
+	ahci_disk_t *d;
+
+	if(disk >= disk_count) {
+		return ENODEV;
+	}
+
+	d = &disks[disk];
+
+	if(lba > d->sectors || count > d->sectors - lba) {
+		return EINVAL;
+	}
+
+	while(count > 0) {
+		uint32_t n = (count > AHCI_MAX_SECTORS) ? AHCI_MAX_SECTORS : count;
+		uint8_t status = ahci_command(d, ATA_CMD_READ_DMA_EXT, lba,
+					      (uint16_t)n,
+					      n * AHCI_SECTOR_SIZE);
+
+		if(status != EOK) {
+			LOGF("AHCI: reading %d sectors at LBA %d failed\n",
+			     (uint64_t)n, lba);
+			return status;
+		}
+
+		memcpy(out, bounce, n * AHCI_SECTOR_SIZE);
+
+		out += n * AHCI_SECTOR_SIZE;
+		lba += n;
+		count -= n;
+	}
+
+	return EOK;
 }
 
 
 void ahci_init(void)
 {
 	LOG("AHCI Init");
+
 	pci_find(ahci_found, PCI_CLASS_ATA, PCI_SUBCLASS_SATA);
+
+	LOGF("AHCI: %d disk(s) ready\n", (uint64_t)disk_count);
 }

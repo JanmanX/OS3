@@ -25,6 +25,10 @@
 #define PCI_REGISTER_INTERRUPT_LINE     0x3C
 #define PCI_REGISTER_INTERRUPT_PIN      0x3D
 
+/* Command register bits */
+#define PCI_COMMAND_MEMORY		(1 << 1)
+#define PCI_COMMAND_BUS_MASTER		(1 << 2)
+
 /* CLASS CODES */
 #define PCI_CLASS_ATA			(0x01)
 
@@ -68,8 +72,8 @@ void pci_write(const uint8_t bus,
 	       const uint32_t data,
 	       const uint8_t len);
 
-/* Iterates the PCI bus and calls callback function when type found.
- * Returns on first hit */
+/* Iterates the PCI bus and calls callback function for every device of the
+ * given type */
 void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass);
 
 void pci_init(void);

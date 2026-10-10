@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <drivers/screen.h>
 #include <drivers/font.h>
+#include <drivers/serial.h>
 #include <libc.h>
 
 
@@ -10,8 +11,25 @@
 static uint32_t x = 0;
 static uint32_t y = 0;
 
+/* Whether anything still reaches the framebuffer */
+static uint8_t screen_enabled = 0x01;
+
+void kprintf_set_screen_enabled(uint8_t on)
+{
+	screen_enabled = on ? 0x01 : 0x00;
+}
+
 void write_char(uint8_t c)
 {
+	/* Mirror everything to the serial console, which keeps the whole
+	 * history even after the screen has been wrapped */
+	serial_write_char(c);
+
+	/* Somebody else owns the pixels now */
+	if(screen_enabled == 0x00) {
+		return;
+	}
+
 	/* Clear screen, if bottom of screen reached*/
 	if(y >= screen_get_height()) {
 		clear_screen();
@@ -114,7 +132,10 @@ string:
 
 void clear_screen()
 {
-	screen_clear();
+	if(screen_enabled) {
+		screen_clear();
+	}
+
 	x = y = 0;
 }
 

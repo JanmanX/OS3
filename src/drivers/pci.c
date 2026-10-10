@@ -58,6 +58,7 @@ void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass)
 	uint8_t func = 0x00;
 	uint32_t c = 0x00;
 	uint32_t sc = 0x00;
+	uint32_t found = 0;
 
 	for (bus = 0; bus < 256; bus++)
 	{
@@ -82,13 +83,16 @@ void pci_find(pci_func_t callback, uint8_t class, uint8_t subclass)
 				if (class == c && subclass == sc)
 				{
 					callback(bus, device, func);
-					return;
+					found++;
 				}
 			}
 		}
 	}
 
-	LOG("PCI Device not found");
+	if (found == 0)
+	{
+		LOG("PCI Device not found");
+	}
 }
 
 ACPI_STATUS acpi_get_devices_callback(ACPI_HANDLE object,

@@ -1,5 +1,6 @@
 os.iso
 *.o
+*.d
 *.map
 *.bin
 *.ini
@@ -12,3 +13,4 @@ notes/*
 
 # remove this later
 docs/*
+disk.img
